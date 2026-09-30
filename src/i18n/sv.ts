@@ -68,10 +68,10 @@ export const sv: Copy = {
     lead: "Vad organisationen följer, hur många som lyssnar, hur långt era budskap nådde och vad som mindes. Aggregerat – aldrig vem som hörde vad.",
     stats: [
       { value: "6 min", label: "lyssnat per dag" },
-      { value: "34 av 41", label: "hörde Inside" },
-      { value: "78 %", label: "mindes rätt" },
+      { value: "34 av 41", label: "har lyssnat i veckan" },
+      { value: "80 %", label: "mindes rätt" },
     ],
-    statsNote: "Exempel från en demo-organisation.",
+    statsNote: "Siffror från ett demoföretag.",
   },
   pricing: {
     metaTitle: "Pris – Newstail. Betala bara för dem som lyssnar.",

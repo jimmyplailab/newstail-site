@@ -68,10 +68,10 @@ export const en: Copy = {
     lead: "What the organisation follows, how many listen, how far your messages reached and what was remembered. Aggregated – never who heard what.",
     stats: [
       { value: "6 min", label: "listened per day" },
-      { value: "34 of 41", label: "heard Inside" },
-      { value: "78%", label: "remembered correctly" },
+      { value: "34 of 41", label: "listened this week" },
+      { value: "80%", label: "remembered correctly" },
     ],
-    statsNote: "Example from a demo organisation.",
+    statsNote: "Figures from a demo company.",
   },
   pricing: {
     metaTitle: "Pricing – Newstail. Pay only for the people who listen.",
