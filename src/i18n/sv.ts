@@ -4,9 +4,9 @@ export const sv: Copy = {
   lang: "sv",
   htmlLang: "sv",
   meta: {
-    title: "Newstail – Nyheter som röst för företag. Hela företaget påläst, varje morgon.",
+    title: "Newstail – En nyhetsvärd för varje medarbetare.",
     description:
-      "En personlig morgonsändning för varje medarbetare: branschen, kunderna och era egna budskap, berättade på fem minuter. 14 dagar gratis.",
+      "En personlig nyhetssändning för varje medarbetare: branschen, kunderna och era interna budskap, berättade med naturlig röst på det språk var och en väljer. 14 dagar gratis.",
   },
   nav: {
     tech: "Tekniken",
@@ -18,7 +18,7 @@ export const sv: Copy = {
   },
   hero: {
     title: "En nyhetsvärd för varje medarbetare.",
-    lead: "Varje morgon en egen sändning, berättad med naturlig röst: branschen, kunderna, det interna – och det man själv följer. Fem minuter, innan kaffet.",
+    lead: "En egen sändning åt varje person, berättad med naturlig röst: branschen, kunderna, det interna – och det man själv följer. Lyssna när det passar, på några minuter.",
     cta: "Kom igång – 14 dagar gratis",
     listen: "Så låter det",
     listening: "Spelar",
@@ -48,7 +48,7 @@ export const sv: Copy = {
   },
   broadcast: {
     title: "Dra upp. Lyssna.",
-    lead: "Öppna appen, dra upp klotet och värden börjar berätta. Omvärlden väljs efter din roll och det du följer – redan från första morgonen. Det interna hör alla.",
+    lead: "Öppna appen, dra upp klotet och värden börjar berätta. Omvärlden väljs efter din roll och det du följer – från första dagen. Det interna hör alla.",
     points: [
       { t: "Tre till tio minuter", d: "Du väljer längden själv." },
       { t: "Pausa, nästa, tillbaka", d: "Med tummen, på låsskärmen eller i hörlurarna." },
@@ -64,6 +64,10 @@ export const sv: Copy = {
     bubble: "Internt: nya prislistan gäller från måndag",
     reach: "Hört av 34 av 41",
     flow: ["Du pratar in", "AI:n förädlar och översätter", "Alla hör det"],
+    points: [
+      { t: "Ni väljer vem som publicerar", d: "Admin, och de ni ger rätten i varje team." },
+      { t: "Team för rätt mottagare", d: "Skapa team och rikta budskapet dit – eller till alla." },
+    ],
   },
   quiz: {
     title: "Gå djupare. Minns mer.",
@@ -138,7 +142,7 @@ export const sv: Copy = {
     ],
   },
   closing: {
-    title: "Börja i morgon bitti.",
+    title: "Kom igång i dag.",
     lead: "Registrera företaget med er mejldomän, så kan kollegorna gå med direkt. Inget IT-projekt, 14 dagar gratis.",
     cta: "Kom igång",
     priceLink: "Se priser",

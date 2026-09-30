@@ -34,7 +34,15 @@ export type Copy = {
     captionTopic: string;
     captionTitle: string;
   };
-  inside: { title: string; lead: string; bubble: string; reach: string; flow: string[] };
+  inside: {
+    title: string;
+    lead: string;
+    bubble: string;
+    reach: string;
+    flow: string[];
+    /** Vem som publicerar och team – så man förstår att inte vem som helst kan publicera. */
+    points: { t: string; d: string }[];
+  };
   quiz: { title: string; lead: string; recap: string; quiz: string; share: string };
   leaders: {
     title: string;

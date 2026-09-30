@@ -1,6 +1,6 @@
 ---
-/** Tekniken: ingen upprepning av startsidan och inget klot – röstvåg, morgonens tidslinje,
- *  stora siffror, ikoner och teknikvalen. */
+/** Tekniken: ingen upprepning av startsidan och inget klot – appens rubrikbubblor och
+ *  dra-upp-spår i heron, tidslinjen från nyhet till röst, stora siffror och ikoner. */
 import type { TechPage } from "../i18n/subpages";
 import { START_URL } from "../i18n/types";
 
@@ -9,7 +9,6 @@ interface Props {
   cta: string;
 }
 const { page, cta } = Astro.props;
-const BARS = 56;
 const icons: Record<string, string> = {
   bell: '<path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   lock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
@@ -20,26 +19,35 @@ const icons: Record<string, string> = {
 };
 ---
 
-<section class="sub-hero" data-space data-hue="200" data-watch>
+<section class="sub-hero sub-hero-split" data-space data-hue="200" data-watch>
   <div class="sub-hero-inner">
     <h1 class="title-hero">{page.title}</h1>
     <p class="lead">{page.lead}</p>
   </div>
-  <div class="voicewave" aria-hidden="true">
-    {Array.from({ length: BARS }, (_, i) => <span style={`--i: ${i}; --h: ${0.25 + 0.75 * Math.abs(Math.sin(i * 0.53) * Math.cos(i * 0.21))}`} />)}
+  <div class="app-scene" aria-hidden="true">
+    <div class="app-bubbles">
+      {page.bubbles.map((b, i) => (
+        <span class={`bubble app-bubble ${i % 2 ? "bubble-l app-bubble-r" : "bubble-r"}${i === page.bubbles.length - 1 ? " bubble-inside" : ""}`} style={`--i: ${i}`}>{b}</span>
+      ))}
+    </div>
+    <div class="app-rail">
+      <span class="app-rail-target"></span>
+      <span class="app-rail-fill"></span>
+      <span class="app-rail-knob"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6" /></svg></span>
+    </div>
   </div>
 </section>
 
-<section class="sub-section morning" id="morgon" data-space data-hue="200" data-watch>
+<section class="sub-section morning" id="flode" data-space data-hue="200" data-watch>
   <div class="morning-grid">
     <div class="morning-side">
-      <h2 class="title-xl">{page.morning.title}</h2>
-      <p class="lead">{page.morning.lead}</p>
+      <h2 class="title-xl">{page.flow.title}</h2>
+      <p class="lead">{page.flow.lead}</p>
       <div class="morning-rail" aria-hidden="true"><span></span></div>
     </div>
     <ol class="morning-steps">
       {
-        page.morning.steps.map((s, i) => (
+        page.flow.steps.map((s, i) => (
           <li class="morning-step" data-step={i}>
             <span class="morning-n">{String(i + 1).padStart(2, "0")}</span>
             <div>
@@ -87,25 +95,6 @@ const icons: Record<string, string> = {
       ))
     }
   </ul>
-</section>
-
-<section class="sub-section" id="teknik" data-space data-hue="262" data-watch>
-  <div class="stack-grid">
-    <div class="sub-head">
-      <h2 class="title-xl">{page.stack.title}</h2>
-      <p class="lead">{page.stack.lead}</p>
-    </div>
-    <dl class="spec">
-      {
-        page.stack.rows.map((r, i) => (
-          <div class="reveal" style={`--i: ${i}`}>
-            <dt>{r.k}</dt>
-            <dd>{r.v}</dd>
-          </div>
-        ))
-      }
-    </dl>
-  </div>
 </section>
 
 <section class="sub-cta" data-space data-hue="262" data-watch>

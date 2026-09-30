@@ -106,6 +106,14 @@ const REST = "0.5,0.5,0.1,0";
           <li class="reveal" style={`--i: ${i + 1}`}><span>{f}</span></li>
         ))}
       </ol>
+      <ul class="deep-points inside-points">
+        {c.inside.points.map((p, i) => (
+          <li class="reveal" style={`--i: ${i + 3}`}>
+            <strong>{p.t}</strong>
+            <span>{p.d}</span>
+          </li>
+        ))}
+      </ul>
     </div>
     <div class="split-stage phone-stage">
       <div class="phone reveal" style="--i: 0">

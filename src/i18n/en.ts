@@ -4,9 +4,9 @@ export const en: Copy = {
   lang: "en",
   htmlLang: "en",
   meta: {
-    title: "Newstail – News as voice, for companies. The whole company briefed, every morning.",
+    title: "Newstail – A news host for every employee.",
     description:
-      "A personal morning broadcast for every employee: your industry, your customers and your own messages, told in five minutes. 14 days free.",
+      "A personal news broadcast for every employee: the industry, the customers and your internal messages, told in a natural voice in the language each person chooses. 14 days free.",
   },
   nav: {
     tech: "Technology",
@@ -18,7 +18,7 @@ export const en: Copy = {
   },
   hero: {
     title: "A news host for every employee.",
-    lead: "Every morning a broadcast of your own, told in a natural voice: the industry, the customers, the internal – and whatever you follow yourself. Five minutes, before coffee.",
+    lead: "A broadcast for each person, told in a natural voice: the industry, the customers, the internal – and whatever you follow yourself. Listen whenever it suits you, in a few minutes.",
     cta: "Get started – 14 days free",
     listen: "Hear it",
     listening: "Playing",
@@ -48,7 +48,7 @@ export const en: Copy = {
   },
   broadcast: {
     title: "Pull up. Listen.",
-    lead: "Open the app, pull up the orb and the host starts talking. The outside world is picked by your role and what you follow – from the very first morning. The internal news, everyone hears.",
+    lead: "Open the app, pull up the orb and the host starts talking. The outside world is picked by your role and what you follow – from day one. The internal news, everyone hears.",
     points: [
       { t: "Three to ten minutes", d: "You choose the length." },
       { t: "Pause, next, back", d: "With your thumb, on the lock screen or in your headphones." },
@@ -64,6 +64,10 @@ export const en: Copy = {
     bubble: "Internal: new price list from Monday",
     reach: "Heard by 34 of 41",
     flow: ["You record it", "AI refines and translates", "Everyone hears it"],
+    points: [
+      { t: "You decide who publishes", d: "Admins, and the people you give the right in each team." },
+      { t: "Teams for the right audience", d: "Create teams and send the message there – or to everyone." },
+    ],
   },
   quiz: {
     title: "Go deeper. Remember more.",
@@ -135,7 +139,7 @@ export const en: Copy = {
     ],
   },
   closing: {
-    title: "Start tomorrow morning.",
+    title: "Get started today.",
     lead: "Register the company with your email domain and colleagues can join right away. No IT project, 14 days free.",
     cta: "Get started",
     priceLink: "See pricing",
