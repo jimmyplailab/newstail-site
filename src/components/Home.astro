@@ -34,20 +34,11 @@ const REST = "0.5,0.5,0.1,0";
       </div>
     </div>
   </div>
-  <ul class="hero-values" id="foretag">
-    {
-      c.value.rows.map((r, i) => (
-        <li class="reveal" style={`--i: ${i + 3}`}>
-          <strong>{r.title}</strong> <span>{r.text}</span>
-        </li>
-      ))
-    }
-  </ul>
 </section>
 
 <!-- 2. Språket: USP – alla med, på sitt eget språk -->
 <section class="section" id="sprak" data-space data-hue="262" data-watch>
-  <div class="split orb-left">
+  <div class="split orb-left lang-split">
     <div class="split-text stack">
       <h2 class="title-xl">{c.language.title}</h2>
       <p class="lead">{c.language.lead}</p>

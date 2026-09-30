@@ -11,7 +11,6 @@ export type TechPage = {
   /** Rubriker som ploppar fram i heron, som i appens hemvy. Den sista är intern. */
   bubbles: string[];
   flow: { title: string; lead: string; steps: { t: string; d: string }[] };
-  personal: { title: string; lead: string; items: { big: string; t: string; d: string }[] };
   ios: { title: string; lead: string; items: { icon: string; t: string; d: string }[] };
   cta: { title: string; lead: string };
 };
@@ -22,7 +21,6 @@ export type TrustPage = {
   lead: string;
   sees: { title: string; lead: string; yes: string[]; no: string[]; yesLabel: string; noLabel: string };
   protect: { title: string; items: { t: string; d: string }[] };
-  cta: { title: string; lead: string };
 };
 
 export const tech: Record<"sv" | "en", TechPage> = {
@@ -46,16 +44,6 @@ export const tech: Record<"sv" | "en", TechPage> = {
         { t: "Redaktion", d: "AI väljer det som spelar roll för just er och skriver om det till berättelse, med källor." },
         { t: "Ditt urval", d: "Dina ämnen, det du redan hört och den tid du har avgör vad du får." },
         { t: "Rösten", d: "Talet skapas medan du lyssnar, på ditt språk." },
-      ],
-    },
-    personal: {
-      title: "Personligt under huven.",
-      lead: "Ingen hör exakt samma sändning. Så lär sig värden vad som är ditt.",
-      items: [
-        { big: "5", t: "egna ämnen", d: "Väljs när du börjar och när som helst i appen." },
-        { big: "1", t: "dag", d: "Ett nytt ämne finns med redan i nästa sändning." },
-        { big: "3", t: "signaler", d: "Hört, hoppat över och bortsvept styr urvalet." },
-        { big: "∞", t: "förslag", d: "Recapen föreslår nya ämnen utifrån det du hört." },
       ],
     },
     ios: {
@@ -92,16 +80,6 @@ export const tech: Record<"sv" | "en", TechPage> = {
         { t: "Editing", d: "AI picks what matters to you specifically and rewrites it as a story, with sources." },
         { t: "Your selection", d: "Your topics, what you've already heard and the time you have decide what you get." },
         { t: "The voice", d: "Speech is created while you listen, in your language." },
-      ],
-    },
-    personal: {
-      title: "Personal under the hood.",
-      lead: "No two people hear exactly the same broadcast. This is how the host learns what's yours.",
-      items: [
-        { big: "5", t: "topics of your own", d: "Chosen when you start and any time in the app." },
-        { big: "1", t: "day", d: "A new topic is included in the very next broadcast." },
-        { big: "3", t: "signals", d: "Heard, skipped and swiped away shape the selection." },
-        { big: "∞", t: "suggestions", d: "The recap suggests new topics based on what you heard." },
       ],
     },
     ios: {
@@ -149,7 +127,6 @@ export const trust: Record<"sv" | "en", TrustPage> = {
         { t: "Rensas automatiskt", d: "Allt har en fast livslängd. Tar en medarbetare bort sitt konto försvinner allt." },
       ],
     },
-    cta: { title: "Frågor om dataskydd?", lead: "Vi går gärna igenom det med er innan ni börjar." },
   },
   en: {
     metaTitle: "Trust – Newstail. Privacy and data.",
@@ -179,6 +156,5 @@ export const trust: Record<"sv" | "en", TrustPage> = {
         { t: "Cleaned up automatically", d: "Everything has a fixed lifetime. When an employee deletes their account, everything is gone." },
       ],
     },
-    cta: { title: "Questions about data protection?", lead: "We're happy to go through it with you before you start." },
   },
 };

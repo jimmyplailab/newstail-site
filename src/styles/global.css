@@ -2098,3 +2098,423 @@ main {
     animation: none;
   }
 }
+
+/* =====================================================================
+   2026-09-30 kväll: snäpp även på undersidorna – varje sektion en skärm.
+   ===================================================================== */
+.sub-hero,
+.sub-section,
+.sub-cta {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding-top: calc(var(--nav-h) + 2rem);
+  padding-bottom: 3rem;
+}
+.sub-hero.sub-hero-split {
+  display: grid;
+  align-content: center;
+}
+.sub-section + .sub-section,
+.sub-section + .sub-cta {
+  border-top: 0;
+}
+/* Tidslinjen: inte klistrad längre, allt syns på en skärm. */
+.morning-side {
+  position: static;
+}
+.morning-step {
+  padding: 1.1rem 0;
+}
+
+/* ---------- Språkrubriken på en rad, bredare textkolumn ---------- */
+@media (min-width: 760px) {
+  .lang-split {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+}
+.lang-split .split-text {
+  max-width: none;
+}
+@media (min-width: 760px) {
+  .lang-split .title-xl {
+    white-space: nowrap;
+    font-size: clamp(1.9rem, 3.1vw, 3rem);
+  }
+}
+
+/* ---------- Trygghet: skölden i heron ---------- */
+.shield {
+  position: relative;
+  width: min(300px, 70vw);
+  aspect-ratio: 1;
+  justify-self: center;
+}
+.shield-ring {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--ring-a),
+    rgba(169, 188, 214, 0.08) 0deg,
+    rgba(169, 188, 214, 0.08) 140deg,
+    oklch(0.84 0.11 262) 250deg,
+    #fff 300deg,
+    rgba(169, 188, 214, 0.08) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: ring-spin 5s linear infinite;
+}
+.shield-core {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  background: radial-gradient(circle at 50% 35%, #1c2230, #0a0c10 70%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 60px rgba(169, 188, 214, 0.12),
+    0 30px 60px rgba(0, 0, 0, 0.6);
+}
+.shield-lock,
+.shield-shackle {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.in-view .shield-lock {
+  animation: draw 1.4s cubic-bezier(0.5, 0, 0.2, 1) 0.3s forwards;
+}
+.in-view .shield-shackle {
+  animation:
+    draw 0.9s cubic-bezier(0.5, 0, 0.2, 1) 1.2s forwards,
+    shackle 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) 2.2s both;
+}
+.shield-dot {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0;
+}
+.in-view .shield-dot {
+  animation: fade-in-soft 0.4s ease 2.5s forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes shackle {
+  from {
+    transform: translateY(-4px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+/* Människorna runt: prickar på en cirkel som tänds – skyddade innanför ringen. */
+.shield-people {
+  position: absolute;
+  inset: 0;
+  animation: people-turn 60s linear infinite;
+}
+.shield-people span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: var(--glow-deep);
+  box-shadow: 0 0 10px rgba(169, 188, 214, 0.6);
+  transform: rotate(var(--a)) translateY(calc(min(300px, 70vw) * -0.49));
+  opacity: 0;
+}
+.in-view .shield-people span {
+  animation: fade-in-soft 0.5s ease forwards;
+  animation-delay: calc(0.6s + var(--i) * 110ms);
+}
+@keyframes people-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shield-ring,
+  .shield-people {
+    animation: none;
+  }
+  .shield-lock,
+  .shield-shackle {
+    stroke-dashoffset: 0;
+  }
+  .shield-people span,
+  .shield-dot {
+    opacity: 1;
+  }
+}
+
+/* ---------- Mobil: allt på en skärm per sektion ---------- */
+@media (max-width: 759px) {
+  .sub-hero,
+  .sub-section,
+  .sub-cta {
+    padding-top: calc(var(--nav-h) + 1.2rem);
+    padding-bottom: 1.5rem;
+  }
+  .sub-hero.sub-hero-split {
+    gap: 1.6rem;
+  }
+  .shield {
+    width: min(200px, 52vw);
+    order: -1;
+  }
+  .shield-people span {
+    transform: rotate(var(--a)) translateY(calc(min(200px, 52vw) * -0.49));
+  }
+  .app-scene {
+    gap: 1.2rem;
+  }
+  .app-bubbles {
+    gap: 10px;
+  }
+  .app-rail {
+    display: none;
+  }
+  .morning-grid {
+    gap: 1rem;
+  }
+  .morning-step {
+    padding: 0.7rem 0;
+  }
+  .morning-step p {
+    font-size: 0.9375rem;
+  }
+  .morning-rail {
+    margin-top: 1.2rem;
+  }
+  .icon-grid {
+    margin-top: 1.6rem;
+    gap: 1.4rem 1.2rem;
+  }
+  .icon-grid svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 0.5rem;
+  }
+  .icon-grid p {
+    font-size: 0.875rem;
+  }
+  .sees-grid {
+    gap: 1.2rem;
+  }
+  .dots {
+    grid-template-columns: repeat(14, 10px);
+    gap: 7px;
+    margin-top: 1.2rem;
+  }
+  .dots span {
+    width: 10px;
+    height: 10px;
+  }
+  .dots-caption {
+    margin-top: 0.5rem;
+  }
+  .sees-lists {
+    gap: 1.1rem;
+  }
+  .check-list li,
+  .cross-list li {
+    padding: 0.28rem 0 0.28rem 1.7rem;
+    font-size: 0.9375rem;
+  }
+  .check-list li::before,
+  .cross-list li::before {
+    top: 0.28rem;
+  }
+  .quiet-grid-4 {
+    margin-top: 1.6rem;
+    gap: 1.2rem;
+  }
+  .price-page .tiers li {
+    padding: 0.55rem 0;
+  }
+  #fragor .faq summary {
+    min-height: 52px;
+  }
+}
+
+.tiers-caption {
+  margin-top: 1.6rem;
+  color: var(--ink-3);
+  font-size: 0.875rem;
+}
+.price-single .tiers {
+  margin-top: 0.4rem;
+}
+/* Avslutet på desktop: mindre klot så sektionen ryms på en skärm. */
+.closing {
+  --orb-size: min(360px, 26vw, 34vh);
+}
+
+/* ---------- Mobil: varje snäppsektion ryms på en skärm (även med Safaris fält framme) ---------- */
+@media (max-width: 759px) {
+  .section {
+    padding: calc(var(--nav-h) + 0.6rem) var(--gutter) 1rem;
+  }
+  .split {
+    gap: 0.9rem;
+  }
+  .title-xl {
+    font-size: 1.85rem;
+  }
+  .lead {
+    font-size: 0.975rem;
+  }
+  .stack > .title-xl + .lead {
+    margin-top: 0.7rem;
+  }
+  /* Språket */
+  .stage-language {
+    --orb-size: min(34vw, 17svh);
+    min-height: calc(var(--orb-size) + 104px);
+  }
+  .lang-chip {
+    width: 36px;
+    height: 36px;
+    font-size: 11px;
+  }
+  .caption-language .caption-title {
+    font-size: 15px;
+  }
+  .caption-language .caption-topic {
+    margin-bottom: 3px;
+  }
+  /* Telefonerna */
+  .phone {
+    width: min(34vw, 22svh);
+    border-radius: 26px;
+    box-shadow:
+      inset 0 0 0 4px #000,
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 24px 50px rgba(0, 0, 0, 0.7);
+  }
+  .phone-stage {
+    padding: 0;
+  }
+  .deep-points {
+    margin-top: 0.8rem;
+  }
+  .deep-points li {
+    padding: 0.2rem 0;
+  }
+  .deep-points span {
+    display: none;
+  }
+  .deep-points strong {
+    font-size: 0.9375rem;
+  }
+  .mini-flow {
+    margin-top: 0.9rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+  .mini-flow li span {
+    padding: 0.3rem 0.55rem;
+  }
+  .mini-flow li + li::before {
+    width: 8px;
+  }
+  .inside-points {
+    margin-top: 0.5rem;
+  }
+  .phone-stage .b-in-1 {
+    top: 4%;
+    font-size: 12px;
+    max-width: 44vw;
+  }
+  .phone-stage .b-in-2 {
+    top: 70%;
+    font-size: 12px;
+  }
+  /* Quiz */
+  .stage-quiz {
+    --orb-size: min(40vw, 20svh);
+    min-height: calc(var(--orb-size) + 80px);
+  }
+  .pills-quiz {
+    top: calc(50% + var(--orb-size) / 2 + 14px);
+  }
+  /* Ledare */
+  .stats {
+    margin-top: 1rem;
+  }
+  .stat-value {
+    font-size: 1.4rem;
+  }
+  .stage-admin .screen {
+    max-width: 100%;
+  }
+  .screen-admin {
+    max-height: 26svh;
+    transform: none;
+  }
+  .screen-admin img {
+    object-fit: cover;
+    object-position: top left;
+  }
+  /* Tekniken */
+  .morning-side .lead {
+    display: none;
+  }
+  .morning-step {
+    padding: 0.45rem 0;
+  }
+  .morning-step h3 {
+    font-size: 1.125rem;
+  }
+  .morning-step p {
+    margin-top: 0.15rem;
+    font-size: 0.875rem;
+  }
+  /* Pris */
+  .price-page .lead {
+    font-size: 0.9375rem;
+  }
+  .price-notes {
+    margin-top: 0.8rem;
+    font-size: 0.875rem;
+  }
+  .price-single .actions {
+    margin-top: 1.2rem;
+  }
+}
+
+@media (max-width: 759px) {
+  #inside .phone {
+    width: min(30vw, 19svh);
+  }
+  #inside .mini-flow li + li::before {
+    display: none;
+  }
+  #inside .mini-flow {
+    margin-top: 0.7rem;
+  }
+  #inside.section {
+    padding-bottom: 0.6rem;
+  }
+}

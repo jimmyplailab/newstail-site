@@ -12,14 +12,13 @@ const { copy: c } = Astro.props;
   <div class="price-single stack">
     <h1 class="title-xl">{c.pricing.title}</h1>
     <p class="lead">{c.pricing.lead}</p>
+    <p class="tiers-caption">{c.pricing.tiers[0]!.unit}</p>
     <ul class="tiers">
       {
         c.pricing.tiers.map((t) => (
           <li>
             <span>{t.range}</span>
-            <span class="amount">
-              {t.amount} <small>{t.unit}</small>
-            </span>
+            <span class="amount">{t.amount}</span>
           </li>
         ))
       }
@@ -33,7 +32,7 @@ const { copy: c } = Astro.props;
   </div>
 </section>
 
-<section class="section section-auto" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+<section class="section" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
   <div class="faq-wrap">
     <h2 class="title-xl">{c.faq.title}</h2>
     <div class="faq">
