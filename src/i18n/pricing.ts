@@ -1,5 +1,5 @@
 /**
- * Prissidan i SaaS-struktur (Joel 2026-09-30): månad/år-växlare, tre planer, räknare,
+ * Prissidan i SaaS-struktur (Joel 2026-09-30): månad/år-växlare, EN plan, räknare,
  * vad som ingår, vanliga frågor. Priset är affärsmodellen 2026-09-30 (docs/affarsmodell.md):
  * graderad trappa 149/119/89 per aktiv lyssnare, golv 10, årsbetalning = tio månader,
  * inget tak.
@@ -21,17 +21,14 @@ export type PricingCopy = {
   yearlyBadge: string;
   perUnit: string;
   perUnitYear: string;
-  plans: {
-    id: "trial" | "team" | "large";
+  /** En enda plan (Joel 2026-09-30): alla får allt, priset följer antalet lyssnare. */
+  plan: {
     name: string;
-    tagline: string;
-    price: string;
-    priceNote: string;
+    from: string;
+    ladder: string[];
     cta: string;
-    href: "start" | "mail";
-    featured?: boolean;
-    features: string[];
-  }[];
+    trial: string;
+  };
   calc: {
     title: string;
     lead: string;
@@ -60,39 +57,13 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     yearlyBadge: "2 månader gratis",
     perUnit: "per aktiv lyssnare och månad",
     perUnitYear: "per aktiv lyssnare och månad, betalt årsvis",
-    plans: [
-      {
-        id: "trial",
-        name: "Prova",
-        tagline: "Hela företaget, fullt ut.",
-        price: "0 kr",
-        priceNote: "i 14 dagar",
-        cta: "Kom igång",
-        href: "start",
-        features: ["Alla funktioner", "Alla medarbetare", "Inget kort, ingen bindning"],
-      },
-      {
-        id: "team",
-        name: "Företag",
-        tagline: "För de flesta företag.",
-        price: "149",
-        priceNote: "",
-        cta: "Kom igång – 14 dagar gratis",
-        href: "start",
-        featured: true,
-        features: ["{p0} för de första 25", "{p1} för lyssnare 26–100", "{p2} från lyssnare 101", "Ingen bindningstid"],
-      },
-      {
-        id: "large",
-        name: "Större organisation",
-        tagline: "Hundratals medarbetare, flera bolag.",
-        price: "Offert",
-        priceNote: "",
-        cta: "Kontakta oss",
-        href: "mail",
-        features: ["Samma trappa, samma funktioner", "Hjälp med uppstart och team", "Avtal efter era behov"],
-      },
-    ],
+    plan: {
+      name: "Newstail",
+      from: "från",
+      ladder: ["{p0} för de första 25", "{p1} för lyssnare 26–100", "{p2} från lyssnare 101"],
+      cta: "Kom igång – 14 dagar gratis",
+      trial: "Hela företaget gratis i 14 dagar. Inget kort, ingen bindning.",
+    },
     calc: {
       title: "Räkna på ert företag.",
       lead: "Dra till så många ni tror lyssnar varje månad.",
@@ -125,6 +96,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
         { q: "Vad händer efter provperioden?", a: "Ni lägger in kort eller fakturauppgifter. Därefter betalar ni i efterskott för förra månadens aktiva lyssnare." },
         { q: "Hur fungerar årsbetalning?", a: "Ni betalar tio månader för tolv, i förskott, utifrån en uppskattad siffra som vi stämmer av." },
         { q: "Kan vi säga upp när vi vill?", a: "Ja. Det finns ingen bindningstid." },
+        { q: "Vi är många, eller flera bolag?", a: "Samma pris och samma tjänst. Mejla hello@newstail.io så hjälper vi er i gång." },
         { q: "Behöver IT göra något?", a: "Nej. Ni registrerar er med er mejldomän, och kollegor med samma domän kan gå med direkt." },
       ],
     },
@@ -138,39 +110,13 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     yearlyBadge: "2 months free",
     perUnit: "per active listener per month",
     perUnitYear: "per active listener per month, paid yearly",
-    plans: [
-      {
-        id: "trial",
-        name: "Try",
-        tagline: "The whole company, fully.",
-        price: "SEK 0",
-        priceNote: "for 14 days",
-        cta: "Get started",
-        href: "start",
-        features: ["Every feature", "Every employee", "No card, no lock-in"],
-      },
-      {
-        id: "team",
-        name: "Company",
-        tagline: "For most companies.",
-        price: "149",
-        priceNote: "",
-        cta: "Get started – 14 days free",
-        href: "start",
-        featured: true,
-        features: ["{p0} for the first 25", "{p1} for listeners 26–100", "{p2} from listener 101", "No lock-in"],
-      },
-      {
-        id: "large",
-        name: "Large organisation",
-        tagline: "Hundreds of employees, several companies.",
-        price: "Quote",
-        priceNote: "",
-        cta: "Contact us",
-        href: "mail",
-        features: ["Same ladder, same features", "Help with setup and teams", "An agreement that fits you"],
-      },
-    ],
+    plan: {
+      name: "Newstail",
+      from: "from",
+      ladder: ["{p0} for the first 25", "{p1} for listeners 26–100", "{p2} from listener 101"],
+      cta: "Get started – 14 days free",
+      trial: "The whole company free for 14 days. No card, no lock-in.",
+    },
     calc: {
       title: "Run the numbers.",
       lead: "Drag to how many you think listen each month.",
@@ -203,6 +149,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
         { q: "What happens after the trial?", a: "You add a card or invoice details. After that you pay in arrears for last month's active listeners." },
         { q: "How does yearly billing work?", a: "You pay ten months for twelve, in advance, based on an estimated number that we reconcile." },
         { q: "Can we cancel whenever we want?", a: "Yes. There is no lock-in." },
+        { q: "We're large, or several companies?", a: "Same price, same service. Email hello@newstail.io and we'll help you get started." },
         { q: "Does IT need to do anything?", a: "No. You register with your email domain, and colleagues on the same domain can join right away." },
       ],
     },

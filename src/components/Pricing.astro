@@ -1,7 +1,7 @@
 ---
 /**
  * Prissidan i SaaS-struktur (Joel 2026-09-30, "strukturen, inte visuellt"):
- * 1) rubrik + månad/år + tre planer, 2) räknare, 3) allt ingår, 4) frågor + sidfot.
+ * 1) rubrik + månad/år + en plan, 2) räknare, 3) allt ingår, 4) frågor + sidfot.
  * Siffrorna kommer från src/i18n/pricing.ts (samma trappa som appens billing_settings).
  */
 import type { Copy } from "../i18n/types";
@@ -14,7 +14,6 @@ interface Props {
 const { copy: c } = Astro.props;
 const p = pricing[c.lang as "sv" | "en"];
 const sv = c.lang === "sv";
-const MAIL = "mailto:hello@newstail.io";
 const year = (n: number) => n * YEAR_FACTOR;
 /** Ett pris som växlar med månad/år. */
 const px = (n: number) =>
@@ -25,57 +24,35 @@ const first = TIERS[0]!.price;
 ---
 
 <section class="section price-hero" id="pris" data-space data-hue="150" data-watch>
-  <div class="price-head">
-    <h1 class="title-xl">{p.title}</h1>
-    <p class="lead">{p.lead}</p>
-    <div class="billing-toggle" role="group" aria-label={sv ? "Betalningsperiod" : "Billing period"}>
-      <button type="button" data-billing="m" aria-pressed="true">{p.monthly}</button>
-      <button type="button" data-billing="y" aria-pressed="false">{p.yearly}<span class="billing-badge">{p.yearlyBadge}</span></button>
+  <div class="price-top">
+    <div class="price-head">
+      <h1 class="title-xl">{p.title}</h1>
+      <p class="lead">{p.lead}</p>
+      <div class="billing-toggle" role="group" aria-label={sv ? "Betalningsperiod" : "Billing period"}>
+        <button type="button" data-billing="m" aria-pressed="true">{p.monthly}</button>
+        <button type="button" data-billing="y" aria-pressed="false">{p.yearly}<span class="billing-badge">{p.yearlyBadge}</span></button>
+      </div>
     </div>
-  </div>
 
-  <div class="plans" data-plans>
-    {
-      p.plans.map((plan) => (
-        <article class={`plan${plan.featured ? " plan-featured" : ""}`} data-plan={plan.id}>
-          <h2 class="plan-name">{plan.name}</h2>
-          <p class="plan-tagline">{plan.tagline}</p>
-          <p class="plan-price">
-            {plan.id === "team" ? (
-              <>
-                <span class="plan-from">{sv ? "från" : "from"}</span>
-                {!sv && <span class="plan-cur">SEK</span>}
-                <span class="plan-amount px" data-m={String(first)} data-y={String(Math.round(year(first)))}>{first}</span>
-                {sv && <span class="plan-cur">kr</span>}
-              </>
-            ) : (
-              <span class="plan-amount">{plan.price}</span>
-            )}
-          </p>
-          <p class="plan-unit">
-            {plan.id === "team" ? (
-              <>
-                <span data-show="m">{p.perUnit}</span>
-                <span data-show="y" hidden>{p.perUnitYear}</span>
-              </>
-            ) : (
-              plan.priceNote || " "
-            )}
-          </p>
-          <a
-            class={`pill pill-lg ${plan.featured ? "pill-primary" : "pill-secondary"}`}
-            href={plan.href === "start" ? START_URL : `${MAIL}?subject=${encodeURIComponent("Newstail")}`}
-          >
-            {plan.cta}
-          </a>
-          <ul class="plan-features">
-            {plan.features.map((f) => <li set:html={feature(f)} />)}
-          </ul>
-        </article>
-      ))
-    }
+    <article class="plan">
+      <h2 class="plan-name">{p.plan.name}</h2>
+      <p class="plan-price">
+        <span class="plan-from">{p.plan.from}</span>
+        {!sv && <span class="plan-cur">SEK</span>}
+        <span class="plan-amount px" data-m={String(first)} data-y={String(Math.round(year(first)))}>{first}</span>
+        {sv && <span class="plan-cur">kr</span>}
+      </p>
+      <p class="plan-unit">
+        <span data-show="m">{p.perUnit}</span>
+        <span data-show="y" hidden>{p.perUnitYear}</span>
+      </p>
+      <ul class="plan-features">
+        {p.plan.ladder.map((f) => <li set:html={feature(f)} />)}
+      </ul>
+      <a class="pill pill-lg pill-primary" href={START_URL}>{p.plan.cta}</a>
+      <p class="plan-trial">{p.plan.trial} {p.vatNote}</p>
+    </article>
   </div>
-  <p class="vat-note">{p.vatNote}</p>
 </section>
 
 <section class="section price-calc" id="rakna" data-space data-hue="170" data-watch>
@@ -112,7 +89,7 @@ const first = TIERS[0]!.price;
       {p.included.items.map((x, i) => <li class="reveal" style={`--i: ${i}`}>{x}</li>)}
     </ul>
     <div class="actions">
-      <a class="pill pill-primary pill-lg" href={START_URL}>{p.plans[1]!.cta}</a>
+      <a class="pill pill-primary pill-lg" href={START_URL}>{p.plan.cta}</a>
     </div>
   </div>
 </section>
@@ -220,10 +197,4 @@ const first = TIERS[0]!.price;
   range?.addEventListener("input", renderCalc);
   renderCalc();
 
-  // Mobil: planerna är en sidledes karusell – börja på den utvalda planen.
-  const plans = document.querySelector<HTMLElement>("[data-plans]");
-  const featured = plans?.querySelector<HTMLElement>(".plan-featured");
-  if (plans && featured && plans.scrollWidth > plans.clientWidth + 4) {
-    plans.scrollLeft = featured.offsetLeft - (plans.clientWidth - featured.offsetWidth) / 2;
-  }
 </script>
