@@ -7,19 +7,23 @@ interface Props {
 }
 const { copy: c } = Astro.props;
 const words = (s: string) => s.split(" ");
+// Riktiga skärmdumpar (public/screens/): slås på när filen finns.
+const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 ---
 
 <!-- 1. Hero -->
 <section class="section section-full hero" data-space data-hue="262" data-watch>
   <div class="split">
     <div class="split-text stack">
-      <p class="eyebrow">{c.hero.eyebrow}</p>
       <h1 class="title-hero">{c.hero.title}</h1>
       <p class="lead">{c.hero.lead}</p>
       <div class="actions">
         <a class="pill pill-primary pill-lg" href={START_URL}>{c.hero.cta}</a>
-        <a class="pill pill-secondary pill-lg" href="#sandningen">{c.hero.listen}</a>
+        <button class="pill pill-secondary pill-lg play-sample" type="button" data-src={`/audio/sample-${c.lang}.mp3`} data-label={c.hero.listen} data-playing={c.hero.listening} aria-pressed="false">
+          <span class="play-icon" aria-hidden="true"></span><span class="play-label">{c.hero.listen}</span>
+        </button>
       </div>
+      <p class="subtle sample-note">{c.hero.sampleNote}</p>
     </div>
     <div class="split-stage stage-hero">
       <div class="orb-anchor orb-anchor-hero" data-orb-anchor></div>
@@ -52,7 +56,6 @@ const words = (s: string) => s.split(" ");
 <section class="section section-full" id="produkt" data-space data-hue="230" data-watch>
   <div style="width:100%">
     <div class="stack" style="max-width: 34rem">
-      <p class="eyebrow">{c.steps.eyebrow}</p>
       <h2 class="title-xl">{c.steps.title}</h2>
     </div>
     <div class="steps">
@@ -74,7 +77,6 @@ const words = (s: string) => s.split(" ");
 <section class="section section-full" id="sandningen" data-space data-hue="200" data-watch>
   <div class="split">
     <div class="split-text stack">
-      <p class="eyebrow">{c.broadcast.eyebrow}</p>
       <h2 class="title-xl">{c.broadcast.title}</h2>
       <p class="lead">{c.broadcast.lead}</p>
     </div>
@@ -101,7 +103,6 @@ const words = (s: string) => s.split(" ");
 <section class="section section-full" id="inside" data-space data-hue="72" data-watch>
   <div class="split orb-left">
     <div class="split-text stack">
-      <p class="eyebrow">{c.inside.eyebrow}</p>
       <h2 class="title-xl">{c.inside.title}</h2>
       <p class="lead">{c.inside.lead}</p>
     </div>
@@ -119,7 +120,6 @@ const words = (s: string) => s.split(" ");
 <section class="section section-full" id="quiz" data-space data-hue="300" data-watch>
   <div class="split">
     <div class="split-text stack">
-      <p class="eyebrow">{c.quiz.eyebrow}</p>
       <h2 class="title-xl">{c.quiz.title}</h2>
       <p class="lead">{c.quiz.lead}</p>
     </div>
@@ -137,7 +137,6 @@ const words = (s: string) => s.split(" ");
 <section class="section section-full" id="ledare" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
   <div class="split">
     <div class="split-text stack">
-      <p class="eyebrow">{c.leaders.eyebrow}</p>
       <h2 class="title-xl">{c.leaders.title}</h2>
       <p class="lead">{c.leaders.lead}</p>
       <div class="stats">
@@ -152,11 +151,13 @@ const words = (s: string) => s.split(" ");
       </div>
       <p class="subtle" style="font-size: 0.8125rem">{c.leaders.statsNote}</p>
     </div>
-    <div class="split-stage stage-admin reveal" style="--i: 2">
-      <div class="screen screen-admin">
-        <img src="/screens/admin-overview.png" alt="" width="1200" height="800" loading="lazy" />
+    {SCREENS.admin && (
+      <div class="split-stage stage-admin reveal" style="--i: 2">
+        <div class="screen screen-admin">
+          <img src="/screens/admin-overview.png" alt="" width="1200" height="800" loading="lazy" />
+        </div>
       </div>
-    </div>
+    )}
   </div>
 </section>
 
@@ -164,7 +165,6 @@ const words = (s: string) => s.split(" ");
 <section class="section" id="pris" data-space data-hue="150" data-orb="0.86,0.5,0.09,0.9" data-orb-m="0.5,0.1,0.06,0.7" data-watch>
   <div class="price-grid">
     <div class="stack">
-      <p class="eyebrow">{c.pricing.eyebrow}</p>
       <h2 class="title-xl">{c.pricing.title}</h2>
       <p class="lead">{c.pricing.lead}</p>
       <ul class="tiers">
@@ -187,7 +187,7 @@ const words = (s: string) => s.split(" ");
       </div>
     </div>
     <div class="stack caps">
-      <p class="eyebrow">{c.pricing.caps.title}</p>
+      <h3 class="title-lg">{c.pricing.caps.title}</h3>
       <ul class="tiers">
         {
           c.pricing.caps.rows.map((r) => (
@@ -208,7 +208,6 @@ const words = (s: string) => s.split(" ");
 <section class="section" id="trygghet" data-space data-hue="200" data-orb="0.9,0.3,0.07,0.85" data-orb-m="0.86,0.12,0.06,0.7" data-watch>
   <div class="split">
     <div class="split-text stack">
-      <p class="eyebrow">{c.trust.eyebrow}</p>
       <h2 class="title-xl">{c.trust.title}</h2>
     </div>
     <ul class="plain-list">
@@ -228,7 +227,6 @@ const words = (s: string) => s.split(" ");
 <!-- 10. Frågor -->
 <section class="section" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
   <div class="stack" style="max-width: 34rem">
-    <p class="eyebrow">{c.faq.eyebrow}</p>
     <h2 class="title-xl">{c.faq.title}</h2>
   </div>
   <div class="faq" style="margin-top: 2rem">
@@ -255,6 +253,68 @@ const words = (s: string) => s.split(" ");
     <p class="subtle">{c.closing.alt}</p>
   </div>
 </section>
+
+<script>
+  // "Så låter det": spelar ljudprovet och skickar röstens styrka till klotet (window.__voiceAmp).
+  const btn = document.querySelector<HTMLButtonElement>(".play-sample");
+  if (btn) {
+    let audio: HTMLAudioElement | null = null;
+    let ctx: AudioContext | null = null;
+    let analyser: AnalyserNode | null = null;
+    let raf = 0;
+    const w = window as unknown as { __voiceAmp: number };
+    const label = btn.querySelector(".play-label")!;
+    const setPlaying = (on: boolean) => {
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.classList.toggle("is-playing", on);
+      label.textContent = on ? btn.dataset.playing! : btn.dataset.label!;
+      if (!on) {
+        cancelAnimationFrame(raf);
+        w.__voiceAmp = 0;
+      }
+    };
+    const tick = () => {
+      if (!analyser) return;
+      const buf = new Uint8Array(analyser.fftSize);
+      analyser.getByteTimeDomainData(buf);
+      let sum = 0;
+      for (let i = 0; i < buf.length; i++) {
+        const v = (buf[i]! - 128) / 128;
+        sum += v * v;
+      }
+      w.__voiceAmp = Math.min(1, Math.sqrt(sum / buf.length) * 4);
+      raf = requestAnimationFrame(tick);
+    };
+    btn.addEventListener("click", async () => {
+      if (!audio) {
+        audio = new Audio(btn.dataset.src!);
+        audio.preload = "auto";
+        audio.addEventListener("ended", () => setPlaying(false));
+        audio.addEventListener("pause", () => setPlaying(false));
+        audio.addEventListener("play", () => setPlaying(true));
+      }
+      if (!audio.paused) {
+        audio.pause();
+        return;
+      }
+      try {
+        if (!ctx) {
+          ctx = new AudioContext();
+          const src = ctx.createMediaElementSource(audio);
+          analyser = ctx.createAnalyser();
+          analyser.fftSize = 512;
+          src.connect(analyser);
+          analyser.connect(ctx.destination);
+        }
+        await ctx.resume();
+      } catch {
+        analyser = null;
+      }
+      await audio.play();
+      if (analyser) tick();
+    });
+  }
+</script>
 
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",

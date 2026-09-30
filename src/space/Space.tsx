@@ -170,6 +170,7 @@ export default function Space() {
     let scrollVel = 0;
     let turn = 0;
     let orbTilt = 0;
+    let voice = 0;
     const t0 = performance.now();
     let lastT = t0;
     const ARRIVE = reduced ? 400 : 1500;
@@ -229,7 +230,7 @@ export default function Space() {
       const dsy = sy - lastScroll;
       lastScroll = sy;
       scrollVel = approach(scrollVel, dt > 0 ? dsy / dt : 0, 0.2, f);
-      if (!reduced) turn += dsy * 0.0022;
+      if (!reduced) turn += dsy * 0.0022 + voice * 0.02 * f;
 
       pointer.x = approach(pointer.x, pointer.tx, 0.06, f);
       pointer.y = approach(pointer.y, pointer.ty, 0.06, f);
@@ -249,6 +250,9 @@ export default function Space() {
       tone = mixTone(tone, target, 1 - Math.pow(1 - 0.08, f));
       accent = mixTone(accent, accentFor(cur.hue), 1 - Math.pow(1 - 0.08, f));
       energy = approach(energy, 0, 0.045, f);
+      // Rösten ur ljudprovet (Home.astro sätter window.__voiceAmp): nebulosan lyser, som i appen.
+      const amp = (window as unknown as { __voiceAmp?: number }).__voiceAmp ?? 0;
+      voice = approach(voice, amp, 0.35, f);
       orbTilt = approach(orbTilt, pointer.y * 0.35 + tilt.y * 0.3, 0.05, f);
 
       // Ankomsten ur rymden.
@@ -293,7 +297,7 @@ export default function Space() {
             x,
             y,
             R,
-            pulse: 1 + energy * 0.1,
+            pulse: 1 + Math.max(energy, voice) * 0.1,
             edge: [],
             phi: 0,
             a: tone,

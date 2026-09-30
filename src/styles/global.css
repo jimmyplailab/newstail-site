@@ -993,3 +993,28 @@ main {
     padding-bottom: calc(var(--orb-size) + 60px);
   }
 }
+
+/* ---------- ljudprovet ---------- */
+.play-icon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 10px;
+  border-color: transparent transparent transparent currentColor;
+  margin-right: 2px;
+}
+.play-sample.is-playing .play-icon {
+  width: 10px;
+  height: 12px;
+  border: 0;
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+}
+.play-sample.is-playing {
+  border-color: rgba(236, 239, 244, 0.4);
+}
+.sample-note {
+  margin-top: 0.7rem;
+  font-size: 0.8125rem;
+}
