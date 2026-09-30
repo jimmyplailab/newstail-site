@@ -8,3 +8,5 @@ Hemsidan för Newstail (newstail.io). Astro + React-öar. Rymden (stjärnorna oc
 - Sektionernas klot-lägen: `data-space`, `data-hue`, ankare `[data-orb-anchor]` (se `src/space/Space.tsx`).
 - Skärmbilder: `node scripts/shots.mjs http://localhost:4321/` (Playwright).
 - Deploy: Vercel (ny.newstail.io tills bytet till newstail.io).
+
+Repot är publikt (Vercels gratisplan bygger bara publika repon utan medlemskontroll).
