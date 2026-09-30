@@ -15,7 +15,6 @@ export const sv: Copy = {
     login: "Logga in",
     start: "Kom igång",
     switch: "EN",
-    switchHref: "/en/",
   },
   hero: {
     title: "Hela företaget påläst. Innan kaffet.",
@@ -75,8 +74,11 @@ export const sv: Copy = {
     statsNote: "Exempel från en demo-organisation.",
   },
   pricing: {
-    title: "Ni betalar för dem som lyssnar. Inte för licenser.",
-    lead: "Aktiv lyssnare = minst tre sändningar i månaden. Minst tio lyssnare.",
+    metaTitle: "Pris – Newstail. Betala bara för dem som lyssnar.",
+    metaDescription:
+      "149 kr per aktiv lyssnare och månad, lägre ju fler ni blir. Aldrig mer än ett tak. 14 dagar gratis, ingen bindning.",
+    title: "Betala för dem som lyssnar.",
+    lead: "Aktiv lyssnare = minst tre sändningar i månaden. Minst tio lyssnare. Publicera är gratis.",
     tiers: [
       { range: "1–25 aktiva lyssnare", amount: "149 kr", unit: "per lyssnare och månad" },
       { range: "26–100", amount: "119 kr", unit: "per lyssnare och månad" },
@@ -91,8 +93,8 @@ export const sv: Copy = {
       ],
     },
     notes: [
-      "Publicera är gratis. 14 dagar gratis för hela företaget.",
-      "Ingen bindning. Faktura i efterskott. Årsbetalning = tio månader.",
+      "14 dagar gratis för hela företaget. Ingen bindning.",
+      "Faktura i efterskott. Årsbetalning = tio månader.",
     ],
     cta: "Kom igång – 14 dagar gratis",
   },
@@ -106,19 +108,15 @@ export const sv: Copy = {
     ],
   },
   faq: {
-    title: "Det folk brukar undra.",
+    title: "Vanliga frågor.",
     items: [
       {
         q: "Vilka nyheter hör man?",
         a: "Det som rör er bransch och marknad, era kunder och konkurrenter, plus det varje medarbetare själv valt att följa. Interna budskap går alltid först.",
       },
       {
-        q: "Vilka språk?",
-        a: "Svenska, engelska, tyska och spanska. Rösten följer språket.",
-      },
-      {
-        q: "Hur lång är sändningen?",
-        a: "Man väljer själv, tre till tio minuter. De flesta landar runt fem.",
+        q: "Vad räknas som aktiv lyssnare?",
+        a: "Den som har hört minst tre sändningar under månaden. Den som inte lyssnar kostar inget.",
       },
       {
         q: "Behöver IT göra något?",
@@ -129,19 +127,20 @@ export const sv: Copy = {
         a: "Nej. Företaget ser aggregerade mönster. Din egen kunskapsprofil delar du bara om du själv väljer det.",
       },
       {
-        q: "Fungerar det i bilen?",
-        a: "Ja. Sändningen styrs från låsskärmen och hörlurarna som en podd. CarPlay är på väg.",
+        q: "Vilka språk?",
+        a: "Svenska, engelska, tyska och spanska. Rösten följer språket.",
       },
       {
         q: "Var finns appen?",
-        a: "iPhone i dag. Android och webb är på väg. Admin körs i webbläsaren.",
+        a: "iPhone i dag, Android och webb är på väg. Sändningen styrs från låsskärmen och i bilen som en podd.",
       },
     ],
   },
   closing: {
     title: "Börja i morgon bitti.",
-    lead: "14 dagar gratis för hela företaget. Ingen bindning, inget kort.",
+    lead: "Från 149 kr per aktiv lyssnare och månad. 14 dagar gratis, ingen bindning.",
     cta: "Kom igång",
+    priceLink: "Priser och vanliga frågor",
     alt: "eller mejla hello@newstail.io",
   },
   footer: {

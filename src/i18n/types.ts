@@ -9,7 +9,6 @@ export type Copy = {
     login: string;
     start: string;
     switch: string;
-    switchHref: string;
   };
   hero: {
     title: string;
@@ -38,6 +37,8 @@ export type Copy = {
     statsNote: string;
   };
   pricing: {
+    metaTitle: string;
+    metaDescription: string;
     title: string;
     lead: string;
     tiers: { range: string; amount: string; unit: string }[];
@@ -47,7 +48,7 @@ export type Copy = {
   };
   trust: { title: string; items: { title: string; text: string }[] };
   faq: { title: string; items: { q: string; a: string }[] };
-  closing: { title: string; lead: string; cta: string; alt: string };
+  closing: { title: string; lead: string; cta: string; priceLink: string; alt: string };
   footer: { line: string; privacy: string; contact: string };
 };
 

@@ -180,9 +180,11 @@ export default function Space() {
     const targetNow = (): Target => {
       if (!sections.length) return { hue: 262, x: 0.5, y: 0.55, r: 0.3, alpha: 1 };
       const cy = H / 2;
-      // Nyckelpunkten per sektion: ankarets mitt om det finns, annars sektionens.
+      // Övergången mellan två sektioner räknas på sektionernas mitt (inte ankarens), så klotet
+      // står exakt på sitt ankare när sektionen fyller skärmen – även i mobilen där ankaret
+      // ligger högt i sektionen.
       const centers = sections.map((s) => {
-        const b = (s.anchor ?? s.el).getBoundingClientRect();
+        const b = s.el.getBoundingClientRect();
         return b.top + b.height / 2;
       });
       // Sektionen närmast mitten och vägen till nästa.

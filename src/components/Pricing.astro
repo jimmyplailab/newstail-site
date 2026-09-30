@@ -1,0 +1,75 @@
+---
+import type { Copy } from "../i18n/types";
+import { START_URL } from "../i18n/types";
+
+interface Props {
+  copy: Copy;
+}
+const { copy: c } = Astro.props;
+---
+
+<section class="section price-page" id="pris" data-space data-hue="150" data-orb="0.84,0.76,0.07,0.9" data-orb-m="0.5,0.5,0.1,0" data-watch>
+  <div class="price-grid">
+    <div class="stack">
+      <h1 class="title-xl">{c.pricing.title}</h1>
+      <p class="lead">{c.pricing.lead}</p>
+      <ul class="tiers">
+        {
+          c.pricing.tiers.map((t) => (
+            <li>
+              <span>{t.range}</span>
+              <span class="amount">
+                {t.amount} <small>{t.unit}</small>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="actions">
+        <a class="pill pill-primary pill-lg" href={START_URL}>{c.pricing.cta}</a>
+      </div>
+    </div>
+    <div class="stack caps">
+      <h2 class="title-lg">{c.pricing.caps.title}</h2>
+      <ul class="tiers tiers-caps">
+        {
+          c.pricing.caps.rows.map((r) => (
+            <li>
+              <span class="muted">{r.size}</span>
+              <span class="amount">{r.amount}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="price-notes">
+        {c.pricing.notes.map((n) => <p>{n}</p>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-auto" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+  <div class="faq-wrap">
+    <h2 class="title-xl">{c.faq.title}</h2>
+    <div class="faq">
+      {
+        c.faq.items.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+})} />

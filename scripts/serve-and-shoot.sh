@@ -5,7 +5,8 @@ python3 -m http.server 4321 --directory dist >/tmp/serve.log 2>&1 &
 P=$!
 sleep 1.5
 rm -rf shots
-CHROME=/opt/pw-browsers/chromium node scripts/shots.mjs http://localhost:4321/ shots 2>&1 | tail -2
+CHROME=/opt/pw-browsers/chromium node scripts/shots.mjs http://localhost:4321/ shots 2>&1 | tail -3
+CHROME=/opt/pw-browsers/chromium node scripts/shots.mjs http://localhost:4321/pris/ shots/pris 2>&1 | tail -3
 kill $P
 cd shots && python3 - <<'PY'
 from PIL import Image

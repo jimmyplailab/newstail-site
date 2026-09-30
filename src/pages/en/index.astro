@@ -1,9 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Home from "../../components/Home.astro";
-import { en } from "../../i18n/en";
+import { en as copy } from "../../i18n/en";
 ---
 
-<Base copy={en} path="/en/">
-  <Home copy={en} />
+<Base copy={copy} path="/en/" altPath="/" title={copy.meta.title} description={copy.meta.description} snap>
+  <Home copy={copy} />
 </Base>

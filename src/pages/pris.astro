@@ -1,0 +1,9 @@
+---
+import Base from "../layouts/Base.astro";
+import Pricing from "../components/Pricing.astro";
+import { sv as copy } from "../i18n/sv";
+---
+
+<Base copy={copy} path="/pris/" altPath="/en/pricing/" title={copy.pricing.metaTitle} description={copy.pricing.metaDescription}>
+  <Pricing copy={copy} />
+</Base>

@@ -17,8 +17,9 @@
   --radius-pill: 999px;
   --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.45);
   --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  /* Apple får systemets SF; alla andra Inter (självhostad), så sajten ser likadan ut överallt. */
   --font-sans:
-    -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, system-ui, "Segoe UI", sans-serif;
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter Variable", Inter, system-ui, sans-serif;
   --play-bg: rgba(221, 231, 242, 0.92);
   --play-ink: #0b0f17;
   --gutter: 20px;
@@ -35,7 +36,10 @@
 
 html {
   scroll-behavior: smooth;
-  /* Sektionerna snäpper: man landar alltid på en sektion, aldrig mitt emellan (Joel 2026-09-30). */
+}
+/* Startsidan snäpper: man landar alltid på en sektion, aldrig mitt emellan (Joel 2026-09-30).
+   Varje sektion där får plats på en skärm – det som är längre (pris, frågor) bor på egen sida. */
+html.snap {
   scroll-snap-type: y mandatory;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -294,6 +298,9 @@ main {
 .section > * {
   width: 100%;
 }
+.section-auto {
+  min-height: 0;
+}
 .footer {
   scroll-snap-align: end;
 }
@@ -359,19 +366,80 @@ main {
 
 /* ---------- hero ---------- */
 .hero {
-  padding-top: calc(var(--nav-h) + 2rem);
+  padding-top: calc(var(--nav-h) + 1.5rem);
+  padding-bottom: 7.5rem;
 }
 .hero .split-stage {
   min-height: calc(var(--orb-size) + 120px);
 }
+/* Värdet för bolaget, i nederkanten av heron (var en egen sektion). */
+.hero-values {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  margin: 0;
+  padding: 1.4rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+.hero-values strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+.hero-values span {
+  color: var(--ink-2);
+}
 @media (max-width: 759px) {
+  /* Mobil: klotet först, litet och ovanför rubriken – "wow" syns direkt. */
   .hero {
-    padding-top: calc(var(--nav-h) + 2rem);
-    align-items: flex-start;
+    padding-top: calc(var(--nav-h) + 0.5rem);
+    padding-bottom: 1.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .hero .split {
+    gap: 0.5rem;
   }
   .hero .split-stage {
-    order: 1;
-    min-height: calc(var(--orb-size) + 200px);
+    order: -1;
+    min-height: calc(var(--orb-size) + 28px);
+  }
+  .hero .title-hero {
+    font-size: 2.2rem;
+  }
+  .hero .lead {
+    font-size: 0.975rem;
+    margin-top: 0.9rem;
+  }
+  .hero .actions {
+    margin-top: 1.2rem;
+    gap: 0.6rem;
+  }
+  .hero .pill-lg {
+    min-height: 50px;
+  }
+  .hero-values {
+    position: static;
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+    margin-top: 1.1rem;
+    padding-top: 0.8rem;
+    font-size: 0.8125rem;
+  }
+  .hero-values span {
+    display: none;
+  }
+  .hero .b-hero-3 {
+    display: none;
   }
 }
 
@@ -886,9 +954,9 @@ main {
 }
 
 /* Bubblornas platser: räknade från scenens mitt, i klotets storlek. */
-.b-hero-1 { left: calc(50% - var(--orb-size) * 0.66); top: calc(50% - var(--orb-size) * 0.42); }
+.b-hero-1 { left: max(0px, calc(50% - var(--orb-size) * 0.5)); top: calc(50% - var(--orb-size) * 0.46); }
 .b-hero-2 { right: calc(50% - var(--orb-size) * 0.62); top: calc(50% - var(--orb-size) * 0.06); }
-.b-hero-3 { left: calc(50% - var(--orb-size) * 0.56); top: calc(50% + var(--orb-size) * 0.3); }
+.b-hero-3 { left: max(0px, calc(50% - var(--orb-size) * 0.46)); top: calc(50% + var(--orb-size) * 0.3); }
 .b-bc-1 { right: calc(50% - var(--orb-size) * 0.6); top: calc(50% - var(--orb-size) * 0.62); }
 .b-bc-2 { left: calc(50% - var(--orb-size) * 0.72); top: calc(50% - var(--orb-size) * 0.2); }
 .b-bc-3 { right: calc(50% - var(--orb-size) * 0.66); top: calc(50% + var(--orb-size) * 0.16); }
@@ -1045,5 +1113,88 @@ main {
   }
   .stage-admin {
     order: 1;
+  }
+}
+
+/* ---------- mobilhero: storlek och bubblor ---------- */
+@media (max-width: 759px) {
+  .stage-hero {
+    --orb-size: min(40vw, 19svh);
+  }
+  .hero .b-hero-1 {
+    left: 0;
+    top: 2%;
+    max-width: 44vw;
+    font-size: 12.5px;
+  }
+  .hero .b-hero-2 {
+    right: 0;
+    top: 58%;
+    max-width: 44vw;
+    font-size: 12.5px;
+  }
+}
+
+/* ---------- topplinjen i mobilen: Pris syns ---------- */
+.nav-mobile-link {
+  display: none;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 0.6rem;
+  font-size: 0.9375rem;
+  color: var(--ink-2);
+}
+.nav-links a[aria-current="page"] {
+  color: var(--ink);
+}
+@media (max-width: 759px) {
+  .nav-mobile-link {
+    display: inline-flex;
+  }
+}
+
+/* ---------- prissidan ---------- */
+.price-page {
+  padding-top: calc(var(--nav-h) + 2rem);
+}
+.price-page .tiers li {
+  padding: 0.75rem 0;
+}
+.tiers-caps .amount {
+  font-size: 1.25rem;
+}
+.caps .title-lg {
+  font-size: 1.25rem;
+}
+.faq-wrap {
+  max-width: 44rem;
+}
+.faq-wrap .faq {
+  margin-top: 1.8rem;
+}
+.stats-note {
+  font-size: 0.8125rem;
+}
+@media (max-width: 759px) {
+  .price-page .tiers li {
+    flex-wrap: wrap;
+    gap: 0.15rem 1rem;
+  }
+  .price-page .tiers .amount small {
+    display: block;
+    text-align: right;
+  }
+}
+
+@media (max-width: 759px) {
+  .closing {
+    --orb-size: min(46vw, 26svh);
+  }
+  .closing-text {
+    padding-bottom: calc(var(--orb-size) + 40px);
+  }
+  .closing .actions {
+    flex-direction: column;
+    align-items: center;
   }
 }

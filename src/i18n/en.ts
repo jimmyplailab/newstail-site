@@ -15,7 +15,6 @@ export const en: Copy = {
     login: "Log in",
     start: "Get started",
     switch: "SV",
-    switchHref: "/",
   },
   hero: {
     title: "The whole company briefed. Before coffee.",
@@ -75,8 +74,11 @@ export const en: Copy = {
     statsNote: "Example from a demo organisation.",
   },
   pricing: {
-    title: "You pay for the people who listen. Not for licences.",
-    lead: "Active listener = at least three broadcasts a month. Minimum ten listeners.",
+    metaTitle: "Pricing – Newstail. Pay only for the people who listen.",
+    metaDescription:
+      "SEK 149 per active listener per month, less the more you are. Never more than a cap. 14 days free, no lock-in.",
+    title: "Pay for the people who listen.",
+    lead: "Active listener = at least three broadcasts a month. Minimum ten listeners. Publishing is free.",
     tiers: [
       { range: "1–25 active listeners", amount: "SEK 149", unit: "per listener per month" },
       { range: "26–100", amount: "SEK 119", unit: "per listener per month" },
@@ -91,8 +93,8 @@ export const en: Copy = {
       ],
     },
     notes: [
-      "Publishing is free. 14 days free for the whole company.",
-      "No lock-in. Invoiced in arrears. Annual billing = ten months.",
+      "14 days free for the whole company. No lock-in.",
+      "Invoiced in arrears. Annual billing = ten months.",
     ],
     cta: "Get started – 14 days free",
   },
@@ -106,16 +108,15 @@ export const en: Copy = {
     ],
   },
   faq: {
-    title: "What people usually ask.",
+    title: "Common questions.",
     items: [
       {
         q: "What news do you hear?",
         a: "What moves your industry and market, your customers and competitors, plus whatever each employee chose to follow. Internal messages always come first.",
       },
-      { q: "Which languages?", a: "Swedish, English, German and Spanish. The voice follows the language." },
       {
-        q: "How long is a broadcast?",
-        a: "You choose, three to ten minutes. Most people land around five.",
+        q: "What counts as an active listener?",
+        a: "Someone who has heard at least three broadcasts in the month. People who don't listen cost nothing.",
       },
       {
         q: "Does IT need to do anything?",
@@ -125,17 +126,18 @@ export const en: Copy = {
         q: "Can my manager see what I heard?",
         a: "No. The company sees aggregated patterns. Your own knowledge profile is shared only if you choose to.",
       },
+      { q: "Which languages?", a: "Swedish, English, German and Spanish. The voice follows the language." },
       {
-        q: "Does it work in the car?",
-        a: "Yes. The broadcast is controlled from the lock screen and your headphones like a podcast. CarPlay is on the way.",
+        q: "Where's the app?",
+        a: "iPhone today, Android and web are on the way. The broadcast is controlled from the lock screen and in the car like a podcast.",
       },
-      { q: "Where's the app?", a: "iPhone today. Android and web are on the way. Admin runs in the browser." },
     ],
   },
   closing: {
     title: "Start tomorrow morning.",
-    lead: "14 days free for the whole company. No lock-in, no card.",
+    lead: "From SEK 149 per active listener per month. 14 days free, no lock-in.",
     cta: "Get started",
+    priceLink: "Pricing and common questions",
     alt: "or email hello@newstail.io",
   },
   footer: {

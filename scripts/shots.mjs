@@ -33,4 +33,6 @@ const shots = async (name, viewport) => {
 };
 await shots("desktop", { width: 1440, height: 900 });
 await shots("mobile", { width: 390, height: 844 });
+// Safari med verktygsfälten framme: den minsta höjden (svh) på en iPhone 14/15.
+await shots("short", { width: 390, height: 664 });
 await browser.close();
