@@ -89,7 +89,7 @@ function targetFor(s: Section, mobile: boolean, W: number, H: number, minSide: n
   };
 }
 
-export default function Space() {
+export default function Space({ orb: showOrb = true }: { orb?: boolean }) {
   const starsRef = useRef<HTMLCanvasElement>(null);
   const orbRef = useRef<HTMLCanvasElement>(null);
 
@@ -291,7 +291,7 @@ export default function Space() {
       stars.draw(ctx, t, tone, offset, Math.max(energy, arriveEnergy), mobile ? 1 : 1.3, flow);
 
       // Klotets gloria i 2D, sedan glaset i WebGL.
-      if (alpha > 0.005 && R > 1) {
+      if (showOrb && alpha > 0.005 && R > 1) {
         const halo = ctx.createRadialGradient(x, y, R * 0.85, x, y, R * 1.6);
         halo.addColorStop(0, rgba(tone.light, 0.1 * alpha));
         halo.addColorStop(0.5, rgba(tone.light, 0.035 * alpha));
@@ -360,7 +360,7 @@ export default function Space() {
       document.removeEventListener("visibilitychange", onVis);
       mo.disconnect();
     };
-  }, []);
+  }, [showOrb]);
 
   return (
     <div className="space" aria-hidden="true">

@@ -1,0 +1,116 @@
+---
+/** Trygghet: vad ledningen ser (prickar som aggregat), var data finns, hur länge (staplar),
+ *  och inget som lyssnar. Inget klot. */
+import type { TrustPage } from "../i18n/subpages";
+
+interface Props {
+  page: TrustPage;
+  mailLabel: string;
+}
+const { page, mailLabel } = Astro.props;
+const DOTS = 41;
+const LIT = 34;
+const maxDays = Math.max(...page.keep.rows.map((r) => r.days));
+// Samma prickmönster varje gång: vilka som lyser är utspritt, inte i ordning – ingen enskild pekas ut.
+const lit = new Set<number>();
+let seed = 7;
+while (lit.size < LIT) {
+  seed = (seed * 16807) % 2147483647;
+  lit.add(seed % DOTS);
+}
+---
+
+<section class="sub-hero" data-space data-hue="230" data-watch>
+  <div class="sub-hero-inner">
+    <h1 class="title-hero">{page.title}</h1>
+    <p class="lead">{page.lead}</p>
+  </div>
+</section>
+
+<section class="sub-section" id="ser" data-space data-hue="230" data-watch>
+  <div class="sees-grid">
+    <div class="sub-head">
+      <h2 class="title-xl">{page.sees.title}</h2>
+      <p class="lead">{page.sees.lead}</p>
+      <div class="dots" aria-hidden="true">
+        {Array.from({ length: DOTS }, (_, i) => <span class={lit.has(i) ? "on" : ""} style={`--i: ${i}`} />)}
+      </div>
+      <p class="dots-caption">34 av 41</p>
+    </div>
+    <div class="sees-lists">
+      <div>
+        <h3>{page.sees.yesLabel}</h3>
+        <ul class="check-list">
+          {page.sees.yes.map((x, i) => <li class="reveal" style={`--i: ${i}`}>{x}</li>)}
+        </ul>
+      </div>
+      <div class="sees-no">
+        <h3>{page.sees.noLabel}</h3>
+        <ul class="cross-list">
+          {page.sees.no.map((x, i) => <li class="reveal" style={`--i: ${i + 2}`}>{x}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section" id="data" data-space data-hue="200" data-watch>
+  <div class="sub-head">
+    <h2 class="title-xl">{page.where.title}</h2>
+    <p class="lead">{page.where.lead}</p>
+  </div>
+  <div class="where-table" role="table">
+    <div class="where-row where-head" role="row">
+      {page.where.cols.map((c) => <span role="columnheader">{c}</span>)}
+    </div>
+    {
+      page.where.rows.map((r, i) => (
+        <div class="where-row reveal" role="row" style={`--i: ${i}`}>
+          <span role="cell">{r.what}</span>
+          <span role="cell" class="where-who">{r.who}</span>
+          <span role="cell" class="where-where">{r.where}</span>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section class="sub-section" id="spara" data-space data-hue="150" data-watch>
+  <div class="sub-head">
+    <h2 class="title-xl">{page.keep.title}</h2>
+    <p class="lead">{page.keep.lead}</p>
+  </div>
+  <ul class="keep-bars">
+    {
+      page.keep.rows.map((r, i) => (
+        <li style={`--w: ${(r.days / maxDays).toFixed(3)}; --i: ${i}`}>
+          <span class="keep-t">{r.t}</span>
+          <span class="keep-bar"><span /></span>
+          <span class="keep-l">{r.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="sub-section" id="tyst" data-space data-hue="262" data-watch>
+  <h2 class="title-xl">{page.quiet.title}</h2>
+  <ul class="quiet-grid">
+    {
+      page.quiet.items.map((it, i) => (
+        <li class="reveal" style={`--i: ${i}`}>
+          <strong>{it.t}</strong>
+          <p>{it.d}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="sub-cta" data-space data-hue="262" data-watch>
+  <h2 class="title-xl">{page.cta.title}</h2>
+  <p class="lead">{page.cta.lead}</p>
+  <div class="actions">
+    <a class="pill pill-primary pill-lg" href="mailto:hello@newstail.io">{mailLabel}</a>
+  </div>
+</section>

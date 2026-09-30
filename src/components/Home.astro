@@ -78,6 +78,14 @@ const REST = "0.5,0.5,0.1,0";
     <div class="split-text stack">
       <h2 class="title-xl">{c.broadcast.title}</h2>
       <p class="lead">{c.broadcast.lead}</p>
+      <ul class="deep-points">
+        {c.broadcast.points.map((p, i) => (
+          <li class="reveal" style={`--i: ${i + 1}`}>
+            <strong>{p.t}</strong>
+            <span>{p.d}</span>
+          </li>
+        ))}
+      </ul>
     </div>
     <div class="split-stage phone-stage reveal" style="--i: 1">
       <div class="phone">
@@ -151,24 +159,6 @@ const REST = "0.5,0.5,0.1,0";
         <img src="/screens/admin-overview.webp" alt={c.lang === "sv" ? "Admin i Newstail: översikt över lyssnande och interna budskap" : "Newstail admin: overview of listening and internal messages"} width="1400" height="1242" loading="lazy" decoding="async" />
       </div>
     </div>
-  </div>
-</section>
-
-<!-- 7. Trygghet -->
-<section class="section" id="trygghet" data-space data-hue="200" data-orb={REST} data-watch>
-  <div class="split">
-    <div class="split-text stack">
-      <h2 class="title-xl">{c.trust.title}</h2>
-    </div>
-    <ul class="plain-list">
-      {
-        c.trust.items.map((t) => (
-          <li>
-            <strong>{t.title}</strong> {t.text}
-          </li>
-        ))
-      }
-    </ul>
   </div>
 </section>
 

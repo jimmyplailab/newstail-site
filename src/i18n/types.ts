@@ -3,8 +3,8 @@ export type Copy = {
   htmlLang: string;
   meta: { title: string; description: string };
   nav: {
-    product: string;
-    company: string;
+    tech: string;
+    trust: string;
     pricing: string;
     login: string;
     start: string;
@@ -29,6 +29,7 @@ export type Copy = {
   broadcast: {
     title: string;
     lead: string;
+    points: { t: string; d: string }[];
     bubbles: string[];
     captionTopic: string;
     captionTitle: string;

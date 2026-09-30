@@ -1,0 +1,11 @@
+---
+import Base from "../layouts/Base.astro";
+import Trust from "../components/Trust.astro";
+import { sv as copy } from "../i18n/sv";
+import { trust } from "../i18n/subpages";
+const page = trust.sv;
+---
+
+<Base copy={copy} path="/trygghet/" altPath="/en/trust/" title={page.metaTitle} description={page.metaDescription} orb={false}>
+  <Trust page={page} mailLabel="Mejla oss" />
+</Base>

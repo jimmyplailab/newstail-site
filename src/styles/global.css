@@ -1329,11 +1329,9 @@ main {
   padding: 0;
 }
 .deep-points li {
-  padding: 0.8rem 0;
+  padding: 0.55rem 0;
 }
-.deep-points li + li {
-  border-top: 1px solid var(--line-soft);
-}
+
 .deep-points strong {
   display: block;
   font-weight: 600;
@@ -1487,5 +1485,455 @@ main {
 @media (min-width: 760px) {
   .nav-sheet {
     display: none !important;
+  }
+}
+
+/* =====================================================================
+   Undersidorna (Tekniken, Trygghet): inget klot, egna former.
+   ===================================================================== */
+.sub-hero,
+.sub-section,
+.sub-cta {
+  position: relative;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(4rem, 11vh, 7.5rem) var(--gutter);
+}
+.sub-hero {
+  min-height: 66vh;
+  min-height: 66svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--nav-h) + 3rem);
+}
+.sub-hero-inner {
+  max-width: 44rem;
+}
+.sub-hero .lead {
+  margin-top: 1.4rem;
+  max-width: 36rem;
+}
+.sub-section + .sub-section,
+.sub-section + .sub-cta {
+  border-top: 1px solid var(--line-soft);
+}
+.sub-head {
+  max-width: 36rem;
+}
+.sub-head .lead {
+  margin-top: 1rem;
+}
+.sub-cta {
+  text-align: center;
+  padding-bottom: clamp(5rem, 14vh, 9rem);
+}
+.sub-cta .lead {
+  margin-top: 1rem;
+}
+.sub-cta .actions {
+  justify-content: center;
+}
+
+/* ---------- Tekniken: röstvågen i heron ---------- */
+.voicewave {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 120px;
+  margin-top: 4rem;
+  max-width: 44rem;
+}
+.voicewave span {
+  flex: 1;
+  height: calc(var(--h) * 100%);
+  min-height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, oklch(0.84 0.11 262), oklch(0.56 0.21 200));
+  opacity: 0.85;
+  transform-origin: 50% 50%;
+  animation: wave 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -73ms);
+}
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* ---------- Tekniken: morgonen, klistrad sida + räls som fylls ---------- */
+.morning-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 4rem;
+  --p: 0;
+}
+.morning-side {
+  position: sticky;
+  top: calc(var(--nav-h) + 3rem);
+  align-self: start;
+}
+.morning-side .lead {
+  margin-top: 1rem;
+}
+.morning-rail {
+  position: relative;
+  height: 2px;
+  margin-top: 2.2rem;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.morning-rail span {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p));
+  background: linear-gradient(90deg, oklch(0.84 0.11 262), oklch(0.64 0.21 300));
+}
+.morning-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.morning-step {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  padding: 1.6rem 0;
+  opacity: 0.32;
+  transition: opacity 500ms ease;
+}
+.morning-step.is-on {
+  opacity: 1;
+}
+.morning-n {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.morning-step.is-on .morning-n {
+  color: var(--ink);
+}
+.morning-step h3 {
+  font-size: 1.375rem;
+  letter-spacing: -0.015em;
+}
+.morning-step p {
+  margin-top: 0.4rem;
+  color: var(--ink-2);
+}
+
+/* ---------- Tekniken: stora siffror ---------- */
+.bignums {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+.bignum {
+  display: block;
+  font-size: clamp(4rem, 8vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  background: linear-gradient(180deg, #fff 20%, oklch(0.56 0.21 150));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bignums strong {
+  display: block;
+  margin-top: 0.8rem;
+  font-weight: 600;
+}
+.bignums p {
+  margin-top: 0.3rem;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Tekniken: ikoner ---------- */
+.icon-grid {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.8rem 2.5rem;
+}
+.icon-grid svg {
+  display: block;
+  color: var(--glow-deep);
+  margin-bottom: 0.9rem;
+}
+.icon-grid strong {
+  display: block;
+  font-weight: 600;
+}
+.icon-grid p {
+  margin-top: 0.3rem;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Tekniken: teknikvalen ---------- */
+.stack-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 4rem;
+  align-items: start;
+}
+.spec {
+  margin: 0;
+}
+.spec > div {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+.spec dt {
+  color: var(--ink-3);
+  font-weight: 500;
+}
+.spec dd {
+  margin: 0;
+  color: var(--ink);
+}
+
+/* ---------- Trygghet: prickarna ---------- */
+.sees-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 4rem;
+  align-items: start;
+}
+.dots {
+  display: grid;
+  grid-template-columns: repeat(9, 14px);
+  gap: 10px;
+  margin-top: 2.4rem;
+}
+.dots span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(236, 239, 244, 0.1);
+  transition: background 600ms ease, box-shadow 600ms ease;
+  transition-delay: calc(var(--i) * 25ms);
+}
+.in-view .dots span.on {
+  background: var(--glow-deep);
+  box-shadow: 0 0 12px rgba(169, 188, 214, 0.5);
+}
+.dots-caption {
+  margin-top: 1rem;
+  color: var(--ink-3);
+  font-size: 0.875rem;
+}
+.sees-lists {
+  display: grid;
+  gap: 2.4rem;
+}
+.sees-lists h3 {
+  font-size: 1rem;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.check-list,
+.cross-list {
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0;
+}
+.check-list li,
+.cross-list li {
+  position: relative;
+  padding: 0.45rem 0 0.45rem 1.9rem;
+}
+.check-list li::before,
+.cross-list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 1.2rem;
+  text-align: center;
+}
+.check-list li::before {
+  content: "✓";
+  color: var(--glow-deep);
+}
+.cross-list li {
+  color: var(--ink-2);
+}
+.cross-list li::before {
+  content: "–";
+  color: var(--ink-3);
+}
+
+/* ---------- Trygghet: var data finns ---------- */
+.where-table {
+  margin-top: 2.6rem;
+}
+.where-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 0.8rem 0;
+}
+.where-head {
+  color: var(--ink-3);
+  font-size: 0.875rem;
+  padding-bottom: 0.4rem;
+}
+.where-who {
+  font-weight: 600;
+}
+.where-where {
+  color: var(--ink-2);
+}
+
+/* ---------- Trygghet: staplarna ---------- */
+.keep-bars {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+  max-width: 52rem;
+}
+.keep-bars li {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 1.5rem;
+  padding: 0.7rem 0;
+}
+.keep-t {
+  grid-row: span 2;
+  align-self: center;
+}
+.keep-bar {
+  height: 8px;
+  border-radius: 8px;
+  background: rgba(236, 239, 244, 0.07);
+  overflow: hidden;
+  align-self: end;
+}
+.keep-bar span {
+  display: block;
+  height: 100%;
+  width: calc(var(--w) * 100%);
+  border-radius: 8px;
+  background: linear-gradient(90deg, oklch(0.56 0.21 150), oklch(0.84 0.11 200));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 1100ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i) * 120ms);
+}
+.in-view .keep-bar span {
+  transform: scaleX(1);
+}
+.keep-l {
+  margin-top: 0.35rem;
+  color: var(--ink-3);
+  font-size: 0.875rem;
+}
+
+/* ---------- Trygghet: inget som lyssnar ---------- */
+.quiet-grid {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+.quiet-grid strong {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.quiet-grid p {
+  margin-top: 0.4rem;
+  color: var(--ink-2);
+}
+
+@media (max-width: 759px) {
+  .sub-hero {
+    min-height: 70svh;
+  }
+  .voicewave {
+    height: 80px;
+    gap: 3px;
+    margin-top: 2.5rem;
+  }
+  .morning-grid,
+  .stack-grid,
+  .sees-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .morning-side {
+    position: static;
+  }
+  .morning-step {
+    grid-template-columns: 2.6rem 1fr;
+    padding: 1.1rem 0;
+  }
+  .morning-n {
+    font-size: 1.25rem;
+  }
+  .bignums {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+  }
+  .icon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+  }
+  .spec > div {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+  .where-row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+    padding: 0.9rem 0;
+  }
+  .where-head {
+    display: none;
+  }
+  .keep-bars li {
+    grid-template-columns: 1fr;
+  }
+  .keep-t {
+    grid-row: auto;
+    margin-bottom: 0.4rem;
+  }
+  .quiet-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .voicewave span {
+    animation: none;
+    transform: scaleY(0.7);
+  }
+  .keep-bar span {
+    transition: none;
+    transform: scaleX(1);
+  }
+  .morning-step {
+    opacity: 1;
   }
 }

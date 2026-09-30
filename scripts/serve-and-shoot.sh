@@ -6,7 +6,7 @@ P=$!
 sleep 1.5
 rm -rf shots
 CHROME=/opt/pw-browsers/chromium node scripts/shots.mjs http://localhost:4321/ shots 2>&1 | tail -3
-for pg in pris produkt for-foretag; do CHROME=/opt/pw-browsers/chromium node scripts/shots.mjs http://localhost:4321/$pg/ shots/$pg 2>&1 | tail -3; done
+for pg in pris tekniken trygghet; do CHROME=/opt/pw-browsers/chromium node scripts/shots.mjs http://localhost:4321/$pg/ shots/$pg 2>&1 | tail -3; done
 kill $P
 cd shots && python3 - <<'PY'
 from PIL import Image

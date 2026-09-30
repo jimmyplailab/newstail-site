@@ -15,16 +15,18 @@ interface Props {
   description: string;
   /** Sektionerna snäpper (bara startsidan). */
   snap?: boolean;
+  /** Klotet i rymden (bara startsidan – undersidorna har bara stjärnorna). */
+  orb?: boolean;
 }
-const { copy, path, altPath, title, description, snap = false } = Astro.props;
+const { copy, path, altPath, title, description, snap = false, orb = true } = Astro.props;
 const site = "https://newstail.io";
 const canonical = `${site}${path}`;
 const svPath = copy.lang === "sv" ? path : altPath;
 const enPath = copy.lang === "en" ? path : altPath;
 const home = copy.lang === "sv" ? "/" : "/en/";
 const pricing = copy.lang === "sv" ? "/pris/" : "/en/pricing/";
-const productPage = copy.lang === "sv" ? "/produkt/" : "/en/product/";
-const companyPage = copy.lang === "sv" ? "/for-foretag/" : "/en/for-companies/";
+const techPage = copy.lang === "sv" ? "/tekniken/" : "/en/technology/";
+const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
 ---
 
 <!doctype html>
@@ -56,13 +58,13 @@ const companyPage = copy.lang === "sv" ? "/for-foretag/" : "/en/for-companies/";
     <slot name="head" />
   </head>
   <body>
-    <Space client:load />
+    <Space client:load orb={orb} />
     <header class="nav" id="nav">
       <div class="nav-inner">
         <a href={home} class="logo" aria-label="Newstail"></a>
         <nav class="nav-links" aria-label="Meny">
-          <a href={productPage} aria-current={path === productPage ? "page" : undefined}>{copy.nav.product}</a>
-          <a href={companyPage} aria-current={path === companyPage ? "page" : undefined}>{copy.nav.company}</a>
+          <a href={techPage} aria-current={path === techPage ? "page" : undefined}>{copy.nav.tech}</a>
+          <a href={trustPage} aria-current={path === trustPage ? "page" : undefined}>{copy.nav.trust}</a>
           <a href={pricing} aria-current={path === pricing ? "page" : undefined}>{copy.nav.pricing}</a>
         </nav>
         <div class="nav-right">
@@ -73,8 +75,8 @@ const companyPage = copy.lang === "sv" ? "/for-foretag/" : "/en/for-companies/";
         </div>
       </div>
       <nav class="nav-sheet" id="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"} hidden>
-        <a href={productPage}>{copy.nav.product}</a>
-        <a href={companyPage}>{copy.nav.company}</a>
+        <a href={techPage}>{copy.nav.tech}</a>
+        <a href={trustPage}>{copy.nav.trust}</a>
         <a href={pricing}>{copy.nav.pricing}</a>
         <a href={LOGIN_URL}>{copy.nav.login}</a>
       </nav>
@@ -87,8 +89,8 @@ const companyPage = copy.lang === "sv" ? "/for-foretag/" : "/en/for-companies/";
         <span class="logo" aria-hidden="true"></span>
         <span>{copy.footer.line}</span>
         <span class="footer-spacer"></span>
-        <a href={productPage}>{copy.nav.product}</a>
-        <a href={companyPage}>{copy.nav.company}</a>
+        <a href={techPage}>{copy.nav.tech}</a>
+        <a href={trustPage}>{copy.nav.trust}</a>
         <a href={pricing}>{copy.nav.pricing}</a>
         <a href={LOGIN_URL}>{copy.nav.login}</a>
         <a href={`mailto:${copy.footer.contact}`}>{copy.footer.contact}</a>
