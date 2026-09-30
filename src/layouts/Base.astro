@@ -68,10 +68,12 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
           <a href={pricing} aria-current={path === pricing ? "page" : undefined}>{copy.nav.pricing}</a>
         </nav>
         <div class="nav-right">
-          <button class="nav-menu-btn" type="button" aria-expanded="false" aria-controls="nav-sheet">{copy.lang === "sv" ? "Meny" : "Menu"}</button>
           <a class="lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>{copy.nav.switch}</a>
           <a class="pill pill-ghost nav-login" href={LOGIN_URL}>{copy.nav.login}</a>
-          <a class="pill pill-primary" href={START_URL}>{copy.nav.start}</a>
+          <a class="pill pill-primary nav-start" href={START_URL}>{copy.nav.start}</a>
+          <button class="nav-menu-btn" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"}>
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
       <nav class="nav-sheet" id="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"} hidden>
@@ -79,6 +81,10 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
         <a href={trustPage}>{copy.nav.trust}</a>
         <a href={pricing}>{copy.nav.pricing}</a>
         <a href={LOGIN_URL}>{copy.nav.login}</a>
+        <div class="nav-sheet-foot">
+          <a class="pill pill-primary pill-lg" href={START_URL}>{copy.nav.start}</a>
+          <a class="nav-sheet-lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>{copy.lang === "sv" ? "English" : "Svenska"}</a>
+        </div>
       </nav>
     </header>
     <main>
@@ -99,6 +105,9 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
     </footer>
     <script>
       // Topplinjen blir glas när man scrollat; sektionernas animationer startar när de syns.
+      // Omladdning börjar alltid högst upp (webbläsaren ska inte återställa scrollen).
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (!location.hash) window.scrollTo(0, 0);
       const nav = document.getElementById("nav");
       const menuBtn = document.querySelector<HTMLButtonElement>(".nav-menu-btn");
       const sheet = document.getElementById("nav-sheet");

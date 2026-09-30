@@ -20,13 +20,15 @@ const REST = "0.5,0.5,0.1,0";
       <p class="lead">{c.hero.lead}</p>
       <div class="actions">
         <a class="pill pill-primary pill-lg" href={START_URL}>{c.hero.cta}</a>
-        <button class="pill pill-secondary pill-lg play-sample" type="button" data-src={`/audio/sample-${c.lang}.mp3`} data-label={c.hero.listen} data-playing={c.hero.listening} aria-pressed="false">
-          <span class="play-icon" aria-hidden="true"></span><span class="play-label">{c.hero.listen}</span>
-        </button>
       </div>
     </div>
     <div class="split-stage stage-hero">
       <div class="orb-anchor" data-orb-anchor></div>
+      <!-- Ljudprovet mitt på klotet: klotet lyser med rösten medan det spelar. -->
+      <button class="orb-play play-sample" type="button" data-src={`/audio/sample-${c.lang}.mp3`} data-label={c.hero.listen} data-playing={c.hero.listening} aria-pressed="false" aria-label={c.hero.listen}>
+        <span class="orb-play-circle"><span class="play-icon" aria-hidden="true"></span></span>
+        <span class="play-label">{c.hero.listen}</span>
+      </button>
       <div class="bubbles" style="--wait: 1700ms">
         <span class="bubble bubble-r b-hero-1" style="--i: 0">{c.hero.bubbles[0]}</span>
         <span class="bubble bubble-l b-hero-2" style="--i: 1">{c.hero.bubbles[1]}</span>

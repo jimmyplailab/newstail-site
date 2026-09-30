@@ -2518,3 +2518,189 @@ main {
     padding-bottom: 0.6rem;
   }
 }
+
+/* =====================================================================
+   2026-09-30 kväll 2: play på klotet, hamburgare, luftigare mobil.
+   ===================================================================== */
+
+/* ---------- Ljudprovet mitt på klotet ---------- */
+.orb-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0;
+  animation: fade-in-soft 700ms ease 1.5s forwards;
+}
+.orb-play-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(10, 12, 18, 0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    0 12px 30px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 300ms ease;
+}
+.orb-play:hover .orb-play-circle {
+  background: rgba(10, 12, 18, 0.6);
+  transform: scale(1.06);
+}
+.orb-play:active .orb-play-circle {
+  transform: scale(0.95);
+}
+.orb-play .play-icon {
+  border-width: 10px 0 10px 16px;
+  margin-left: 4px;
+}
+.orb-play.is-playing .play-icon {
+  width: 16px;
+  height: 20px;
+  margin-left: 0;
+  border-left-width: 5px;
+  border-right-width: 5px;
+}
+.orb-play .play-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
+}
+@media (max-width: 759px) {
+  .orb-play-circle {
+    width: 56px;
+    height: 56px;
+  }
+  .orb-play .play-icon {
+    border-width: 8px 0 8px 13px;
+    margin-left: 3px;
+  }
+  .orb-play.is-playing .play-icon {
+    width: 13px;
+    height: 16px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+  }
+  .orb-play .play-label {
+    display: none;
+  }
+}
+
+/* ---------- Språkknapparna tätt intill klotet ---------- */
+.lang-chip-0,
+.lang-chip-1,
+.lang-chip-2,
+.lang-chip-3 {
+  right: auto !important;
+}
+.lang-chip-0 { left: calc(50% - 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; top: calc(50% - 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; }
+.lang-chip-1 { left: calc(50% + 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; top: calc(50% - 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; }
+.lang-chip-2 { left: calc(50% + 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; top: calc(50% + 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; }
+.lang-chip-3 { left: calc(50% - 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; top: calc(50% + 0.7071 * (var(--orb-size) / 2 + 30px) - 22px) !important; }
+@media (max-width: 759px) {
+  .lang-chip-0 { left: calc(50% - 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; top: calc(50% - 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; }
+  .lang-chip-1 { left: calc(50% + 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; top: calc(50% - 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; }
+  .lang-chip-2 { left: calc(50% + 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; top: calc(50% + 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; }
+  .lang-chip-3 { left: calc(50% - 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; top: calc(50% + 0.7071 * (var(--orb-size) / 2 + 24px) - 18px) !important; }
+}
+
+/* ---------- Hamburgaren: bara logga + tre streck i mobilen ---------- */
+.nav-menu-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.nav-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 0 auto;
+  border-radius: 2px;
+  background: var(--ink);
+  transition:
+    transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 200ms ease;
+}
+.nav-menu-btn[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-menu-btn[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.nav-menu-btn[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+.nav-sheet {
+  min-height: calc(100svh - var(--nav-h));
+  padding-top: 1.5rem;
+}
+.nav-sheet a:not(.pill) {
+  min-height: 60px;
+  font-size: 1.75rem;
+}
+.nav-sheet-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+.nav-sheet-foot .nav-sheet-lang {
+  min-height: 44px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+@media (max-width: 759px) {
+  .nav-right .lang,
+  .nav-right .nav-start {
+    display: none;
+  }
+}
+
+/* ---------- Mobil: luftigare, en sorts text per sektion ---------- */
+@media (max-width: 759px) {
+  .split {
+    gap: 2.2rem;
+  }
+  .hero .split {
+    gap: 2.4rem;
+  }
+  .stack > .title-xl + .lead,
+  .stack > .title-hero + .lead {
+    margin-top: 1.1rem;
+  }
+  .hero .actions {
+    margin-top: 1.8rem;
+  }
+  .section .deep-points,
+  .section .inside-points,
+  .section .mini-flow {
+    display: none;
+  }
+  .icon-grid p {
+    display: none;
+  }
+  .icon-grid {
+    gap: 1.8rem 1.2rem;
+  }
+}
