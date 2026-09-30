@@ -301,8 +301,10 @@ main {
 .section-auto {
   min-height: 0;
 }
-.footer {
-  scroll-snap-align: end;
+/* Sista sektionen + sidfoten = en skärm (Joel 2026-09-30). --footer-h mäts i Base. */
+main > section:last-of-type {
+  min-height: calc(100vh - var(--footer-h, 7rem));
+  min-height: calc(100svh - var(--footer-h, 7rem));
 }
 .split {
   display: grid;
@@ -930,12 +932,6 @@ main {
 .stage-quiz {
   --orb-size: min(300px, 22vw);
 }
-.closing {
-  --orb-size: min(440px, 34vw);
-}
-.orb-anchor-closing {
-  top: calc(100% - var(--orb-size) / 2 - 24px);
-}
 @media (max-width: 759px) {
   .stage-hero {
     --orb-size: 66vw;
@@ -944,12 +940,6 @@ main {
   .stage-inside,
   .stage-quiz {
     --orb-size: 50vw;
-  }
-  .closing {
-    --orb-size: 60vw;
-  }
-  .orb-anchor-closing {
-    top: calc(100% - var(--orb-size) / 2 - 16px);
   }
 }
 
@@ -1001,7 +991,6 @@ main {
   position: relative;
   z-index: 1;
   max-width: 34rem;
-  padding-bottom: calc(var(--orb-size) + 80px);
 }
 .closing-text .subtle {
   margin-top: 1rem;
@@ -1009,9 +998,6 @@ main {
 @media (max-width: 759px) {
   .stats {
     gap: 1.4rem;
-  }
-  .closing-text {
-    padding-bottom: calc(var(--orb-size) + 60px);
   }
 }
 
@@ -1187,12 +1173,6 @@ main {
 }
 
 @media (max-width: 759px) {
-  .closing {
-    --orb-size: min(46vw, 26svh);
-  }
-  .closing-text {
-    padding-bottom: calc(var(--orb-size) + 40px);
-  }
   .closing .actions {
     flex-direction: column;
     align-items: center;
@@ -2366,10 +2346,6 @@ main {
 .price-single .tiers {
   margin-top: 0.4rem;
 }
-/* Avslutet på desktop: mindre klot så sektionen ryms på en skärm. */
-.closing {
-  --orb-size: min(360px, 26vw, 34vh);
-}
 
 /* ---------- Mobil: varje snäppsektion ryms på en skärm (även med Safaris fält framme) ---------- */
 @media (max-width: 759px) {
@@ -2702,5 +2678,374 @@ main {
   }
   .icon-grid {
     gap: 1.8rem 1.2rem;
+  }
+}
+
+/* ---------- Pris i SaaS-struktur (2026-09-30): växlare, tre planer, räknare, allt ingår, frågor ---------- */
+.price-hero {
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--nav-h) + 1.5rem);
+}
+.price-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.price-head .lead {
+  max-width: 34rem;
+  margin-top: 0.9rem;
+}
+.billing-toggle {
+  display: inline-flex;
+  gap: 2px;
+  margin-top: 1.6rem;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+}
+.billing-toggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 38px;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 240ms ease-out, color 240ms ease-out;
+}
+.billing-toggle button[aria-pressed="true"] {
+  background: rgba(236, 239, 244, 0.12);
+  color: var(--ink);
+}
+.billing-badge {
+  font-size: 0.75rem;
+  color: var(--ok);
+}
+.plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+  max-width: 62rem;
+  align-self: center;
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.plan-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.plan-tagline {
+  margin-top: 0.25rem;
+  color: var(--ink-3);
+  font-size: 0.875rem;
+}
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-top: 1.2rem;
+  min-height: 3.2rem;
+}
+.plan-amount {
+  font-size: 2.75rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.plan-from,
+.plan-cur {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.plan-unit {
+  margin-top: 0.3rem;
+  min-height: 2.6em;
+  color: var(--ink-3);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+.plan .pill {
+  margin-top: 1rem;
+  width: 100%;
+}
+.plan-features {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.plan-features li {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.6rem;
+}
+.plan-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--glow-deep);
+}
+.plan-features .px {
+  color: var(--ink);
+}
+.plan-featured .plan-name::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  vertical-align: middle;
+  background: var(--glow-deep);
+  box-shadow: 0 0 12px var(--glow);
+}
+.vat-note {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+
+/* Räknaren */
+.price-calc {
+  align-items: center;
+}
+.calc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 4rem;
+  align-items: center;
+}
+.calc-side .lead {
+  margin-top: 1rem;
+}
+.calc-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.calc-seats-out {
+  color: var(--ink);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.calc-range {
+  --fill: 6%;
+  width: 100%;
+  height: 32px;
+  margin: 0.8rem 0 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.calc-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--glow-deep) var(--fill), rgba(236, 239, 244, 0.12) var(--fill));
+}
+.calc-range::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--glow-deep) var(--fill), rgba(236, 239, 244, 0.12) var(--fill));
+}
+.calc-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 6px rgba(221, 231, 242, 0.12), var(--shadow-soft-sm);
+}
+.calc-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 6px rgba(221, 231, 242, 0.12);
+}
+.calc-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+.calc-amount {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.calc-per {
+  color: var(--ink-3);
+}
+.calc-year {
+  margin-top: 0.4rem;
+  color: var(--ink-3);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+.calc-rows {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+.calc-rows li {
+  display: grid;
+  grid-template-columns: 5rem 1fr auto;
+  padding: 0.2rem 0;
+}
+.calc-rows li span:last-child {
+  color: var(--ink);
+}
+.calc-floor {
+  margin-top: 0.4rem;
+  color: var(--ink-3);
+  font-size: 0.8125rem;
+}
+.billing-toggle-sm {
+  margin-top: 1.4rem;
+}
+
+/* Allt ingår */
+.included {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.included-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.2rem 3rem;
+  margin-top: 2rem;
+  text-align: left;
+  color: var(--ink-2);
+}
+.included .actions {
+  margin-top: 2.2rem;
+  justify-content: center;
+}
+
+@media (max-width: 759px) {
+  .price-hero {
+    padding-top: calc(var(--nav-h) + 0.8rem);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .price-head {
+    padding: 0 var(--gutter);
+  }
+  .price-head .title-xl {
+    font-size: 1.875rem;
+  }
+  .price-head .lead {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+  }
+  .billing-toggle {
+    margin-top: 1rem;
+  }
+  /* Planerna blir en sidledes karusell, så sektionen ryms på en skärm. */
+  .plans {
+    display: flex;
+    gap: 1.6rem;
+    margin-top: 1.4rem;
+    padding: 0 12vw;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 12vw;
+    scrollbar-width: none;
+    align-self: stretch;
+    max-width: none;
+  }
+  .plans::-webkit-scrollbar {
+    display: none;
+  }
+  .plan {
+    flex: 0 0 76vw;
+    scroll-snap-align: center;
+  }
+  .plan-price {
+    margin-top: 0.8rem;
+    min-height: 0;
+  }
+  .plan-amount {
+    font-size: 2.25rem;
+  }
+  .plan-unit {
+    min-height: 0;
+  }
+  .plan .pill {
+    margin-top: 0.8rem;
+  }
+  .plan-features {
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+  }
+  .plan-features li {
+    padding: 0.18rem 0 0.18rem 1.5rem;
+  }
+  .vat-note {
+    margin-top: 1rem;
+  }
+  .calc {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .calc-side .lead {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+  }
+  .calc-total {
+    margin-top: 0.8rem;
+  }
+  .calc-rows {
+    margin-top: 0.8rem;
+  }
+  .included-list {
+    grid-template-columns: 1fr;
+    margin-top: 1.2rem;
+  }
+  .included .actions {
+    margin-top: 1.4rem;
+  }
+}
+
+/* Sidfoten delar skärm med sista sektionen – håll den kompakt i mobilen. */
+@media (max-width: 759px) {
+  .footer {
+    padding: 1.1rem var(--gutter) 1.4rem;
+  }
+  .footer-inner {
+    gap: 0.55rem 1.1rem;
+    font-size: 0.8125rem;
+  }
+  .footer-spacer {
+    flex-basis: 100%;
+    height: 0;
   }
 }

@@ -132,6 +132,14 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
         { threshold: 0.35 },
       );
       document.querySelectorAll("[data-watch]").forEach((el) => io.observe(el));
+      // Sista sektionen + sidfoten ryms på en skärm: sektionen krymper med sidfotens höjd.
+      const footer = document.querySelector<HTMLElement>(".footer");
+      if (footer) {
+        const setFooter = () =>
+          document.documentElement.style.setProperty("--footer-h", `${Math.ceil(footer.getBoundingClientRect().height)}px`);
+        setFooter();
+        new ResizeObserver(setFooter).observe(footer);
+      }
     </script>
   </body>
 </html>

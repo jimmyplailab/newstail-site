@@ -1,43 +1,128 @@
 ---
+/**
+ * Prissidan i SaaS-struktur (Joel 2026-09-30, "strukturen, inte visuellt"):
+ * 1) rubrik + månad/år + tre planer, 2) räknare, 3) allt ingår, 4) frågor + sidfot.
+ * Siffrorna kommer från src/i18n/pricing.ts (samma trappa som appens billing_settings).
+ */
 import type { Copy } from "../i18n/types";
 import { START_URL } from "../i18n/types";
+import { pricing, TIERS, YEAR_FACTOR } from "../i18n/pricing";
 
 interface Props {
   copy: Copy;
 }
 const { copy: c } = Astro.props;
+const p = pricing[c.lang as "sv" | "en"];
+const sv = c.lang === "sv";
+const MAIL = "mailto:hello@newstail.io";
+const year = (n: number) => n * YEAR_FACTOR;
+/** Ett pris som växlar med månad/år. */
+const px = (n: number) =>
+  `<span class="px" data-m="${p.currency(n)}" data-y="${p.currency(year(n))}">${p.currency(n)}</span>`;
+const feature = (f: string) =>
+  f.replace(/\{p(\d)\}/g, (_, i) => px(TIERS[Number(i)]!.price));
+const first = TIERS[0]!.price;
 ---
 
-<section class="section price-page" id="pris" data-space data-hue="150" data-orb="0.82,0.5,0.14,0.95" data-orb-m="0.5,0.5,0.1,0" data-watch>
-  <div class="price-single stack">
-    <h1 class="title-xl">{c.pricing.title}</h1>
-    <p class="lead">{c.pricing.lead}</p>
-    <p class="tiers-caption">{c.pricing.tiers[0]!.unit}</p>
-    <ul class="tiers">
-      {
-        c.pricing.tiers.map((t) => (
-          <li>
-            <span>{t.range}</span>
-            <span class="amount">{t.amount}</span>
-          </li>
-        ))
-      }
-    </ul>
-    <div class="price-notes">
-      {c.pricing.notes.map((n) => <p>{n}</p>)}
+<section class="section price-hero" id="pris" data-space data-hue="150" data-watch>
+  <div class="price-head">
+    <h1 class="title-xl">{p.title}</h1>
+    <p class="lead">{p.lead}</p>
+    <div class="billing-toggle" role="group" aria-label={sv ? "Betalningsperiod" : "Billing period"}>
+      <button type="button" data-billing="m" aria-pressed="true">{p.monthly}</button>
+      <button type="button" data-billing="y" aria-pressed="false">{p.yearly}<span class="billing-badge">{p.yearlyBadge}</span></button>
     </div>
-    <div class="actions">
-      <a class="pill pill-primary pill-lg" href={START_URL}>{c.pricing.cta}</a>
+  </div>
+
+  <div class="plans" data-plans>
+    {
+      p.plans.map((plan) => (
+        <article class={`plan${plan.featured ? " plan-featured" : ""}`} data-plan={plan.id}>
+          <h2 class="plan-name">{plan.name}</h2>
+          <p class="plan-tagline">{plan.tagline}</p>
+          <p class="plan-price">
+            {plan.id === "team" ? (
+              <>
+                <span class="plan-from">{sv ? "från" : "from"}</span>
+                {!sv && <span class="plan-cur">SEK</span>}
+                <span class="plan-amount px" data-m={String(first)} data-y={String(Math.round(year(first)))}>{first}</span>
+                {sv && <span class="plan-cur">kr</span>}
+              </>
+            ) : (
+              <span class="plan-amount">{plan.price}</span>
+            )}
+          </p>
+          <p class="plan-unit">
+            {plan.id === "team" ? (
+              <>
+                <span data-show="m">{p.perUnit}</span>
+                <span data-show="y" hidden>{p.perUnitYear}</span>
+              </>
+            ) : (
+              plan.priceNote || " "
+            )}
+          </p>
+          <a
+            class={`pill pill-lg ${plan.featured ? "pill-primary" : "pill-secondary"}`}
+            href={plan.href === "start" ? START_URL : `${MAIL}?subject=${encodeURIComponent("Newstail")}`}
+          >
+            {plan.cta}
+          </a>
+          <ul class="plan-features">
+            {plan.features.map((f) => <li set:html={feature(f)} />)}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+  <p class="vat-note">{p.vatNote}</p>
+</section>
+
+<section class="section price-calc" id="rakna" data-space data-hue="170" data-watch>
+  <div class="calc">
+    <div class="calc-side">
+      <h2 class="title-xl">{p.calc.title}</h2>
+      <p class="lead">{p.calc.lead}</p>
+    </div>
+    <div class="calc-card" data-calc>
+      <div class="calc-label">
+        <label for="calc-seats">{p.calc.label}</label>
+        <output for="calc-seats" class="calc-seats-out">30</output>
+      </div>
+      <input id="calc-seats" class="calc-range" type="range" min="1" max="500" step="1" value="30" />
+      <div class="calc-total">
+        <span class="calc-amount">–</span>
+        <span class="calc-per">{p.calc.perMonth}</span>
+      </div>
+      <p class="calc-year"><span class="calc-year-amount">–</span> {p.calc.perYear}</p>
+      <ul class="calc-rows" aria-label={p.calc.breakdown}></ul>
+      <p class="calc-floor" hidden>{p.calc.floorNote}</p>
+      <div class="billing-toggle billing-toggle-sm" role="group" aria-label={sv ? "Betalningsperiod" : "Billing period"}>
+        <button type="button" data-billing="m" aria-pressed="true">{p.monthly}</button>
+        <button type="button" data-billing="y" aria-pressed="false">{p.yearly}<span class="billing-badge">{p.yearlyBadge}</span></button>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+<section class="section price-included" id="ingar" data-space data-hue="200" data-watch>
+  <div class="included">
+    <h2 class="title-xl">{p.included.title}</h2>
+    <ul class="check-list included-list">
+      {p.included.items.map((x, i) => <li class="reveal" style={`--i: ${i}`}>{x}</li>)}
+    </ul>
+    <div class="actions">
+      <a class="pill pill-primary pill-lg" href={START_URL}>{p.plans[1]!.cta}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section price-faq" id="fragor" data-space data-hue="262" data-watch>
   <div class="faq-wrap">
-    <h2 class="title-xl">{c.faq.title}</h2>
+    <h2 class="title-xl">{p.faq.title}</h2>
     <div class="faq">
       {
-        c.faq.items.map((f) => (
+        p.faq.items.map((f) => (
           <details>
             <summary>{f.q}</summary>
             <p>{f.a}</p>
@@ -48,12 +133,97 @@ const { copy: c } = Astro.props;
   </div>
 </section>
 
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: c.faq.items.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-})} />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: p.faq.items.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  })}
+/>
+
+<script define:vars={{ lang: c.lang, labels: p.calc.tierLabels }}>
+  window.__priceLang = lang;
+  window.__priceTierLabels = labels;
+</script>
+
+<script>
+  import { TIERS, MIN_SEATS, YEAR_FACTOR } from "../i18n/pricing";
+
+  const w = window as unknown as { __priceLang: string; __priceTierLabels: string[] };
+  const sv = w.__priceLang === "sv";
+  const money = (n: number) =>
+    sv ? `${Math.round(n).toLocaleString("sv-SE")} kr` : `SEK ${Math.round(n).toLocaleString("en-GB")}`;
+  let billing: "m" | "y" = "m";
+
+  /** Graderad trappa som i appens billing_summary(): varje steg kostar sitt eget pris. */
+  const breakdown = (seats: number) => {
+    const billed = Math.max(seats, MIN_SEATS);
+    const rows: { label: string; n: number; price: number }[] = [];
+    let prev = 0;
+    TIERS.forEach((t, i) => {
+      const n = Math.max(0, Math.min(billed, t.upto) - prev);
+      if (n > 0) rows.push({ label: w.__priceTierLabels[i]!, n, price: t.price });
+      prev = t.upto;
+    });
+    return { billed, rows, total: rows.reduce((s, r) => s + r.n * r.price, 0) };
+  };
+
+  const range = document.querySelector<HTMLInputElement>(".calc-range");
+  const out = document.querySelector<HTMLOutputElement>(".calc-seats-out");
+  const amount = document.querySelector<HTMLElement>(".calc-amount");
+  const yearAmount = document.querySelector<HTMLElement>(".calc-year-amount");
+  const rowsEl = document.querySelector<HTMLUListElement>(".calc-rows");
+  const floor = document.querySelector<HTMLElement>(".calc-floor");
+
+  const renderCalc = () => {
+    if (!range) return;
+    const seats = Number(range.value);
+    const f = billing === "y" ? YEAR_FACTOR : 1;
+    const { billed, rows, total } = breakdown(seats);
+    if (out) out.textContent = String(seats);
+    if (amount) amount.textContent = money(total * f);
+    if (yearAmount) yearAmount.textContent = money(total * f * 12);
+    if (floor) floor.hidden = seats >= billed;
+    if (rowsEl) {
+      rowsEl.innerHTML = rows
+        .map(
+          (r) =>
+            `<li><span>${r.label}</span><span>${r.n} × ${money(r.price * f)}</span><span>${money(r.n * r.price * f)}</span></li>`,
+        )
+        .join("");
+    }
+    range.style.setProperty("--fill", `${((seats - 1) / (Number(range.max) - 1)) * 100}%`);
+  };
+
+  const setBilling = (b: "m" | "y") => {
+    billing = b;
+    document.querySelectorAll<HTMLButtonElement>("[data-billing]").forEach((btn) => {
+      btn.setAttribute("aria-pressed", String(btn.dataset.billing === b));
+    });
+    document.querySelectorAll<HTMLElement>(".px").forEach((el) => {
+      el.textContent = (b === "y" ? el.dataset.y : el.dataset.m) ?? el.textContent;
+    });
+    document.querySelectorAll<HTMLElement>("[data-show]").forEach((el) => {
+      el.hidden = el.dataset.show !== b;
+    });
+    renderCalc();
+  };
+
+  document.querySelectorAll<HTMLButtonElement>("[data-billing]").forEach((btn) => {
+    btn.addEventListener("click", () => setBilling(btn.dataset.billing as "m" | "y"));
+  });
+  range?.addEventListener("input", renderCalc);
+  renderCalc();
+
+  // Mobil: planerna är en sidledes karusell – börja på den utvalda planen.
+  const plans = document.querySelector<HTMLElement>("[data-plans]");
+  const featured = plans?.querySelector<HTMLElement>(".plan-featured");
+  if (plans && featured && plans.scrollWidth > plans.clientWidth + 4) {
+    plans.scrollLeft = featured.offsetLeft - (plans.clientWidth - featured.offsetWidth) / 2;
+  }
+</script>

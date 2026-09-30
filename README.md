@@ -1,7 +1,10 @@
 # newstail-site
 
 Hemsidan för Newstail (newstail.io). Astro + React-öar. Rymden (stjärnorna och glasklotet)
-är samma kod som i appen: `src/space/`.
+är samma kod som i appen: `src/space/`. Den är kopierad, inte länkad – ändras klotet i
+appen körs `bash scripts/sync-orb.sh` (appen i `../newstail-air`), sedan bygga och pusha.
+`bash scripts/sync-orb.sh --check` visar om sajten ligger efter. Redigera aldrig
+`orb-gl.ts`, `starfield.ts` eller `news-color.ts` här.
 
 - `npm run dev` – lokalt · `npm run build` – statisk sajt i `dist/`
 - Sidor: `/` (svenska), `/en/` (engelska). Copy i `src/i18n/`.
