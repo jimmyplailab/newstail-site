@@ -8,7 +8,7 @@ interface Props {
 const { copy: c } = Astro.props;
 const words = (s: string) => s.split(" ");
 // Riktiga skärmdumpar (public/screens/): slås på när filen finns.
-const SCREENS = { admin: false, home: false, publish: false, quiz: false };
+const SCREENS = { admin: true, home: true, publish: true, quiz: false };
 ---
 
 <!-- 1. Hero -->
@@ -50,22 +50,28 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 </section>
 
 <!-- 3. Så funkar det -->
-<section class="section" id="produkt" data-space data-hue="230" data-watch>
-  <div style="width:100%">
-    <div class="stack" style="max-width: 34rem">
+<section class="section" id="produkt" data-space data-hue="230" data-orb="0.5,0.5,0.1,0" data-watch>
+  <div class="split">
+    <div class="split-text stack">
       <h2 class="title-xl">{c.steps.title}</h2>
+      <ol class="steps-list">
+        {
+          c.steps.items.map((st, i) => (
+            <li class="step reveal" style={`--i: ${i + 1}`}>
+              <span class="step-n">{i + 1}</span>
+              <div>
+                <h3>{st.title}</h3>
+                <p>{st.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
     </div>
-    <div class="steps">
-      <div class="orb-anchor orb-anchor-steps" data-orb-anchor></div>
-      {
-        c.steps.items.map((s, i) => (
-          <div class="step reveal" style={`--i: ${i}`}>
-            <span class="step-n">{i + 1}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </div>
-        ))
-      }
+    <div class="split-stage phone-stage reveal" style="--i: 1">
+      <div class="phone">
+        <img src="/screens/app-home.webp" alt="" width="720" height="1565" loading="lazy" decoding="async" />
+      </div>
     </div>
   </div>
 </section>
@@ -97,15 +103,17 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 </section>
 
 <!-- 5. Inside -->
-<section class="section" id="inside" data-space data-hue="72" data-watch>
+<section class="section" id="inside" data-space data-hue="72" data-orb="0.5,0.5,0.1,0" data-watch>
   <div class="split orb-left">
     <div class="split-text stack">
       <h2 class="title-xl">{c.inside.title}</h2>
       <p class="lead">{c.inside.lead}</p>
     </div>
-    <div class="split-stage stage-inside">
-      <div class="orb-anchor orb-anchor-sm" data-orb-anchor></div>
-      <div class="bubbles" style="--wait: 300ms">
+    <div class="split-stage phone-stage">
+      <div class="phone reveal" style="--i: 0">
+        <img src="/screens/app-publish.webp" alt="" width="720" height="1565" loading="lazy" decoding="async" />
+      </div>
+      <div class="bubbles" style="--wait: 500ms">
         <span class="bubble bubble-r bubble-inside b-in-1" style="--i: 0">{c.inside.bubble}</span>
         <span class="bubble bubble-l b-in-2 muted" style="--i: 2">{c.inside.reach}</span>
       </div>
@@ -151,7 +159,7 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
     {SCREENS.admin && (
       <div class="split-stage stage-admin reveal" style="--i: 2">
         <div class="screen screen-admin">
-          <img src="/screens/admin-overview.png" alt="" width="1200" height="800" loading="lazy" />
+          <img src="/screens/admin-overview.webp" alt="" width="1400" height="1242" loading="lazy" decoding="async" />
         </div>
       </div>
     )}
