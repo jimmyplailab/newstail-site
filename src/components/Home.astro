@@ -45,33 +45,49 @@ const REST = "0.5,0.5,0.1,0";
   </ul>
 </section>
 
-<!-- 2. Sändningen: produkten, levande -->
-<section class="section" id="sandningen" data-space data-hue="200" data-watch>
+<!-- 2. Språket: USP – alla med, på sitt eget språk -->
+<section class="section" id="sprak" data-space data-hue="262" data-watch>
+  <div class="split orb-left">
+    <div class="split-text stack">
+      <h2 class="title-xl">{c.language.title}</h2>
+      <p class="lead">{c.language.lead}</p>
+    </div>
+    <div class="split-stage stage-language">
+      <div class="orb-anchor" data-orb-anchor></div>
+      <div class="lang-chips" aria-hidden="true">
+        {c.language.samples.map((x, i) => (
+          <span class={`lang-chip lang-chip-${i}${i === 0 ? " is-on" : ""}`} data-i={i}>{x.code}</span>
+        ))}
+      </div>
+      <div class="caption caption-language" style="--wait: 300ms" aria-live="off">
+        <span class="caption-topic" data-lang-topic>{c.language.samples[0]!.topic}</span>
+        <span class="caption-title" data-lang-title>
+          {words(c.language.samples[0]!.title).map((w, i) => (
+            <><span class="caption-word" style={`--i: ${i}`}>{w}</span>{" "}</>
+          ))}
+        </span>
+      </div>
+      <script type="application/json" data-lang-samples set:html={JSON.stringify(c.language.samples)} />
+    </div>
+  </div>
+</section>
+
+<!-- 3. Sändningen: appen -->
+<section class="section" id="sandningen" data-space data-hue="200" data-orb={REST} data-watch>
   <div class="split">
     <div class="split-text stack">
       <h2 class="title-xl">{c.broadcast.title}</h2>
       <p class="lead">{c.broadcast.lead}</p>
     </div>
-    <div class="split-stage stage-broadcast">
-      <div class="orb-anchor" data-orb-anchor></div>
-      <div class="bubbles" style="--wait: 300ms">
-        <span class="bubble bubble-l b-bc-1" style="--i: 0">{c.broadcast.bubbles[0]}</span>
-        <span class="bubble bubble-r b-bc-2" style="--i: 1">{c.broadcast.bubbles[1]}</span>
-        <span class="bubble bubble-l b-bc-3" style="--i: 2">{c.broadcast.bubbles[2]}</span>
-      </div>
-      <div class="caption caption-broadcast" style="--wait: 900ms">
-        <span class="caption-topic">{c.broadcast.captionTopic}</span>
-        <span class="caption-title">
-          {words(c.broadcast.captionTitle).map((w, i) => (
-            <><span class="caption-word" style={`--i: ${i}`}>{w}</span>{" "}</>
-          ))}
-        </span>
+    <div class="split-stage phone-stage reveal" style="--i: 1">
+      <div class="phone">
+        <img src="/screens/app-home.webp" alt={c.lang === "sv" ? "Newstail-appens hemvy med dagens rubriker" : "The Newstail app home screen with today's headlines"} width="720" height="1565" loading="lazy" decoding="async" />
       </div>
     </div>
   </div>
 </section>
 
-<!-- 3. Inside: bolagets röst -->
+<!-- 4. Inside: bolagets röst -->
 <section class="section" id="inside" data-space data-hue="72" data-orb={REST} data-watch>
   <div class="split orb-left">
     <div class="split-text stack">
@@ -90,7 +106,7 @@ const REST = "0.5,0.5,0.1,0";
   </div>
 </section>
 
-<!-- 4. Recap & Quiz -->
+<!-- 5. Recap & Quiz -->
 <section class="section" id="quiz" data-space data-hue="300" data-watch>
   <div class="split">
     <div class="split-text stack">
@@ -107,7 +123,7 @@ const REST = "0.5,0.5,0.1,0";
   </div>
 </section>
 
-<!-- 5. För ledningen -->
+<!-- 6. För ledningen -->
 <section class="section" id="ledare" data-space data-hue="262" data-orb={REST} data-watch>
   <div class="split">
     <div class="split-text stack">
@@ -128,33 +144,6 @@ const REST = "0.5,0.5,0.1,0";
     <div class="split-stage stage-admin reveal" style="--i: 2">
       <div class="screen screen-admin">
         <img src="/screens/admin-overview.webp" alt={c.lang === "sv" ? "Admin i Newstail: översikt över lyssnande och interna budskap" : "Newstail admin: overview of listening and internal messages"} width="1400" height="1242" loading="lazy" decoding="async" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 6. Så kommer ni igång -->
-<section class="section" id="produkt" data-space data-hue="230" data-orb={REST} data-watch>
-  <div class="split">
-    <div class="split-text stack">
-      <h2 class="title-xl">{c.steps.title}</h2>
-      <ol class="steps-list">
-        {
-          c.steps.items.map((st, i) => (
-            <li class="step reveal" style={`--i: ${i + 1}`}>
-              <span class="step-n">{i + 1}</span>
-              <div>
-                <h3>{st.title}</h3>
-                <p>{st.text}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-    <div class="split-stage phone-stage reveal" style="--i: 1">
-      <div class="phone">
-        <img src="/screens/app-home.webp" alt={c.lang === "sv" ? "Newstail-appens hemvy med dagens rubriker" : "The Newstail app home screen with today's headlines"} width="720" height="1565" loading="lazy" decoding="async" />
       </div>
     </div>
   </div>
@@ -188,11 +177,62 @@ const REST = "0.5,0.5,0.1,0";
       <a class="pill pill-primary pill-lg" href={START_URL}>{c.closing.cta}</a>
       <a class="pill pill-secondary pill-lg" href={pricing}>{c.closing.priceLink}</a>
     </div>
-    <p class="subtle">{c.closing.alt}</p>
   </div>
 </section>
 
 <script>
+  // Språksektionen: samma interna nyhet på värdens fyra språk. Klotet byter ton och lyser upp
+  // vid varje byte (Space läser data-hue varje ruta och window.__orbKick).
+  const langSec = document.getElementById("sprak");
+  const samplesEl = langSec?.querySelector<HTMLScriptElement>("[data-lang-samples]");
+  if (langSec && samplesEl) {
+    const samples = JSON.parse(samplesEl.textContent || "[]") as { code: string; topic: string; title: string }[];
+    const HUES = [262, 200, 30, 330];
+    const topic = langSec.querySelector<HTMLElement>("[data-lang-topic]")!;
+    const title = langSec.querySelector<HTMLElement>("[data-lang-title]")!;
+    const chips = [...langSec.querySelectorAll<HTMLElement>(".lang-chip")];
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let i = 0;
+    let timer = 0;
+    const w = window as unknown as { __orbKick?: number };
+    const show = (k: number) => {
+      const x = samples[k]!;
+      topic.textContent = x.topic;
+      title.innerHTML = "";
+      x.title.split(" ").forEach((word, j) => {
+        const sp = document.createElement("span");
+        sp.className = "caption-word";
+        sp.style.setProperty("--i", String(j));
+        sp.style.setProperty("--wait", "0ms");
+        sp.textContent = word;
+        title.append(sp, " ");
+      });
+      chips.forEach((c, j) => c.classList.toggle("is-on", j === k));
+      langSec.dataset.hue = String(HUES[k % HUES.length]);
+      w.__orbKick = (w.__orbKick ?? 0) + 1;
+    };
+    const start = () => {
+      if (timer || reduced) return;
+      timer = window.setInterval(() => {
+        i = (i + 1) % samples.length;
+        show(i);
+      }, 2800);
+    };
+    const stop = () => {
+      clearInterval(timer);
+      timer = 0;
+    };
+    new IntersectionObserver(([e]) => (e!.isIntersecting ? start() : stop()), { threshold: 0.5 }).observe(langSec);
+    chips.forEach((c, k) =>
+      c.addEventListener("click", () => {
+        stop();
+        i = k;
+        show(k);
+        start();
+      }),
+    );
+  }
+
   // "Så låter det": spelar ljudprovet och skickar röstens styrka till klotet (window.__voiceAmp).
   const btn = document.querySelector<HTMLButtonElement>(".play-sample");
   if (btn) {

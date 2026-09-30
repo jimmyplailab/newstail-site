@@ -18,50 +18,53 @@ export const en: Copy = {
   },
   hero: {
     title: "The whole company briefed. Before coffee.",
-    lead: "A personal morning broadcast for every employee. The industry, the customers and the internal – told in five minutes.",
+    lead: "A personal morning broadcast for every employee. The industry, the customers, the internal – and whatever you follow yourself. Told in five minutes.",
     cta: "Get started – 14 days free",
     listen: "Hear it",
     listening: "Playing",
-    sampleNote: "Example, 30 seconds",
+    sampleNote: "",
     bubbles: [
       "Competitor opens warehouse in Malmö",
-      "New EU AI rules from January 1",
+      "Arsenal take the derby in extra time",
       "Internal: Q3 numbers on Friday",
     ],
   },
   value: {
     rows: [
       { title: "Everyone knows what's going on.", text: "Not just the ones who find time to read." },
-      { title: "Your message lands.", text: "And you can see that it did." },
-      { title: "Pay only for the people who listen.", text: "SEK 149 per active listener. No lock-in." },
+      { title: "Internal news that lands.", text: "And you can see that it did." },
+      { title: "In everyone's own language.", text: "No one left outside." },
     ],
   },
-  steps: {
-    title: "Three steps. No IT project.",
-    items: [
-      { title: "You register the company", text: "With your email domain. Ten minutes." },
-      { title: "Employees open the app", text: "And say what they want to follow." },
-      { title: "Every morning: a broadcast of their own", text: "Done before the first meeting." },
+  language: {
+    title: "Everyone included. In their own language.",
+    lead: "Every employee picks the host's language. The same news and the same internal messages – in English, Swedish, German or Spanish. When everyone is equally up to date, the team gets stronger.",
+    samples: [
+      { code: "EN", topic: "Internal", title: "New office in Växjö from 1 November" },
+      { code: "SV", topic: "Internt", title: "Nytt kontor i Växjö från 1 november" },
+      { code: "DE", topic: "Intern", title: "Neues Büro in Växjö ab 1. November" },
+      { code: "ES", topic: "Interno", title: "Nueva oficina en Växjö desde el 1 de noviembre" },
     ],
   },
   broadcast: {
     title: "Told for you, specifically.",
-    lead: "No two people hear the same broadcast. The host picks what touches your role, puts it in context and tells it like a colleague who's up to speed.",
+    lead: "The outside world is picked by your role and what you follow. The host puts the news in context and tells it like a colleague who's up to speed. The internal news, everyone hears.",
     bubbles: ["Rate decision: what it means for construction", "Your biggest customer names new CEO", "Premier League: Arsenal take the derby"],
     captionTopic: "Industry",
     captionTitle: "Rate decision: what it means for construction",
   },
   inside: {
-    title: "Your voice in the broadcast.",
-    lead: "Record a message in the app and it's heard in tomorrow's broadcast – right among the news. You see how many heard it.",
+    title: "Internal news that actually lands.",
+    lead: "Write or record the message in the app. The next morning the host tells it in everyone's broadcast, right among the news. No email nobody opens – and you see how many heard it.",
     bubble: "Internal: new price list from Monday",
     reach: "Heard by 34 of 41",
   },
   quiz: {
-    title: "What's heard should stick.",
-    lead: "The day's items sit in the recap, with sources. The day after: three quick questions on what you heard.",
+    title: "Go deeper. Remember more.",
+    lead: "The recap collects the day's items with sources to read on and share with colleagues. A short quiz on what you heard makes it stick.",
     recap: "Recap",
     quiz: "Quiz",
+    share: "Share",
   },
   leaders: {
     title: "See that it lands.",
@@ -135,10 +138,9 @@ export const en: Copy = {
   },
   closing: {
     title: "Start tomorrow morning.",
-    lead: "From SEK 149 per active listener per month. 14 days free, no lock-in.",
+    lead: "Register the company with your email domain and colleagues can join right away. No IT project, 14 days free.",
     cta: "Get started",
-    priceLink: "Pricing and common questions",
-    alt: "or email hello@newstail.io",
+    priceLink: "See pricing",
   },
   footer: {
     line: "© Newstail",

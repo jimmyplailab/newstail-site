@@ -1198,3 +1198,66 @@ main {
     align-items: center;
   }
 }
+
+/* ---------- språksektionen ---------- */
+.stage-language {
+  --orb-size: min(320px, 24vw);
+}
+.lang-chips {
+  position: absolute;
+  inset: 0;
+}
+.lang-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #1e222a 0%, #171a20 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 10px 24px rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    color 400ms ease,
+    background 400ms ease,
+    transform 500ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.lang-chip.is-on {
+  color: #000;
+  background: var(--ink);
+  transform: scale(1.12);
+}
+.lang-chip-0 { left: calc(50% - var(--orb-size) * 0.78); top: calc(50% - var(--orb-size) * 0.5); }
+.lang-chip-1 { left: calc(50% + var(--orb-size) * 0.62); top: calc(50% - var(--orb-size) * 0.46); }
+.lang-chip-2 { left: calc(50% + var(--orb-size) * 0.66); top: calc(50% + var(--orb-size) * 0.18); }
+.lang-chip-3 { left: calc(50% - var(--orb-size) * 0.84); top: calc(50% + var(--orb-size) * 0.14); }
+.caption-language {
+  top: calc(50% + var(--orb-size) / 2 + 26px);
+}
+.caption-language .caption-word {
+  animation-delay: calc(var(--i, 0) * 60ms) !important;
+}
+@media (max-width: 759px) {
+  .stage-language {
+    --orb-size: min(42vw, 22svh);
+    min-height: calc(var(--orb-size) + 170px);
+  }
+  .caption-language {
+    top: calc(50% + var(--orb-size) / 2 + 14px);
+  }
+  .caption-language .caption-title {
+    font-size: 17px;
+  }
+  .lang-chip-0 { left: 4%; }
+  .lang-chip-1 { left: auto; right: 4%; }
+  .lang-chip-2 { left: auto; right: 6%; }
+  .lang-chip-3 { left: 6%; }
+}

@@ -18,50 +18,53 @@ export const sv: Copy = {
   },
   hero: {
     title: "Hela företaget påläst. Innan kaffet.",
-    lead: "En personlig morgonsändning för varje medarbetare. Branschen, kunderna och det interna – berättat på fem minuter.",
+    lead: "En personlig morgonsändning för varje medarbetare. Branschen, kunderna, det interna – och det man själv följer. Berättat på fem minuter.",
     cta: "Kom igång – 14 dagar gratis",
     listen: "Så låter det",
     listening: "Spelar",
-    sampleNote: "Exempel, 30 sekunder",
+    sampleNote: "",
     bubbles: [
       "Konkurrenten öppnar lager i Jönköping",
-      "Nya EU-regler för AI från 1 januari",
+      "HV71 tog derbyt efter förlängning",
       "Internt: Q3-siffrorna på fredag",
     ],
   },
   value: {
     rows: [
       { title: "Alla vet vad som händer.", text: "Inte bara de som hinner läsa." },
-      { title: "Ert budskap når fram.", text: "Och ni ser att det gjorde det." },
-      { title: "Betala bara för dem som lyssnar.", text: "149 kr per aktiv lyssnare. Inget bindande." },
+      { title: "Interninfo som når fram.", text: "Och ni ser att den gjorde det." },
+      { title: "På var och ens språk.", text: "Ingen står utanför." },
     ],
   },
-  steps: {
-    title: "Tre steg. Inget IT-projekt.",
-    items: [
-      { title: "Ni registrerar företaget", text: "Med er mejldomän. Tio minuter." },
-      { title: "Medarbetarna öppnar appen", text: "Och säger vad de vill följa." },
-      { title: "Varje morgon: en egen sändning", text: "Klar innan första mötet." },
+  language: {
+    title: "Alla med. På sitt eget språk.",
+    lead: "Varje medarbetare väljer värdens språk. Samma nyheter och samma interna budskap – på svenska, engelska, tyska eller spanska. När alla är lika uppdaterade blir teamet starkare.",
+    samples: [
+      { code: "SV", topic: "Internt", title: "Nytt kontor i Växjö från 1 november" },
+      { code: "EN", topic: "Internal", title: "New office in Växjö from 1 November" },
+      { code: "DE", topic: "Intern", title: "Neues Büro in Växjö ab 1. November" },
+      { code: "ES", topic: "Interno", title: "Nueva oficina en Växjö desde el 1 de noviembre" },
     ],
   },
   broadcast: {
     title: "Berättat för just dig.",
-    lead: "Ingen hör samma sändning. Värden väljer det som rör din roll, sätter det i sammanhang och berättar det som en kollega med koll.",
+    lead: "Omvärlden väljs efter din roll och det du följer. Värden sätter nyheterna i sammanhang och berättar som en kollega med koll. Det interna hör alla.",
     bubbles: ["Räntebeskedet: så slår det mot bygg", "Er största kund byter vd", "SHL: Hv71 tog derbyt"],
     captionTopic: "Bransch",
     captionTitle: "Räntebeskedet: så slår det mot byggsektorn",
   },
   inside: {
-    title: "Er röst i sändningen.",
-    lead: "Tala in ett budskap i appen, så hörs det i morgondagens sändning – bland nyheterna. Ni ser hur många som hörde.",
+    title: "Interninfo som faktiskt når fram.",
+    lead: "Skriv eller tala in budskapet i appen. Nästa morgon berättar värden det i allas sändning, mitt bland nyheterna. Inget mejl som ingen öppnar – och ni ser hur många som hörde.",
     bubble: "Internt: nya prislistan gäller från måndag",
     reach: "Hört av 34 av 41",
   },
   quiz: {
-    title: "Det som hörs ska fastna.",
-    lead: "Dagens punkter ligger i recapen, med källor. Dagen efter: tre snabba frågor på det du hörde.",
+    title: "Gå djupare. Minns mer.",
+    lead: "Recapen samlar dagens punkter med källor att läsa vidare i och dela med kollegor. Ett kort quiz på det du hört gör att det fastnar.",
     recap: "Recap",
     quiz: "Quiz",
+    share: "Dela",
   },
   leaders: {
     title: "Se att det når fram.",
@@ -138,10 +141,9 @@ export const sv: Copy = {
   },
   closing: {
     title: "Börja i morgon bitti.",
-    lead: "Från 149 kr per aktiv lyssnare och månad. 14 dagar gratis, ingen bindning.",
+    lead: "Registrera företaget med er mejldomän, så kan kollegorna gå med direkt. Inget IT-projekt, 14 dagar gratis.",
     cta: "Kom igång",
-    priceLink: "Priser och vanliga frågor",
-    alt: "eller mejla hello@newstail.io",
+    priceLink: "Se priser",
   },
   footer: {
     line: "© Newstail",

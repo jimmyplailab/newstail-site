@@ -20,7 +20,12 @@ export type Copy = {
     bubbles: string[];
   };
   value: { rows: { title: string; text: string }[] };
-  steps: { title: string; items: { title: string; text: string }[] };
+  language: {
+    title: string;
+    lead: string;
+    /** Samma interna nyhet på värdens fyra språk – kretsar under klotet. */
+    samples: { code: string; topic: string; title: string }[];
+  };
   broadcast: {
     title: string;
     lead: string;
@@ -29,7 +34,7 @@ export type Copy = {
     captionTitle: string;
   };
   inside: { title: string; lead: string; bubble: string; reach: string };
-  quiz: { title: string; lead: string; recap: string; quiz: string };
+  quiz: { title: string; lead: string; recap: string; quiz: string; share: string };
   leaders: {
     title: string;
     lead: string;
@@ -48,7 +53,7 @@ export type Copy = {
   };
   trust: { title: string; items: { title: string; text: string }[] };
   faq: { title: string; items: { q: string; a: string }[] };
-  closing: { title: string; lead: string; cta: string; priceLink: string; alt: string };
+  closing: { title: string; lead: string; cta: string; priceLink: string };
   footer: { line: string; privacy: string; contact: string };
 };
 

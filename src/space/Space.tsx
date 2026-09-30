@@ -71,7 +71,10 @@ function readSections(): Section[] {
  * mot nästa sektions ankare när den närmar sig. Annars talen i data-orb (andelar av vyn).
  */
 function targetFor(s: Section, mobile: boolean, W: number, H: number, minSide: number): Target {
-  const t = mobile ? s.m : s.d;
+  // Tonen läses varje ruta: en sektion kan byta färg på klotet medan den syns (språksektionen).
+  const hue = parseFloat(s.el.dataset.hue ?? "");
+  const t0 = mobile ? s.m : s.d;
+  const t = Number.isFinite(hue) ? { ...t0, hue } : t0;
   if (!s.anchor) return t;
   const a = s.anchor.getBoundingClientRect();
   if (a.width < 2) return { ...t, alpha: 0 };
@@ -171,6 +174,7 @@ export default function Space() {
     let turn = 0;
     let orbTilt = 0;
     let voice = 0;
+    let lastKick = 0;
     const t0 = performance.now();
     let lastT = t0;
     const ARRIVE = reduced ? 400 : 1500;
@@ -251,6 +255,11 @@ export default function Space() {
       const target = toneForHue(cur.hue);
       tone = mixTone(tone, target, 1 - Math.pow(1 - 0.08, f));
       accent = mixTone(accent, accentFor(cur.hue), 1 - Math.pow(1 - 0.08, f));
+      const kick = (window as unknown as { __orbKick?: number }).__orbKick ?? 0;
+      if (kick !== lastKick) {
+        lastKick = kick;
+        energy = Math.max(energy, 0.8);
+      }
       energy = approach(energy, 0, 0.045, f);
       // Rösten ur ljudprovet (Home.astro sätter window.__voiceAmp): nebulosan lyser, som i appen.
       const amp = (window as unknown as { __voiceAmp?: number }).__voiceAmp ?? 0;
