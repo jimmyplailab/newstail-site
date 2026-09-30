@@ -12,7 +12,7 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 ---
 
 <!-- 1. Hero -->
-<section class="section section-full hero" data-space data-hue="262" data-watch>
+<section class="section hero" data-space data-hue="262" data-watch>
   <div class="split">
     <div class="split-text stack">
       <h1 class="title-hero">{c.hero.title}</h1>
@@ -23,7 +23,6 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
           <span class="play-icon" aria-hidden="true"></span><span class="play-label">{c.hero.listen}</span>
         </button>
       </div>
-      <p class="subtle sample-note">{c.hero.sampleNote}</p>
     </div>
     <div class="split-stage stage-hero">
       <div class="orb-anchor orb-anchor-hero" data-orb-anchor></div>
@@ -50,10 +49,8 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
   </div>
 </section>
 
-<div class="hairline"></div>
-
 <!-- 3. Så funkar det -->
-<section class="section section-full" id="produkt" data-space data-hue="230" data-watch>
+<section class="section" id="produkt" data-space data-hue="230" data-watch>
   <div style="width:100%">
     <div class="stack" style="max-width: 34rem">
       <h2 class="title-xl">{c.steps.title}</h2>
@@ -74,7 +71,7 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 </section>
 
 <!-- 4. Sändningen -->
-<section class="section section-full" id="sandningen" data-space data-hue="200" data-watch>
+<section class="section" id="sandningen" data-space data-hue="200" data-watch>
   <div class="split">
     <div class="split-text stack">
       <h2 class="title-xl">{c.broadcast.title}</h2>
@@ -100,7 +97,7 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 </section>
 
 <!-- 5. Inside -->
-<section class="section section-full" id="inside" data-space data-hue="72" data-watch>
+<section class="section" id="inside" data-space data-hue="72" data-watch>
   <div class="split orb-left">
     <div class="split-text stack">
       <h2 class="title-xl">{c.inside.title}</h2>
@@ -117,7 +114,7 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 </section>
 
 <!-- 6. Recap & Quiz -->
-<section class="section section-full" id="quiz" data-space data-hue="300" data-watch>
+<section class="section" id="quiz" data-space data-hue="300" data-watch>
   <div class="split">
     <div class="split-text stack">
       <h2 class="title-xl">{c.quiz.title}</h2>
@@ -134,7 +131,7 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
 </section>
 
 <!-- 7. För företaget -->
-<section class="section section-full" id="ledare" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+<section class="section" id="ledare" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
   <div class="split">
     <div class="split-text stack">
       <h2 class="title-xl">{c.leaders.title}</h2>
@@ -202,8 +199,6 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
   </div>
 </section>
 
-<div class="hairline"></div>
-
 <!-- 9. Trygghet -->
 <section class="section" id="trygghet" data-space data-hue="200" data-orb="0.9,0.3,0.07,0.85" data-orb-m="0.86,0.12,0.06,0.7" data-watch>
   <div class="split">
@@ -222,10 +217,9 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
   </div>
 </section>
 
-<div class="hairline"></div>
-
 <!-- 10. Frågor -->
 <section class="section" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+  <div class="faq-wrap">
   <div class="stack" style="max-width: 34rem">
     <h2 class="title-xl">{c.faq.title}</h2>
   </div>
@@ -239,10 +233,11 @@ const SCREENS = { admin: false, home: false, publish: false, quiz: false };
       ))
     }
   </div>
+  </div>
 </section>
 
 <!-- 11. Avslut -->
-<section class="section section-full closing" data-space data-hue="262" data-watch>
+<section class="section closing" data-space data-hue="262" data-watch>
   <div class="orb-anchor orb-anchor-closing" data-orb-anchor></div>
   <div class="stack closing-text">
     <h2 class="title-xl">{c.closing.title}</h2>

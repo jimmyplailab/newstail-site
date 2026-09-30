@@ -35,6 +35,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Sektionerna snäpper: man landar alltid på en sektion, aldrig mitt emellan (Joel 2026-09-30). */
+  scroll-snap-type: y mandatory;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -281,13 +283,19 @@ main {
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(5rem, 12vh, 9rem) var(--gutter);
-}
-.section-full {
+  padding: clamp(4rem, 10vh, 7rem) var(--gutter);
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
   align-items: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.section > * {
+  width: 100%;
+}
+.footer {
+  scroll-snap-align: end;
 }
 .split {
   display: grid;
@@ -326,12 +334,7 @@ main {
   gap: 0.75rem;
   margin-top: 2rem;
 }
-.hairline {
-  height: 1px;
-  background: var(--line-soft);
-  max-width: var(--max);
-  margin: 0 auto;
-}
+
 @media (max-width: 759px) {
   .split {
     grid-template-columns: 1fr;
@@ -356,7 +359,7 @@ main {
 
 /* ---------- hero ---------- */
 .hero {
-  padding-top: calc(var(--nav-h) + 3rem);
+  padding-top: calc(var(--nav-h) + 2rem);
 }
 .hero .split-stage {
   min-height: calc(var(--orb-size) + 120px);
@@ -1013,8 +1016,4 @@ main {
 }
 .play-sample.is-playing {
   border-color: rgba(236, 239, 244, 0.4);
-}
-.sample-note {
-  margin-top: 0.7rem;
-  font-size: 0.8125rem;
 }
