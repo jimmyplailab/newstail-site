@@ -1,0 +1,11 @@
+---
+import Base from "../layouts/Base.astro";
+import Deep from "../components/Deep.astro";
+import { sv as copy } from "../i18n/sv";
+import { product } from "../i18n/pages";
+const page = product.sv;
+---
+
+<Base copy={copy} path="/produkt/" altPath="/en/product/" title={page.metaTitle} description={page.metaDescription}>
+  <Deep copy={copy} page={page} />
+</Base>

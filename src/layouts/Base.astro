@@ -23,6 +23,8 @@ const svPath = copy.lang === "sv" ? path : altPath;
 const enPath = copy.lang === "en" ? path : altPath;
 const home = copy.lang === "sv" ? "/" : "/en/";
 const pricing = copy.lang === "sv" ? "/pris/" : "/en/pricing/";
+const productPage = copy.lang === "sv" ? "/produkt/" : "/en/product/";
+const companyPage = copy.lang === "sv" ? "/for-foretag/" : "/en/for-companies/";
 ---
 
 <!doctype html>
@@ -59,17 +61,23 @@ const pricing = copy.lang === "sv" ? "/pris/" : "/en/pricing/";
       <div class="nav-inner">
         <a href={home} class="logo" aria-label="Newstail"></a>
         <nav class="nav-links" aria-label="Meny">
-          <a href={`${home}#sandningen`}>{copy.nav.product}</a>
-          <a href={`${home}#ledare`}>{copy.nav.company}</a>
+          <a href={productPage} aria-current={path === productPage ? "page" : undefined}>{copy.nav.product}</a>
+          <a href={companyPage} aria-current={path === companyPage ? "page" : undefined}>{copy.nav.company}</a>
           <a href={pricing} aria-current={path === pricing ? "page" : undefined}>{copy.nav.pricing}</a>
         </nav>
         <div class="nav-right">
-          <a class="nav-mobile-link" href={pricing}>{copy.nav.pricing}</a>
+          <button class="nav-menu-btn" type="button" aria-expanded="false" aria-controls="nav-sheet">{copy.lang === "sv" ? "Meny" : "Menu"}</button>
           <a class="lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>{copy.nav.switch}</a>
           <a class="pill pill-ghost nav-login" href={LOGIN_URL}>{copy.nav.login}</a>
           <a class="pill pill-primary" href={START_URL}>{copy.nav.start}</a>
         </div>
       </div>
+      <nav class="nav-sheet" id="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"} hidden>
+        <a href={productPage}>{copy.nav.product}</a>
+        <a href={companyPage}>{copy.nav.company}</a>
+        <a href={pricing}>{copy.nav.pricing}</a>
+        <a href={LOGIN_URL}>{copy.nav.login}</a>
+      </nav>
     </header>
     <main>
       <slot />
@@ -79,6 +87,8 @@ const pricing = copy.lang === "sv" ? "/pris/" : "/en/pricing/";
         <span class="logo" aria-hidden="true"></span>
         <span>{copy.footer.line}</span>
         <span class="footer-spacer"></span>
+        <a href={productPage}>{copy.nav.product}</a>
+        <a href={companyPage}>{copy.nav.company}</a>
         <a href={pricing}>{copy.nav.pricing}</a>
         <a href={LOGIN_URL}>{copy.nav.login}</a>
         <a href={`mailto:${copy.footer.contact}`}>{copy.footer.contact}</a>
@@ -88,6 +98,14 @@ const pricing = copy.lang === "sv" ? "/pris/" : "/en/pricing/";
     <script>
       // Topplinjen blir glas när man scrollat; sektionernas animationer startar när de syns.
       const nav = document.getElementById("nav");
+      const menuBtn = document.querySelector<HTMLButtonElement>(".nav-menu-btn");
+      const sheet = document.getElementById("nav-sheet");
+      menuBtn?.addEventListener("click", () => {
+        const open = menuBtn.getAttribute("aria-expanded") !== "true";
+        menuBtn.setAttribute("aria-expanded", String(open));
+        if (sheet) sheet.hidden = !open;
+        nav?.classList.toggle("menu-open", open);
+      });
       const onScroll = () => nav?.classList.toggle("is-scrolled", window.scrollY > 24);
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });

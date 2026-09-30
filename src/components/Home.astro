@@ -93,6 +93,11 @@ const REST = "0.5,0.5,0.1,0";
     <div class="split-text stack">
       <h2 class="title-xl">{c.inside.title}</h2>
       <p class="lead">{c.inside.lead}</p>
+      <ol class="mini-flow" aria-label={c.lang === "sv" ? "Så går det till" : "How it works"}>
+        {c.inside.flow.map((f, i) => (
+          <li class="reveal" style={`--i: ${i + 1}`}><span>{f}</span></li>
+        ))}
+      </ol>
     </div>
     <div class="split-stage phone-stage">
       <div class="phone reveal" style="--i: 0">

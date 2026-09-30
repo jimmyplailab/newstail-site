@@ -1097,7 +1097,7 @@ main {
 }
 @media (max-width: 759px) {
   .phone {
-    width: 58vw;
+    width: min(46vw, 30svh);
   }
   .phone-stage {
     min-height: 0;
@@ -1260,4 +1260,232 @@ main {
   .lang-chip-1 { left: auto; right: 4%; }
   .lang-chip-2 { left: auto; right: 6%; }
   .lang-chip-3 { left: 6%; }
+}
+
+/* ---------- prissidan: en kolumn, klotet till höger ---------- */
+.price-single {
+  max-width: 36rem;
+}
+.price-single .tiers {
+  margin-top: 1.6rem;
+}
+
+/* ---------- Inside: mikroflödet (enkelt framför, magi bakom) ---------- */
+.mini-flow {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+.mini-flow li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.mini-flow li span {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+.mini-flow li:nth-child(2) span {
+  /* AI-steget: ett ljus som vandrar längs kanten – det är där magin sker. */
+  position: relative;
+  border-color: transparent;
+  background:
+    linear-gradient(#0d0f13, #0d0f13) padding-box,
+    conic-gradient(from var(--ring-a), rgba(217, 194, 122, 0.2), #f4e3a6, rgba(169, 188, 214, 0.9), rgba(217, 194, 122, 0.2)) border-box;
+  animation: ring-spin 3.2s linear infinite;
+}
+.mini-flow li + li::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ink-3));
+}
+
+/* ---------- fördjupningssidor ---------- */
+.deep-hero {
+  padding-top: calc(var(--nav-h) + 2rem);
+}
+.deep-hero-stage {
+  min-height: 40vh;
+}
+.deep {
+  padding-top: clamp(4.5rem, 12vh, 8rem);
+  padding-bottom: clamp(4.5rem, 12vh, 8rem);
+}
+.stage-deep-orb {
+  --orb-size: min(300px, 24vw);
+}
+.deep-points {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+}
+.deep-points li {
+  padding: 0.8rem 0;
+}
+.deep-points li + li {
+  border-top: 1px solid var(--line-soft);
+}
+.deep-points strong {
+  display: block;
+  font-weight: 600;
+}
+.deep-points span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+.split-wide {
+  align-items: start;
+}
+.flow {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.6rem;
+}
+/* Linjen med ett ljus som färdas nedåt – underlaget som blir en sändning. */
+.flow::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--line);
+}
+.flow::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 7px;
+  height: 60px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, transparent, var(--glow-deep), transparent);
+  filter: blur(1px);
+  animation: flow-travel 4.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes flow-travel {
+  0% {
+    top: 8px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 68px);
+    opacity: 0;
+  }
+}
+.flow li {
+  position: relative;
+  padding: 0 0 1.6rem;
+}
+.flow li:last-child {
+  padding-bottom: 0;
+}
+.flow-dot {
+  position: absolute;
+  left: calc(-1.6rem + 1px);
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid var(--ink-3);
+}
+.flow strong {
+  display: block;
+  font-size: 1.0625rem;
+}
+.flow p {
+  margin-top: 0.3rem;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+@media (max-width: 759px) {
+  .deep-hero-stage {
+    order: -1;
+    min-height: 28vh;
+  }
+  .stage-deep-orb {
+    --orb-size: 44vw;
+  }
+  .split-wide .flow {
+    order: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow::after,
+  .mini-flow li:nth-child(2) span {
+    animation: none;
+  }
+}
+
+/* ---------- mobilmenyn ---------- */
+.nav-menu-btn {
+  display: none;
+  min-height: 44px;
+  padding: 0 0.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+.nav-sheet {
+  position: absolute;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem var(--gutter) 1.2rem;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-sheet[hidden] {
+  display: none;
+}
+.nav-sheet a {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.nav.menu-open {
+  background: rgba(0, 0, 0, 0.92);
+}
+@media (max-width: 759px) {
+  .nav-menu-btn {
+    display: inline-flex;
+    align-items: center;
+  }
+  .nav-mobile-link {
+    display: none !important;
+  }
+}
+@media (min-width: 760px) {
+  .nav-sheet {
+    display: none !important;
+  }
 }

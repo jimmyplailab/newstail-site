@@ -55,9 +55,10 @@ export const en: Copy = {
   },
   inside: {
     title: "Internal news that actually lands.",
-    lead: "Write or record the message in the app. The next morning the host tells it in everyone's broadcast, right among the news. No email nobody opens – and you see how many heard it.",
+    lead: "Write or record the message in the app. The host then tells it in everyone's broadcast, in the language each person chose. No email nobody opens – and you see how many heard it.",
     bubble: "Internal: new price list from Monday",
     reach: "Heard by 34 of 41",
+    flow: ["You record it", "AI refines and translates", "Everyone hears it"],
   },
   quiz: {
     title: "Go deeper. Remember more.",
@@ -79,7 +80,7 @@ export const en: Copy = {
   pricing: {
     metaTitle: "Pricing – Newstail. Pay only for the people who listen.",
     metaDescription:
-      "SEK 149 per active listener per month, less the more you are. Never more than a cap. 14 days free, no lock-in.",
+      "SEK 149 per active listener per month, less the more you are. People who don't listen cost nothing. 14 days free, no lock-in.",
     title: "Pay for the people who listen.",
     lead: "Active listener = at least three broadcasts a month. Minimum ten listeners. Publishing is free.",
     tiers: [
@@ -87,14 +88,6 @@ export const en: Copy = {
       { range: "26–100", amount: "SEK 119", unit: "per listener per month" },
       { range: "101 and up", amount: "SEK 89", unit: "per listener per month" },
     ],
-    caps: {
-      title: "Never more than",
-      rows: [
-        { size: "up to 100 employees", amount: "SEK 9,900/month" },
-        { size: "up to 300", amount: "SEK 24,900/month" },
-        { size: "up to 1,000", amount: "SEK 59,000/month" },
-      ],
-    },
     notes: [
       "14 days free for the whole company. No lock-in.",
       "Invoiced in arrears. Annual billing = ten months.",
@@ -104,7 +97,7 @@ export const en: Copy = {
   trust: {
     title: "Built for companies from day one.",
     items: [
-      { title: "Data in the EU.", text: "Your messages train no model." },
+      { title: "Database in Stockholm.", text: "No AI is trained on your data." },
       { title: "The individual owns their data.", text: "Management sees patterns, never people." },
       { title: "You decide the sources.", text: "Trusted sources per market, your internal ones first." },
       { title: "Delete whenever you want.", text: "Everything is gone." },

@@ -1,0 +1,11 @@
+---
+import Base from "../../layouts/Base.astro";
+import Deep from "../../components/Deep.astro";
+import { en as copy } from "../../i18n/en";
+import { companies } from "../../i18n/pages";
+const page = companies.en;
+---
+
+<Base copy={copy} path="/en/for-companies/" altPath="/for-foretag/" title={page.metaTitle} description={page.metaDescription}>
+  <Deep copy={copy} page={page} />
+</Base>

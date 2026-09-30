@@ -33,7 +33,7 @@ export type Copy = {
     captionTopic: string;
     captionTitle: string;
   };
-  inside: { title: string; lead: string; bubble: string; reach: string };
+  inside: { title: string; lead: string; bubble: string; reach: string; flow: string[] };
   quiz: { title: string; lead: string; recap: string; quiz: string; share: string };
   leaders: {
     title: string;
@@ -47,7 +47,6 @@ export type Copy = {
     title: string;
     lead: string;
     tiers: { range: string; amount: string; unit: string }[];
-    caps: { title: string; rows: { size: string; amount: string }[] };
     notes: string[];
     cta: string;
   };

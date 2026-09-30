@@ -55,9 +55,10 @@ export const sv: Copy = {
   },
   inside: {
     title: "Interninfo som faktiskt når fram.",
-    lead: "Skriv eller tala in budskapet i appen. Nästa morgon berättar värden det i allas sändning, mitt bland nyheterna. Inget mejl som ingen öppnar – och ni ser hur många som hörde.",
+    lead: "Skriv eller tala in budskapet i appen. Därefter berättar värden det i allas sändning, på det språk var och en valt. Inget mejl som ingen öppnar – och ni ser hur många som hörde.",
     bubble: "Internt: nya prislistan gäller från måndag",
     reach: "Hört av 34 av 41",
+    flow: ["Du pratar in", "AI:n förädlar och översätter", "Alla hör det"],
   },
   quiz: {
     title: "Gå djupare. Minns mer.",
@@ -79,7 +80,7 @@ export const sv: Copy = {
   pricing: {
     metaTitle: "Pris – Newstail. Betala bara för dem som lyssnar.",
     metaDescription:
-      "149 kr per aktiv lyssnare och månad, lägre ju fler ni blir. Aldrig mer än ett tak. 14 dagar gratis, ingen bindning.",
+      "149 kr per aktiv lyssnare och månad, lägre ju fler ni blir. Den som inte lyssnar kostar inget. 14 dagar gratis, ingen bindning.",
     title: "Betala för dem som lyssnar.",
     lead: "Aktiv lyssnare = minst tre sändningar i månaden. Minst tio lyssnare. Publicera är gratis.",
     tiers: [
@@ -87,14 +88,6 @@ export const sv: Copy = {
       { range: "26–100", amount: "119 kr", unit: "per lyssnare och månad" },
       { range: "101 och uppåt", amount: "89 kr", unit: "per lyssnare och månad" },
     ],
-    caps: {
-      title: "Aldrig mer än",
-      rows: [
-        { size: "upp till 100 anställda", amount: "9 900 kr/mån" },
-        { size: "upp till 300", amount: "24 900 kr/mån" },
-        { size: "upp till 1 000", amount: "59 000 kr/mån" },
-      ],
-    },
     notes: [
       "14 dagar gratis för hela företaget. Ingen bindning.",
       "Faktura i efterskott. Årsbetalning = tio månader.",
@@ -104,7 +97,7 @@ export const sv: Copy = {
   trust: {
     title: "Byggt för företag från början.",
     items: [
-      { title: "Data i EU.", text: "Era budskap tränar ingen modell." },
+      { title: "Databasen i Stockholm.", text: "Ingen AI tränas på era data." },
       { title: "Individen äger sin data.", text: "Ledningen ser mönster, aldrig personer." },
       { title: "Ni bestämmer källorna.", text: "Betrodda källor per marknad, era interna först." },
       { title: "Radera när ni vill.", text: "Allt försvinner." },
