@@ -1,0 +1,98 @@
+---
+import "../styles/global.css";
+import Space from "../space/Space";
+import type { Copy } from "../i18n/types";
+import { LOGIN_URL, START_URL } from "../i18n/types";
+
+interface Props {
+  copy: Copy;
+  path: string;
+}
+const { copy, path } = Astro.props;
+const site = "https://newstail.io";
+const canonical = `${site}${path}`;
+const svHref = `${site}/`;
+const enHref = `${site}/en/`;
+---
+
+<!doctype html>
+<html lang={copy.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{copy.meta.title}</title>
+    <meta name="description" content={copy.meta.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="sv" href={svHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={svHref} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#000000" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Newstail" />
+    <meta property="og:title" content={copy.meta.title} />
+    <meta property="og:description" content={copy.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site}/og.png`} />
+    <meta property="og:locale" content={copy.lang === "sv" ? "sv_SE" : "en_GB"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={copy.meta.title} />
+    <meta name="twitter:description" content={copy.meta.description} />
+    <meta name="twitter:image" content={`${site}/og.png`} />
+    <slot name="head" />
+  </head>
+  <body>
+    <Space client:load />
+    <header class="nav" id="nav">
+      <div class="nav-inner">
+        <a href={copy.lang === "sv" ? "/" : "/en/"} class="logo" aria-label="Newstail"></a>
+        <nav class="nav-links" aria-label="Meny">
+          <a href="#produkt">{copy.nav.product}</a>
+          <a href="#foretag">{copy.nav.company}</a>
+          <a href="#pris">{copy.nav.pricing}</a>
+        </nav>
+        <div class="nav-right">
+          <a class="lang" href={copy.nav.switchHref} hreflang={copy.lang === "sv" ? "en" : "sv"}
+            >{copy.nav.switch}</a
+          >
+          <a class="pill pill-ghost nav-login" href={LOGIN_URL}>{copy.nav.login}</a>
+          <a class="pill pill-primary" href={START_URL}>{copy.nav.start}</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="logo" aria-hidden="true"></span>
+        <span>{copy.footer.line}</span>
+        <span class="footer-spacer"></span>
+        <a href={`mailto:${copy.footer.contact}`}>{copy.footer.contact}</a>
+        <a href={copy.lang === "sv" ? "/integritet/" : "/en/privacy/"}>{copy.footer.privacy}</a>
+        <a href={copy.nav.switchHref}>{copy.nav.switch}</a>
+      </div>
+    </footer>
+    <script>
+      // Topplinjen blir glas när man scrollat; sektionernas animationer startar när de syns.
+      const nav = document.getElementById("nav");
+      const onScroll = () => nav?.classList.toggle("is-scrolled", window.scrollY > 24);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in-view");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.35 },
+      );
+      document.querySelectorAll("[data-watch]").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

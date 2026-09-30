@@ -1,0 +1,267 @@
+---
+import type { Copy } from "../i18n/types";
+import { START_URL } from "../i18n/types";
+
+interface Props {
+  copy: Copy;
+}
+const { copy: c } = Astro.props;
+const words = (s: string) => s.split(" ");
+---
+
+<!-- 1. Hero -->
+<section class="section section-full hero" data-space data-hue="262" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="eyebrow">{c.hero.eyebrow}</p>
+      <h1 class="title-hero">{c.hero.title}</h1>
+      <p class="lead">{c.hero.lead}</p>
+      <div class="actions">
+        <a class="pill pill-primary pill-lg" href={START_URL}>{c.hero.cta}</a>
+        <a class="pill pill-secondary pill-lg" href="#sandningen">{c.hero.listen}</a>
+      </div>
+    </div>
+    <div class="split-stage stage-hero">
+      <div class="orb-anchor orb-anchor-hero" data-orb-anchor></div>
+      <div class="bubbles" style="--wait: 1700ms">
+        <span class="bubble bubble-r b-hero-1" style="--i: 0">{c.hero.bubbles[0]}</span>
+        <span class="bubble bubble-l b-hero-2" style="--i: 1">{c.hero.bubbles[1]}</span>
+        <span class="bubble bubble-r bubble-inside b-hero-3" style="--i: 2">{c.hero.bubbles[2]}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Värdet för bolaget -->
+<section class="section" id="foretag" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+  <div class="value-rows">
+    {
+      c.value.rows.map((r, i) => (
+        <div class="value-row reveal" style={`--i: ${i}`}>
+          <h3>{r.title}</h3>
+          <p>{r.text}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- 3. Så funkar det -->
+<section class="section section-full" id="produkt" data-space data-hue="230" data-watch>
+  <div style="width:100%">
+    <div class="stack" style="max-width: 34rem">
+      <p class="eyebrow">{c.steps.eyebrow}</p>
+      <h2 class="title-xl">{c.steps.title}</h2>
+    </div>
+    <div class="steps">
+      <div class="orb-anchor orb-anchor-steps" data-orb-anchor></div>
+      {
+        c.steps.items.map((s, i) => (
+          <div class="step reveal" style={`--i: ${i}`}>
+            <span class="step-n">{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- 4. Sändningen -->
+<section class="section section-full" id="sandningen" data-space data-hue="200" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="eyebrow">{c.broadcast.eyebrow}</p>
+      <h2 class="title-xl">{c.broadcast.title}</h2>
+      <p class="lead">{c.broadcast.lead}</p>
+    </div>
+    <div class="split-stage stage-broadcast">
+      <div class="orb-anchor orb-anchor-md" data-orb-anchor></div>
+      <div class="bubbles" style="--wait: 300ms">
+        <span class="bubble bubble-l b-bc-1" style="--i: 0">{c.broadcast.bubbles[0]}</span>
+        <span class="bubble bubble-r b-bc-2" style="--i: 1">{c.broadcast.bubbles[1]}</span>
+        <span class="bubble bubble-l b-bc-3" style="--i: 2">{c.broadcast.bubbles[2]}</span>
+      </div>
+      <div class="caption caption-broadcast" style="--wait: 900ms">
+        <span class="caption-topic">{c.broadcast.captionTopic}</span>
+        <span class="caption-title">
+          {words(c.broadcast.captionTitle).map((w, i) => (
+            <><span class="caption-word" style={`--i: ${i}`}>{w}</span>{" "}</>
+          ))}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Inside -->
+<section class="section section-full" id="inside" data-space data-hue="72" data-watch>
+  <div class="split orb-left">
+    <div class="split-text stack">
+      <p class="eyebrow">{c.inside.eyebrow}</p>
+      <h2 class="title-xl">{c.inside.title}</h2>
+      <p class="lead">{c.inside.lead}</p>
+    </div>
+    <div class="split-stage stage-inside">
+      <div class="orb-anchor orb-anchor-sm" data-orb-anchor></div>
+      <div class="bubbles" style="--wait: 300ms">
+        <span class="bubble bubble-r bubble-inside b-in-1" style="--i: 0">{c.inside.bubble}</span>
+        <span class="bubble bubble-l b-in-2 muted" style="--i: 2">{c.inside.reach}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Recap & Quiz -->
+<section class="section section-full" id="quiz" data-space data-hue="300" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="eyebrow">{c.quiz.eyebrow}</p>
+      <h2 class="title-xl">{c.quiz.title}</h2>
+      <p class="lead">{c.quiz.lead}</p>
+    </div>
+    <div class="split-stage stage-quiz">
+      <div class="orb-anchor orb-anchor-sm" data-orb-anchor></div>
+      <div class="pills-row pills-quiz" style="--wait: 500ms">
+        <span class="pill pill-recap">{c.quiz.recap.toUpperCase()}</span>
+        <span class="pill pill-quiz">{c.quiz.quiz.toUpperCase()}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. För företaget -->
+<section class="section section-full" id="ledare" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="eyebrow">{c.leaders.eyebrow}</p>
+      <h2 class="title-xl">{c.leaders.title}</h2>
+      <p class="lead">{c.leaders.lead}</p>
+      <div class="stats">
+        {
+          c.leaders.stats.map((s, i) => (
+            <div class="stat reveal" style={`--i: ${i + 1}`}>
+              <span class="stat-value">{s.value}</span>
+              <span class="stat-label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+      <p class="subtle" style="font-size: 0.8125rem">{c.leaders.statsNote}</p>
+    </div>
+    <div class="split-stage stage-admin reveal" style="--i: 2">
+      <div class="screen screen-admin">
+        <img src="/screens/admin-overview.png" alt="" width="1200" height="800" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Pris -->
+<section class="section" id="pris" data-space data-hue="150" data-orb="0.86,0.5,0.09,0.9" data-orb-m="0.5,0.1,0.06,0.7" data-watch>
+  <div class="price-grid">
+    <div class="stack">
+      <p class="eyebrow">{c.pricing.eyebrow}</p>
+      <h2 class="title-xl">{c.pricing.title}</h2>
+      <p class="lead">{c.pricing.lead}</p>
+      <ul class="tiers">
+        {
+          c.pricing.tiers.map((t) => (
+            <li>
+              <span>{t.range}</span>
+              <span class="amount">
+                {t.amount} <small>{t.unit}</small>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="price-notes">
+        {c.pricing.notes.map((n) => <p>{n}</p>)}
+      </div>
+      <div class="actions">
+        <a class="pill pill-primary pill-lg" href={START_URL}>{c.pricing.cta}</a>
+      </div>
+    </div>
+    <div class="stack caps">
+      <p class="eyebrow">{c.pricing.caps.title}</p>
+      <ul class="tiers">
+        {
+          c.pricing.caps.rows.map((r) => (
+            <li>
+              <span class="muted">{r.size}</span>
+              <span class="amount">{r.amount}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- 9. Trygghet -->
+<section class="section" id="trygghet" data-space data-hue="200" data-orb="0.9,0.3,0.07,0.85" data-orb-m="0.86,0.12,0.06,0.7" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="eyebrow">{c.trust.eyebrow}</p>
+      <h2 class="title-xl">{c.trust.title}</h2>
+    </div>
+    <ul class="plain-list">
+      {
+        c.trust.items.map((t) => (
+          <li>
+            <strong>{t.title}</strong> {t.text}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- 10. Frågor -->
+<section class="section" id="fragor" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-watch>
+  <div class="stack" style="max-width: 34rem">
+    <p class="eyebrow">{c.faq.eyebrow}</p>
+    <h2 class="title-xl">{c.faq.title}</h2>
+  </div>
+  <div class="faq" style="margin-top: 2rem">
+    {
+      c.faq.items.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>
+
+<!-- 11. Avslut -->
+<section class="section section-full closing" data-space data-hue="262" data-watch>
+  <div class="orb-anchor orb-anchor-closing" data-orb-anchor></div>
+  <div class="stack closing-text">
+    <h2 class="title-xl">{c.closing.title}</h2>
+    <p class="lead">{c.closing.lead}</p>
+    <div class="actions">
+      <a class="pill pill-primary pill-lg" href={START_URL}>{c.closing.cta}</a>
+    </div>
+    <p class="subtle">{c.closing.alt}</p>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: c.faq.items.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+})} />
