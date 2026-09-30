@@ -3,6 +3,7 @@
  *  dra-upp-spår i heron, tidslinjen från nyhet till röst, stora siffror och ikoner. */
 import type { TechPage } from "../i18n/subpages";
 import { START_URL } from "../i18n/types";
+import LineArt from "./LineArt.astro";
 
 interface Props {
   page: TechPage;
@@ -44,6 +45,7 @@ const icons: Record<string, string> = {
       <h2 class="title-xl">{page.flow.title}</h2>
       <p class="lead">{page.flow.lead}</p>
       <div class="morning-rail" aria-hidden="true"><span></span></div>
+      <LineArt kind="waves" />
     </div>
     <ol class="morning-steps">
       {

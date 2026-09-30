@@ -42,16 +42,16 @@ const REST = "0.5,0.5,0.1,0";
 <section class="section" id="sprak" data-space data-hue="262" data-watch>
   <div class="split orb-left lang-split">
     <div class="split-text stack">
-      <h2 class="title-xl">{c.language.title}</h2>
-      <p class="lead">{c.language.lead}</p>
-    </div>
-    <div class="split-stage stage-language">
-      <div class="orb-anchor" data-orb-anchor></div>
       <div class="lang-chips" aria-hidden="true">
         {c.language.samples.map((x, i) => (
           <span class={`lang-chip lang-chip-${i}${i === 0 ? " is-on" : ""}`} data-i={i}>{x.code}</span>
         ))}
       </div>
+      <h2 class="title-xl">{c.language.title}</h2>
+      <p class="lead">{c.language.lead}</p>
+    </div>
+    <div class="split-stage stage-language">
+      <div class="orb-anchor" data-orb-anchor></div>
       <div class="caption caption-language" style="--wait: 300ms" aria-live="off">
         <span class="caption-topic" data-lang-topic>{c.language.samples[0]!.topic}</span>
         <span class="caption-title" data-lang-title>

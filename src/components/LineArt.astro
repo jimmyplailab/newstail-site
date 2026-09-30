@@ -1,0 +1,102 @@
+---
+/**
+ * Tunna linjeillustrationer i stil med elevenlabs.io (Joel 2026-09-30): geometri i hårlinjer och
+ * prickade hjälplinjer, animerade lugnt. Ritas i ett 320×320-rutnät, färgen är currentColor.
+ *   waves – cirklar som växer ur en punkt (rösten som sprids)        → Tekniken, från nyhet till röst
+ *   cube  – kub med rutnät och prickade rymddiagonaler (allt i ett)   → Pris, allt ingår
+ *   cones – två koner mot en punkt på prickade axlar (många → en)      → Trygghet, byggt för att skydda
+ * Linjerna tecknas fram när sektionen syns (.in-view via data-watch), sedan rör de sig i loop.
+ */
+interface Props {
+  kind: "waves" | "cube" | "cones";
+  class?: string;
+}
+const { kind, class: cls = "" } = Astro.props;
+
+// waves: alla cirklar tangerar samma punkt till vänster
+const waves = Array.from({ length: 7 }, (_, k) => {
+  const r = 36 + k * 15;
+  return { r, cx: 58 + r, cy: 160 };
+});
+
+// cube: främre kvadrat + bakre förskjuten, 3×3-rutnät på synliga ytor
+const F = { x: 62, y: 104, s: 156 }; // främre yta
+const D = { x: 58, y: -50 }; // förskjutning bakåt
+const cubeLines: string[] = [];
+const sq = (x: number, y: number, s: number) => `M${x} ${y}h${s}v${s}h${-s}z`;
+cubeLines.push(sq(F.x, F.y, F.s));
+cubeLines.push(sq(F.x + D.x, F.y + D.y, F.s));
+for (const [dx, dy] of [
+  [0, 0],
+  [F.s, 0],
+  [0, F.s],
+  [F.s, F.s],
+]) {
+  cubeLines.push(`M${F.x + dx} ${F.y + dy}l${D.x} ${D.y}`);
+}
+for (let i = 1; i < 3; i++) {
+  const t = (F.s / 3) * i;
+  // främre yta
+  cubeLines.push(`M${F.x + t} ${F.y}v${F.s}`, `M${F.x} ${F.y + t}h${F.s}`);
+  // ovansidan
+  cubeLines.push(`M${F.x + t} ${F.y}l${D.x} ${D.y}`, `M${F.x + (D.x / 3) * i} ${F.y + (D.y / 3) * i}h${F.s}`);
+  // högersidan
+  cubeLines.push(`M${F.x + F.s} ${F.y + t}l${D.x} ${D.y}`, `M${F.x + F.s + (D.x / 3) * i} ${F.y + (D.y / 3) * i}v${F.s}`);
+}
+const cubeDiag = [
+  `M${F.x} ${F.y + F.s}L${F.x + F.s + D.x} ${F.y + D.y}`,
+  `M${F.x + F.s} ${F.y + F.s}L${F.x + D.x} ${F.y + D.y}`,
+  `M${F.x} ${F.y}L${F.x + F.s + D.x} ${F.y + F.s + D.y}`,
+  `M${F.x + F.s} ${F.y}L${F.x + D.x} ${F.y + F.s + D.y}`,
+];
+
+// cones: spets i (150,190)
+const A = { x: 150, y: 190 };
+const small = { cx: 88, cy: 158, rx: 14, ry: 44 };
+const big = { cx: 252, cy: 134, rx: 24, ry: 84 };
+---
+
+<figure class={`lineart lineart-${kind} ${cls}`} aria-hidden="true">
+  {
+    kind === "waves" && (
+      <svg viewBox="0 0 320 320" fill="none" stroke="currentColor" stroke-width="1">
+        {waves.map((c, k) => (
+          <circle
+            cx={c.cx}
+            cy={c.cy}
+            r={c.r}
+            pathLength="1"
+            class={k === waves.length - 1 ? "la-dotted" : "la-draw la-breathe"}
+            style={`--k: ${k}`}
+          />
+        ))}
+      </svg>
+    )
+  }
+  {
+    kind === "cube" && (
+      <svg viewBox="0 0 320 320" fill="none" stroke="currentColor" stroke-width="1">
+        {cubeLines.map((d, k) => (
+          <path d={d} pathLength="1" class="la-draw" style={`--k: ${k}`} />
+        ))}
+        {cubeDiag.map((d, k) => (
+          <path d={d} class="la-dotted la-flow" style={`--k: ${k}`} />
+        ))}
+      </svg>
+    )
+  }
+  {
+    kind === "cones" && (
+      <svg viewBox="0 0 320 320" fill="none" stroke="currentColor" stroke-width="1">
+        <path d={`M${A.x} 40V300`} class="la-dotted" />
+        <path d={`M20 ${A.y}H300`} class="la-dotted" />
+        <path d={`M92 292L${A.x + 40} ${A.y - 62}`} class="la-dotted" />
+        <ellipse cx={small.cx} cy={small.cy} rx={small.rx} ry={small.ry} pathLength="1" class="la-draw la-sway" style="--k: 0" />
+        <path d={`M${small.cx} ${small.cy - small.ry}L${A.x} ${A.y}L${small.cx} ${small.cy + small.ry}`} pathLength="1" class="la-draw" style="--k: 1" />
+        <ellipse cx={big.cx} cy={big.cy} rx={big.rx} ry={big.ry} pathLength="1" class="la-draw la-sway" style="--k: 2" />
+        <path d={`M${big.cx} ${big.cy - big.ry}L${A.x} ${A.y}L${big.cx} ${big.cy + big.ry}`} pathLength="1" class="la-draw" style="--k: 3" />
+        <circle cx={A.x} cy={A.y} r="2.2" fill="currentColor" stroke="none" class="la-pulse" />
+      </svg>
+    )
+  }
+</figure>

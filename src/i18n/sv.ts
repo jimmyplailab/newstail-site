@@ -151,5 +151,51 @@ export const sv: Copy = {
     line: "© Newstail",
     privacy: "Integritet",
     contact: "hello@newstail.io",
+    langName: "Svenska",
+    cols: [
+      {
+        title: "Produkt",
+        links: [
+          { t: "Sändningen", href: "/#sandningen" },
+          { t: "På sitt eget språk", href: "/#sprak" },
+          { t: "Interninfo", href: "/#inside" },
+          { t: "Recap och quiz", href: "/#quiz" },
+          { t: "För ledare", href: "/#ledare" },
+        ],
+      },
+      {
+        title: "Tekniken",
+        links: [
+          { t: "Enkelt framför, avancerat bakom", href: "/tekniken/" },
+          { t: "Från nyhet till röst", href: "/tekniken/#flode" },
+          { t: "Appen för iPhone", href: "/tekniken/#iphone" },
+        ],
+      },
+      {
+        title: "Trygghet",
+        links: [
+          { t: "Tryggt från början", href: "/trygghet/" },
+          { t: "Vad ledningen ser", href: "/trygghet/#ser" },
+          { t: "Byggt för att skydda", href: "/trygghet/#skydd" },
+        ],
+      },
+      {
+        title: "Pris",
+        links: [
+          { t: "Betala för dem som lyssnar", href: "/pris/" },
+          { t: "Räkna på ert företag", href: "/pris/#rakna" },
+          { t: "Allt ingår", href: "/pris/#ingar" },
+          { t: "Frågor om priset", href: "/pris/#fragor" },
+        ],
+      },
+      {
+        title: "Företag",
+        links: [
+          { t: "Kom igång", href: "https://air.newstail.io/start" },
+          { t: "Logga in", href: "https://air.newstail.io/login" },
+          { t: "hello@newstail.io", href: "mailto:hello@newstail.io" },
+        ],
+      },
+    ],
   },
 };

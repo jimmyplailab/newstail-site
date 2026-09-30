@@ -148,5 +148,51 @@ export const en: Copy = {
     line: "© Newstail",
     privacy: "Privacy",
     contact: "hello@newstail.io",
+    langName: "English",
+    cols: [
+      {
+        title: "Product",
+        links: [
+          { t: "The broadcast", href: "/en/#sandningen" },
+          { t: "In their own language", href: "/en/#sprak" },
+          { t: "Internal news", href: "/en/#inside" },
+          { t: "Recap and quiz", href: "/en/#quiz" },
+          { t: "For leaders", href: "/en/#ledare" },
+        ],
+      },
+      {
+        title: "Technology",
+        links: [
+          { t: "Simple in front, advanced behind", href: "/en/technology/" },
+          { t: "From news to voice", href: "/en/technology/#flode" },
+          { t: "The iPhone app", href: "/en/technology/#iphone" },
+        ],
+      },
+      {
+        title: "Trust",
+        links: [
+          { t: "Secure from the start", href: "/en/trust/" },
+          { t: "What management sees", href: "/en/trust/#ser" },
+          { t: "Built to protect", href: "/en/trust/#skydd" },
+        ],
+      },
+      {
+        title: "Pricing",
+        links: [
+          { t: "Pay for the people who listen", href: "/en/pricing/" },
+          { t: "Run the numbers", href: "/en/pricing/#rakna" },
+          { t: "Everything included", href: "/en/pricing/#ingar" },
+          { t: "Pricing questions", href: "/en/pricing/#fragor" },
+        ],
+      },
+      {
+        title: "Company",
+        links: [
+          { t: "Get started", href: "https://air.newstail.io/start" },
+          { t: "Log in", href: "https://air.newstail.io/login" },
+          { t: "hello@newstail.io", href: "mailto:hello@newstail.io" },
+        ],
+      },
+    ],
   },
 };

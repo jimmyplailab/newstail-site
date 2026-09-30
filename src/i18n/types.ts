@@ -62,7 +62,14 @@ export type Copy = {
   trust: { title: string; items: { title: string; text: string }[] };
   faq: { title: string; items: { q: string; a: string }[] };
   closing: { title: string; lead: string; cta: string; priceLink: string };
-  footer: { line: string; privacy: string; contact: string };
+  footer: {
+    line: string;
+    privacy: string;
+    contact: string;
+    /** Sidfoten som egen sektion (2026-09-30): kolumner med rubrik och länkar, sökvägar på sidans språk. */
+    langName: string;
+    cols: { title: string; links: { t: string; href: string }[] }[];
+  };
 };
 
 export const LOGIN_URL = "https://air.newstail.io/login";

@@ -2,6 +2,7 @@
 /** Trygghet: vad ledningen ser (prickar som aggregat) och hur data skyddas. Inget klot,
  *  inga leverantörsnamn eller lagringstider (Joel 2026-09-30). */
 import type { TrustPage } from "../i18n/subpages";
+import LineArt from "./LineArt.astro";
 
 interface Props {
   page: TrustPage;
@@ -67,7 +68,11 @@ while (lit.size < LIT) {
 </section>
 
 <section class="sub-section" id="skydd" data-space data-hue="262" data-watch>
-  <h2 class="title-xl">{page.protect.title}</h2>
+  <div class="protect-grid">
+  <div class="protect-side">
+    <h2 class="title-xl">{page.protect.title}</h2>
+    <LineArt kind="cones" />
+  </div>
   <ul class="quiet-grid quiet-grid-4">
     {
       page.protect.items.map((it, i) => (
@@ -78,5 +83,6 @@ while (lit.size < LIT) {
       ))
     }
   </ul>
+  </div>
 </section>
 

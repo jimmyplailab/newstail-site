@@ -90,17 +90,34 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
     <main>
       <slot />
     </main>
-    <footer class="footer">
+    <footer class="footer" id="sidfot">
       <div class="footer-inner">
-        <span class="logo" aria-hidden="true"></span>
+        <div class="footer-brand">
+          <a href={home} class="logo" aria-label="Newstail"></a>
+          <a class="footer-lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9s-1.3 6.3-3.9 9c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z" /></svg>
+            {copy.lang === "sv" ? "English" : "Svenska"}
+          </a>
+        </div>
+        <div class="footer-cols">
+          {
+            copy.footer.cols.map((col) => (
+              <div class="footer-col">
+                <h3>{col.title}</h3>
+                <ul>
+                  {col.links.map((l) => (
+                    <li>
+                      <a href={l.href}>{l.t}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="footer-foot">
         <span>{copy.footer.line}</span>
-        <span class="footer-spacer"></span>
-        <a href={techPage}>{copy.nav.tech}</a>
-        <a href={trustPage}>{copy.nav.trust}</a>
-        <a href={pricing}>{copy.nav.pricing}</a>
-        <a href={LOGIN_URL}>{copy.nav.login}</a>
-        <a href={`mailto:${copy.footer.contact}`}>{copy.footer.contact}</a>
-        <a href={altPath}>{copy.nav.switch}</a>
       </div>
     </footer>
     <script>
@@ -117,7 +134,22 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
         if (sheet) sheet.hidden = !open;
         nav?.classList.toggle("menu-open", open);
       });
-      const onScroll = () => nav?.classList.toggle("is-scrolled", window.scrollY > 24);
+      // Som elevenlabs.io: högst upp syns hela topplinjen. Scrollar man ner glider den bort,
+      // scrollar man upp kommer en kompakt variant (logga + knappar) tillbaka på fast botten.
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        const scrolled = y > 24;
+        nav?.classList.toggle("is-scrolled", scrolled);
+        if (nav && !nav.classList.contains("menu-open")) {
+          const goingDown = y > lastY + 4;
+          const goingUp = y < lastY - 4;
+          if (!scrolled) nav.classList.remove("is-hidden");
+          else if (goingDown) nav.classList.add("is-hidden");
+          else if (goingUp) nav.classList.remove("is-hidden");
+        }
+        if (Math.abs(y - lastY) > 4) lastY = y;
+      };
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
       const io = new IntersectionObserver(
@@ -132,14 +164,6 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
         { threshold: 0.35 },
       );
       document.querySelectorAll("[data-watch]").forEach((el) => io.observe(el));
-      // Sista sektionen + sidfoten ryms på en skärm: sektionen krymper med sidfotens höjd.
-      const footer = document.querySelector<HTMLElement>(".footer");
-      if (footer) {
-        const setFooter = () =>
-          document.documentElement.style.setProperty("--footer-h", `${Math.ceil(footer.getBoundingClientRect().height)}px`);
-        setFooter();
-        new ResizeObserver(setFooter).observe(footer);
-      }
     </script>
   </body>
 </html>

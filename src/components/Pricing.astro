@@ -7,6 +7,7 @@
 import type { Copy } from "../i18n/types";
 import { START_URL } from "../i18n/types";
 import { pricing, TIERS, YEAR_FACTOR } from "../i18n/pricing";
+import LineArt from "./LineArt.astro";
 
 interface Props {
   copy: Copy;
@@ -83,13 +84,18 @@ const first = TIERS[0]!.price;
 </section>
 
 <section class="section price-included" id="ingar" data-space data-hue="200" data-watch>
-  <div class="included">
-    <h2 class="title-xl">{p.included.title}</h2>
-    <ul class="check-list included-list">
-      {p.included.items.map((x, i) => <li class="reveal" style={`--i: ${i}`}>{x}</li>)}
-    </ul>
-    <div class="actions">
-      <a class="pill pill-primary pill-lg" href={START_URL}>{p.plan.cta}</a>
+  <div class="included included-grid">
+    <div class="included-side">
+      <h2 class="title-xl">{p.included.title}</h2>
+      <LineArt kind="cube" />
+    </div>
+    <div>
+      <ul class="check-list included-list">
+        {p.included.items.map((x, i) => <li class="reveal" style={`--i: ${i}`}>{x}</li>)}
+      </ul>
+      <div class="actions">
+        <a class="pill pill-primary pill-lg" href={START_URL}>{p.plan.cta}</a>
+      </div>
     </div>
   </div>
 </section>
