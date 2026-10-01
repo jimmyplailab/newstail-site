@@ -89,17 +89,17 @@ export const sv: Copy = {
   pricing: {
     metaTitle: "Pris – Newstail. Betala bara för dem som lyssnar.",
     metaDescription:
-      "149 kr per aktiv lyssnare och månad, lägre ju fler ni blir. Den som inte lyssnar kostar inget. 14 dagar gratis, ingen bindning.",
+      "149 kr per aktiv lyssnare och månad. Den som inte lyssnar kostar inget. 14 dagar gratis, ingen bindning.",
     title: "Betala för dem som lyssnar.",
     lead: "Aktiv lyssnare = minst tre sändningar i månaden. Minst tio lyssnare. Publicera är gratis.",
     tiers: [
-      { range: "1–25 aktiva lyssnare", amount: "149 kr", unit: "per lyssnare och månad" },
-      { range: "26–100", amount: "119 kr", unit: "per lyssnare och månad" },
-      { range: "101 och uppåt", amount: "89 kr", unit: "per lyssnare och månad" },
+      { range: "Sverige", amount: "149 kr", unit: "per aktiv lyssnare och månad" },
+      { range: "Övriga Europa", amount: "14 €", unit: "per aktiv lyssnare och månad" },
+      { range: "Resten av världen", amount: "15 $", unit: "per aktiv lyssnare och månad" },
     ],
     notes: [
       "14 dagar gratis för hela företaget. Ingen bindning.",
-      "Faktura i efterskott. Årsbetalning = tio månader.",
+      "Betalas i förskott den 1:a, räknat på månaden innan. Årsbetalning = tio månader.",
     ],
     cta: "Kom igång – 14 dagar gratis",
   },

@@ -89,17 +89,17 @@ export const en: Copy = {
   pricing: {
     metaTitle: "Pricing – Newstail. Pay only for the people who listen.",
     metaDescription:
-      "SEK 149 per active listener per month, less the more you are. People who don't listen cost nothing. 14 days free, no lock-in.",
+      "€14 per active listener per month. People who don't listen cost nothing. 14 days free, no lock-in.",
     title: "Pay for the people who listen.",
     lead: "Active listener = at least three broadcasts a month. Minimum ten listeners. Publishing is free.",
     tiers: [
-      { range: "1–25 active listeners", amount: "SEK 149", unit: "per listener per month" },
-      { range: "26–100", amount: "SEK 119", unit: "per listener per month" },
-      { range: "101 and up", amount: "SEK 89", unit: "per listener per month" },
+      { range: "Europe", amount: "€14", unit: "per active listener per month" },
+      { range: "Sweden", amount: "SEK 149", unit: "per active listener per month" },
+      { range: "Rest of the world", amount: "$15", unit: "per active listener per month" },
     ],
     notes: [
       "14 days free for the whole company. No lock-in.",
-      "Invoiced in arrears. Annual billing = ten months.",
+      "Paid in advance on the 1st, based on the month before. Annual billing = ten months.",
     ],
     cta: "Get started – 14 days free",
   },

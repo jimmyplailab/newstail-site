@@ -2,11 +2,11 @@
 /**
  * Prissidan i SaaS-struktur (Joel 2026-09-30, "strukturen, inte visuellt"):
  * 1) rubrik + månad/år + en plan, 2) räknare, 3) allt ingår, 4) frågor + sidfot.
- * Siffrorna kommer från src/i18n/pricing.ts (samma trappa som appens billing_settings).
+ * Siffrorna kommer från src/i18n/pricing.ts (samma pris som appens billing_prices).
  */
 import type { Copy } from "../i18n/types";
 import { START_URL } from "../i18n/types";
-import { pricing, TIERS, YEAR_FACTOR } from "../i18n/pricing";
+import { pricing, YEAR_FACTOR } from "../i18n/pricing";
 import LineArt from "./LineArt.astro";
 
 interface Props {
@@ -16,12 +16,7 @@ const { copy: c } = Astro.props;
 const p = pricing[c.lang as "sv" | "en"];
 const sv = c.lang === "sv";
 const year = (n: number) => n * YEAR_FACTOR;
-/** Ett pris som växlar med månad/år. */
-const px = (n: number) =>
-  `<span class="px" data-m="${p.currency(n)}" data-y="${p.currency(year(n))}">${p.currency(n)}</span>`;
-const feature = (f: string) =>
-  f.replace(/\{p(\d)\}/g, (_, i) => px(TIERS[Number(i)]!.price));
-const first = TIERS[0]!.price;
+const first = p.plan.price;
 ---
 
 <section class="section price-hero" id="pris" data-space data-hue="150" data-watch>
@@ -38,17 +33,16 @@ const first = TIERS[0]!.price;
     <article class="plan">
       <h2 class="plan-name">{p.plan.name}</h2>
       <p class="plan-price">
-        <span class="plan-from">{p.plan.from}</span>
-        {!sv && <span class="plan-cur">SEK</span>}
-        <span class="plan-amount px" data-m={String(first)} data-y={String(Math.round(year(first)))}>{first}</span>
-        {sv && <span class="plan-cur">kr</span>}
+        {p.plan.unitBefore && <span class="plan-cur">{p.plan.unitBefore}</span>}
+        <span class="plan-amount px" data-m={String(first)} data-y={sv ? String(Math.round(year(first))) : year(first).toFixed(2)}>{first}</span>
+        {p.plan.unitAfter && <span class="plan-cur">{p.plan.unitAfter}</span>}
       </p>
       <p class="plan-unit">
         <span data-show="m">{p.perUnit}</span>
         <span data-show="y" hidden>{p.perUnitYear}</span>
       </p>
       <ul class="plan-features">
-        {p.plan.ladder.map((f) => <li set:html={feature(f)} />)}
+        {p.plan.features.map((f) => <li>{f}</li>)}
       </ul>
       <a class="pill pill-lg pill-primary" href={START_URL}>{p.plan.cta}</a>
       <p class="plan-trial">{p.plan.trial} {p.vatNote}</p>
@@ -129,31 +123,28 @@ const first = TIERS[0]!.price;
   })}
 />
 
-<script define:vars={{ lang: c.lang, labels: p.calc.tierLabels }}>
+<script define:vars={{ lang: c.lang, label: p.calc.rowLabel }}>
   window.__priceLang = lang;
-  window.__priceTierLabels = labels;
+  window.__priceRowLabel = label;
 </script>
 
 <script>
-  import { TIERS, MIN_SEATS, YEAR_FACTOR } from "../i18n/pricing";
+  import { PRICES, MIN_SEATS, YEAR_FACTOR } from "../i18n/pricing";
 
-  const w = window as unknown as { __priceLang: string; __priceTierLabels: string[] };
+  const w = window as unknown as { __priceLang: string; __priceRowLabel: string };
   const sv = w.__priceLang === "sv";
+  const price = sv ? PRICES.SEK : PRICES.EUR;
   const money = (n: number) =>
-    sv ? `${Math.round(n).toLocaleString("sv-SE")} kr` : `SEK ${Math.round(n).toLocaleString("en-GB")}`;
+    sv
+      ? `${Math.round(n).toLocaleString("sv-SE")} kr`
+      : `€${n.toLocaleString("en-GB", { maximumFractionDigits: n < 100 ? 2 : 0 })}`;
   let billing: "m" | "y" = "m";
 
-  /** Graderad trappa som i appens billing_summary(): varje steg kostar sitt eget pris. */
+  /** Rakt pris som i appens billing_quote(): pris × max(aktiva, golv). */
   const breakdown = (seats: number) => {
     const billed = Math.max(seats, MIN_SEATS);
-    const rows: { label: string; n: number; price: number }[] = [];
-    let prev = 0;
-    TIERS.forEach((t, i) => {
-      const n = Math.max(0, Math.min(billed, t.upto) - prev);
-      if (n > 0) rows.push({ label: w.__priceTierLabels[i]!, n, price: t.price });
-      prev = t.upto;
-    });
-    return { billed, rows, total: rows.reduce((s, r) => s + r.n * r.price, 0) };
+    const rows = [{ label: w.__priceRowLabel, n: billed, price }];
+    return { billed, rows, total: billed * price };
   };
 
   const range = document.querySelector<HTMLInputElement>(".calc-range");

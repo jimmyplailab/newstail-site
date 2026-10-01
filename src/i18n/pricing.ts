@@ -1,14 +1,10 @@
 /**
- * Prissidan i SaaS-struktur (Joel 2026-09-30): månad/år-växlare, EN plan, räknare,
- * vad som ingår, vanliga frågor. Priset är affärsmodellen 2026-09-30 (docs/affarsmodell.md):
- * graderad trappa 149/119/89 per aktiv lyssnare, golv 10, årsbetalning = tio månader,
- * inget tak.
+ * Prissidan (Joel 2026-09-30, rakt pris 2026-10-01): EN plan, räknare, vad som ingår, frågor.
+ * Priset är affärsmodellen (docs/affarsmodell.md): rakt pris per aktiv lyssnare –
+ * 149 kr i Sverige, 14 € i övriga Europa, 15 $ i resten av världen – minst 10, betalt i
+ * förskott den 1:a räknat på månaden innan. Årsbetalning = tio månader.
  */
-export const TIERS = [
-  { upto: 25, price: 149 },
-  { upto: 100, price: 119 },
-  { upto: Infinity, price: 89 },
-];
+export const PRICES = { SEK: 149, EUR: 14, USD: 15 } as const;
 export const MIN_SEATS = 10;
 /** Årsbetalning: tio månaders pris för tolv. */
 export const YEAR_FACTOR = 10 / 12;
@@ -24,8 +20,11 @@ export type PricingCopy = {
   /** En enda plan (Joel 2026-09-30): alla får allt, priset följer antalet lyssnare. */
   plan: {
     name: string;
-    from: string;
-    ladder: string[];
+    /** Siffran i planen (sv: kronor, en: euro). */
+    price: number;
+    unitBefore: string;
+    unitAfter: string;
+    features: string[];
     cta: string;
     trial: string;
   };
@@ -37,7 +36,7 @@ export type PricingCopy = {
     perYear: string;
     breakdown: string;
     floorNote: string;
-    tierLabels: [string, string, string];
+    rowLabel: string;
   };
   included: { title: string; items: string[] };
   vatNote: string;
@@ -46,12 +45,12 @@ export type PricingCopy = {
 };
 
 const sek = (n: number) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
-const sekEn = (n: number) => `SEK ${Math.round(n).toLocaleString("en-GB")}`;
+const eur = (n: number) => `€${Math.round(n).toLocaleString("en-GB")}`;
 
 export const pricing: Record<"sv" | "en", PricingCopy> = {
   sv: {
     title: "Betala för dem som lyssnar.",
-    lead: "Ett pris per aktiv lyssnare, lägre ju fler ni blir. Den som inte lyssnar kostar inget.",
+    lead: "Ett pris per aktiv lyssnare. Den som inte lyssnar kostar inget.",
     monthly: "Månadsvis",
     yearly: "Årsvis",
     yearlyBadge: "2 månader gratis",
@@ -59,8 +58,15 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     perUnitYear: "per aktiv lyssnare och månad, betalt årsvis",
     plan: {
       name: "Newstail",
-      from: "från",
-      ladder: ["{p0} för de första 25", "{p1} för lyssnare 26–100", "{p2} från lyssnare 101"],
+      price: PRICES.SEK,
+      unitBefore: "",
+      unitAfter: "kr",
+      features: [
+        "Minst 10 lyssnare",
+        "Betalas i förskott den 1:a, räknat på månaden innan",
+        "Ni ser beloppet innan det dras",
+        "14 € i övriga Europa, 15 $ i resten av världen",
+      ],
       cta: "Kom igång – 14 dagar gratis",
       trial: "Hela företaget gratis i 14 dagar. Inget kort, ingen bindning.",
     },
@@ -72,7 +78,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
       perYear: "per år",
       breakdown: "Så räknas det",
       floorNote: "Minst tio lyssnare debiteras.",
-      tierLabels: ["1–25", "26–100", "101–"],
+      rowLabel: "Lyssnare",
     },
     included: {
       title: "Allt ingår.",
@@ -92,8 +98,10 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
       title: "Frågor om priset.",
       items: [
         { q: "Vad räknas som aktiv lyssnare?", a: "Den som har lyssnat klart på minst tre sändningar under månaden. Den som lyssnar mindre kostar inget." },
-        { q: "Hur fungerar trappan?", a: "Som skatt: de första 25 kostar 149 kr, de nästa 75 kostar 119 kr och resten 89 kr. Fler lyssnare höjer aldrig priset på de första." },
-        { q: "Vad händer efter provperioden?", a: "Ni lägger in kort eller fakturauppgifter. Därefter betalar ni i efterskott för förra månadens aktiva lyssnare." },
+        { q: "Vad händer efter provperioden?", a: "Ni lägger in kort. Resten av månaden dras direkt, i förskott, räknat på provperioden. Sedan dras varje månad den 1:a, räknat på hur många som lyssnade månaden innan. Beloppet syns i admin, och ni får ett mejl tre dagar innan." },
+        { q: "Varför räknas det på månaden innan?", a: "Då vet ni exakt vad som dras innan det dras, och ni behöver aldrig vänta på en faktura i efterhand. Växer ni följer priset med månaden efter." },
+        { q: "Vilken valuta?", a: "Kronor i Sverige, euro i övriga Europa (14 €) och dollar i resten av världen (15 $). Svenska företag betalar 25 % moms, EU-företag med momsnummer omvänd skattskyldighet." },
+        { q: "Vad händer om vi slutar?", a: "Månaden ni redan betalat gäller till sista dagen. Sedan dras inget mer – ingen slutfaktura." },
         { q: "Hur fungerar årsbetalning?", a: "Ni betalar tio månader för tolv, i förskott, utifrån en uppskattad siffra som vi stämmer av." },
         { q: "Kan vi säga upp när vi vill?", a: "Ja. Det finns ingen bindningstid." },
         { q: "Vi är många, eller flera bolag?", a: "Samma pris och samma tjänst. Mejla hello@newstail.io så hjälper vi er i gång." },
@@ -104,7 +112,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
   },
   en: {
     title: "Pay for the people who listen.",
-    lead: "One price per active listener, lower the more you are. People who don't listen cost nothing.",
+    lead: "One price per active listener. People who don't listen cost nothing.",
     monthly: "Monthly",
     yearly: "Yearly",
     yearlyBadge: "2 months free",
@@ -112,8 +120,15 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     perUnitYear: "per active listener per month, paid yearly",
     plan: {
       name: "Newstail",
-      from: "from",
-      ladder: ["{p0} for the first 25", "{p1} for listeners 26–100", "{p2} from listener 101"],
+      price: PRICES.EUR,
+      unitBefore: "€",
+      unitAfter: "",
+      features: [
+        "Minimum 10 listeners",
+        "Paid in advance on the 1st, based on the month before",
+        "You see the amount before it is charged",
+        "SEK 149 in Sweden, $15 outside Europe",
+      ],
       cta: "Get started – 14 days free",
       trial: "The whole company free for 14 days. No card, no lock-in.",
     },
@@ -125,7 +140,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
       perYear: "per year",
       breakdown: "How it's calculated",
       floorNote: "A minimum of ten listeners is billed.",
-      tierLabels: ["1–25", "26–100", "101+"],
+      rowLabel: "Listeners",
     },
     included: {
       title: "Everything included.",
@@ -145,14 +160,16 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
       title: "Pricing questions.",
       items: [
         { q: "What counts as an active listener?", a: "Someone who has finished at least three broadcasts in the month. People who listen less cost nothing." },
-        { q: "How does the ladder work?", a: "Like tax brackets: the first 25 cost SEK 149, the next 75 cost SEK 119 and the rest SEK 89. More listeners never raise the price of the first ones." },
-        { q: "What happens after the trial?", a: "You add a card or invoice details. After that you pay in arrears for last month's active listeners." },
+        { q: "What happens after the trial?", a: "You add a card. The rest of the month is charged right away, in advance, based on the trial. After that you're charged on the 1st of each month, based on how many listened the month before. The amount is shown in admin, and you get an email three days ahead." },
+        { q: "Why is it based on the month before?", a: "So you know exactly what will be charged before it is, and never wait for an invoice afterwards. If you grow, the price follows the month after." },
+        { q: "Which currency?", a: "Euro in Europe (€14), Swedish kronor in Sweden (SEK 149) and US dollars elsewhere ($15). EU companies with a VAT number are reverse charged." },
+        { q: "What if we stop?", a: "The month you've paid for runs to its last day. Then nothing more is charged – no final invoice." },
         { q: "How does yearly billing work?", a: "You pay ten months for twelve, in advance, based on an estimated number that we reconcile." },
         { q: "Can we cancel whenever we want?", a: "Yes. There is no lock-in." },
         { q: "We're large, or several companies?", a: "Same price, same service. Email hello@newstail.io and we'll help you get started." },
         { q: "Does IT need to do anything?", a: "No. You register with your email domain, and colleagues on the same domain can join right away." },
       ],
     },
-    currency: sekEn,
+    currency: eur,
   },
 };
