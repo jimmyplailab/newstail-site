@@ -99,7 +99,7 @@ export const en: Copy = {
     ],
     notes: [
       "14 days free for the whole company. No lock-in.",
-      "Paid in advance on the 1st, based on the month before. Annual billing = ten months.",
+      "Paid in advance on the 1st, based on the month before.",
     ],
     cta: "Get started – 14 days free",
   },

@@ -2,21 +2,15 @@
  * Prissidan (Joel 2026-09-30, rakt pris 2026-10-01): EN plan, räknare, vad som ingår, frågor.
  * Priset är affärsmodellen (docs/affarsmodell.md): rakt pris per aktiv lyssnare –
  * 149 kr i Sverige, 14 € i övriga Europa, 15 $ i resten av världen – minst 10, betalt i
- * förskott den 1:a räknat på månaden innan. Årsbetalning = tio månader.
+ * förskott den 1:a räknat på månaden innan. Ingen årsbetalning (Joel 2026-10-01).
  */
 export const PRICES = { SEK: 149, EUR: 14, USD: 15 } as const;
 export const MIN_SEATS = 10;
-/** Årsbetalning: tio månaders pris för tolv. */
-export const YEAR_FACTOR = 10 / 12;
 
 export type PricingCopy = {
   title: string;
   lead: string;
-  monthly: string;
-  yearly: string;
-  yearlyBadge: string;
   perUnit: string;
-  perUnitYear: string;
   /** En enda plan (Joel 2026-09-30): alla får allt, priset följer antalet lyssnare. */
   plan: {
     name: string;
@@ -51,11 +45,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
   sv: {
     title: "Betala för dem som lyssnar.",
     lead: "Ett pris per aktiv lyssnare. Den som inte lyssnar kostar inget.",
-    monthly: "Månadsvis",
-    yearly: "Årsvis",
-    yearlyBadge: "2 månader gratis",
     perUnit: "per aktiv lyssnare och månad",
-    perUnitYear: "per aktiv lyssnare och månad, betalt årsvis",
     plan: {
       name: "Newstail",
       price: PRICES.SEK,
@@ -102,7 +92,6 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
         { q: "Varför räknas det på månaden innan?", a: "Då vet ni exakt vad som dras innan det dras, och ni behöver aldrig vänta på en faktura i efterhand. Växer ni följer priset med månaden efter." },
         { q: "Vilken valuta?", a: "Kronor i Sverige, euro i övriga Europa (14 €) och dollar i resten av världen (15 $). Svenska företag betalar 25 % moms, EU-företag med momsnummer omvänd skattskyldighet." },
         { q: "Vad händer om vi slutar?", a: "Månaden ni redan betalat gäller till sista dagen. Sedan dras inget mer – ingen slutfaktura." },
-        { q: "Hur fungerar årsbetalning?", a: "Ni betalar tio månader för tolv, i förskott, utifrån en uppskattad siffra som vi stämmer av." },
         { q: "Kan vi säga upp när vi vill?", a: "Ja. Det finns ingen bindningstid." },
         { q: "Vi är många, eller flera bolag?", a: "Samma pris och samma tjänst. Mejla hello@newstail.io så hjälper vi er i gång." },
         { q: "Behöver IT göra något?", a: "Nej. Ni registrerar er med er mejldomän, och kollegor med samma domän kan gå med direkt." },
@@ -113,11 +102,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
   en: {
     title: "Pay for the people who listen.",
     lead: "One price per active listener. People who don't listen cost nothing.",
-    monthly: "Monthly",
-    yearly: "Yearly",
-    yearlyBadge: "2 months free",
     perUnit: "per active listener per month",
-    perUnitYear: "per active listener per month, paid yearly",
     plan: {
       name: "Newstail",
       price: PRICES.EUR,
@@ -164,7 +149,6 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
         { q: "Why is it based on the month before?", a: "So you know exactly what will be charged before it is, and never wait for an invoice afterwards. If you grow, the price follows the month after." },
         { q: "Which currency?", a: "Euro in Europe (€14), Swedish kronor in Sweden (SEK 149) and US dollars elsewhere ($15). EU companies with a VAT number are reverse charged." },
         { q: "What if we stop?", a: "The month you've paid for runs to its last day. Then nothing more is charged – no final invoice." },
-        { q: "How does yearly billing work?", a: "You pay ten months for twelve, in advance, based on an estimated number that we reconcile." },
         { q: "Can we cancel whenever we want?", a: "Yes. There is no lock-in." },
         { q: "We're large, or several companies?", a: "Same price, same service. Email hello@newstail.io and we'll help you get started." },
         { q: "Does IT need to do anything?", a: "No. You register with your email domain, and colleagues on the same domain can join right away." },

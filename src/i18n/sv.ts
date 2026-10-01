@@ -99,7 +99,7 @@ export const sv: Copy = {
     ],
     notes: [
       "14 dagar gratis för hela företaget. Ingen bindning.",
-      "Betalas i förskott den 1:a, räknat på månaden innan. Årsbetalning = tio månader.",
+      "Betalas i förskott den 1:a, räknat på månaden innan.",
     ],
     cta: "Kom igång – 14 dagar gratis",
   },

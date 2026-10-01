@@ -6,7 +6,7 @@
  */
 import type { Copy } from "../i18n/types";
 import { START_URL } from "../i18n/types";
-import { pricing, YEAR_FACTOR } from "../i18n/pricing";
+import { pricing } from "../i18n/pricing";
 import LineArt from "./LineArt.astro";
 
 interface Props {
@@ -15,7 +15,6 @@ interface Props {
 const { copy: c } = Astro.props;
 const p = pricing[c.lang as "sv" | "en"];
 const sv = c.lang === "sv";
-const year = (n: number) => n * YEAR_FACTOR;
 const first = p.plan.price;
 ---
 
@@ -24,22 +23,17 @@ const first = p.plan.price;
     <div class="price-head">
       <h1 class="title-xl">{p.title}</h1>
       <p class="lead">{p.lead}</p>
-      <div class="billing-toggle" role="group" aria-label={sv ? "Betalningsperiod" : "Billing period"}>
-        <button type="button" data-billing="m" aria-pressed="true">{p.monthly}</button>
-        <button type="button" data-billing="y" aria-pressed="false">{p.yearly}<span class="billing-badge">{p.yearlyBadge}</span></button>
-      </div>
     </div>
 
     <article class="plan">
       <h2 class="plan-name">{p.plan.name}</h2>
       <p class="plan-price">
         {p.plan.unitBefore && <span class="plan-cur">{p.plan.unitBefore}</span>}
-        <span class="plan-amount px" data-m={String(first)} data-y={sv ? String(Math.round(year(first))) : year(first).toFixed(2)}>{first}</span>
+        <span class="plan-amount">{first}</span>
         {p.plan.unitAfter && <span class="plan-cur">{p.plan.unitAfter}</span>}
       </p>
       <p class="plan-unit">
-        <span data-show="m">{p.perUnit}</span>
-        <span data-show="y" hidden>{p.perUnitYear}</span>
+        {p.perUnit}
       </p>
       <ul class="plan-features">
         {p.plan.features.map((f) => <li>{f}</li>)}
@@ -69,10 +63,6 @@ const first = p.plan.price;
       <p class="calc-year"><span class="calc-year-amount">–</span> {p.calc.perYear}</p>
       <ul class="calc-rows" aria-label={p.calc.breakdown}></ul>
       <p class="calc-floor" hidden>{p.calc.floorNote}</p>
-      <div class="billing-toggle billing-toggle-sm" role="group" aria-label={sv ? "Betalningsperiod" : "Billing period"}>
-        <button type="button" data-billing="m" aria-pressed="true">{p.monthly}</button>
-        <button type="button" data-billing="y" aria-pressed="false">{p.yearly}<span class="billing-badge">{p.yearlyBadge}</span></button>
-      </div>
     </div>
   </div>
 </section>
@@ -129,7 +119,7 @@ const first = p.plan.price;
 </script>
 
 <script>
-  import { PRICES, MIN_SEATS, YEAR_FACTOR } from "../i18n/pricing";
+  import { PRICES, MIN_SEATS } from "../i18n/pricing";
 
   const w = window as unknown as { __priceLang: string; __priceRowLabel: string };
   const sv = w.__priceLang === "sv";
@@ -138,7 +128,6 @@ const first = p.plan.price;
     sv
       ? `${Math.round(n).toLocaleString("sv-SE")} kr`
       : `€${n.toLocaleString("en-GB", { maximumFractionDigits: n < 100 ? 2 : 0 })}`;
-  let billing: "m" | "y" = "m";
 
   /** Rakt pris som i appens billing_quote(): pris × max(aktiva, golv). */
   const breakdown = (seats: number) => {
@@ -157,7 +146,7 @@ const first = p.plan.price;
   const renderCalc = () => {
     if (!range) return;
     const seats = Number(range.value);
-    const f = billing === "y" ? YEAR_FACTOR : 1;
+    const f = 1;
     const { billed, rows, total } = breakdown(seats);
     if (out) out.textContent = String(seats);
     if (amount) amount.textContent = money(total * f);
@@ -174,23 +163,6 @@ const first = p.plan.price;
     range.style.setProperty("--fill", `${((seats - 1) / (Number(range.max) - 1)) * 100}%`);
   };
 
-  const setBilling = (b: "m" | "y") => {
-    billing = b;
-    document.querySelectorAll<HTMLButtonElement>("[data-billing]").forEach((btn) => {
-      btn.setAttribute("aria-pressed", String(btn.dataset.billing === b));
-    });
-    document.querySelectorAll<HTMLElement>(".px").forEach((el) => {
-      el.textContent = (b === "y" ? el.dataset.y : el.dataset.m) ?? el.textContent;
-    });
-    document.querySelectorAll<HTMLElement>("[data-show]").forEach((el) => {
-      el.hidden = el.dataset.show !== b;
-    });
-    renderCalc();
-  };
-
-  document.querySelectorAll<HTMLButtonElement>("[data-billing]").forEach((btn) => {
-    btn.addEventListener("click", () => setBilling(btn.dataset.billing as "m" | "y"));
-  });
   range?.addEventListener("input", renderCalc);
   renderCalc();
 
