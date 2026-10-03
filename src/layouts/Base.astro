@@ -76,7 +76,7 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
           </button>
         </div>
       </div>
-      <nav class="nav-sheet" id="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"} hidden>
+      <nav class="nav-sheet" id="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"} inert>
         <a href={techPage}>{copy.nav.tech}</a>
         <a href={trustPage}>{copy.nav.trust}</a>
         <a href={pricing}>{copy.nav.pricing}</a>
@@ -131,7 +131,10 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
       menuBtn?.addEventListener("click", () => {
         const open = menuBtn.getAttribute("aria-expanded") !== "true";
         menuBtn.setAttribute("aria-expanded", String(open));
-        if (sheet) sheet.hidden = !open;
+        if (sheet) {
+          sheet.classList.toggle("is-open", open);
+          sheet.inert = !open;
+        }
         nav?.classList.toggle("menu-open", open);
       });
       // Som elevenlabs.io: högst upp syns hela topplinjen. Scrollar man ner glider den bort,
