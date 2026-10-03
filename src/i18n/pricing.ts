@@ -1,6 +1,7 @@
 /**
  * Prissidan (Joel 2026-09-30, rakt pris 2026-10-01): EN plan, räknare, vad som ingår, frågor.
- * Priset är affärsmodellen (docs/affarsmodell.md): rakt pris per aktiv lyssnare –
+ * Priset är affärsmodellen (docs/affarsmodell.md): rakt pris per användare, men bara de som
+ * faktiskt lyssnar räknas (minst tre sändningar i månaden) –
  * 149 kr i Sverige, 14 € i övriga Europa, 15 $ i resten av världen – minst 10, betalt i
  * förskott den 1:a räknat på månaden innan. Ingen årsbetalning (Joel 2026-10-01).
  */
@@ -43,16 +44,17 @@ const eur = (n: number) => `€${Math.round(n).toLocaleString("en-GB")}`;
 
 export const pricing: Record<"sv" | "en", PricingCopy> = {
   sv: {
-    title: "Betala för dem som lyssnar.",
-    lead: "Ett pris per aktiv lyssnare. Den som inte lyssnar kostar inget.",
-    perUnit: "per aktiv lyssnare och månad",
+    title: "149 kr per användare och månad.",
+    lead: "Vi räknar bara de som faktiskt lyssnar. Den som inte lyssnar kostar inget.",
+    perUnit: "per användare och månad",
     plan: {
       name: "Newstail",
       price: PRICES.SEK,
       unitBefore: "",
       unitAfter: "kr",
       features: [
-        "Minst 10 lyssnare",
+        "Bara de som lyssnar räknas – minst tre sändningar i månaden",
+        "Minst 10 användare",
         "Betalas i förskott den 1:a, räknat på månaden innan",
         "Ni ser beloppet innan det dras",
         "14 € i övriga Europa, 15 $ i resten av världen",
@@ -63,12 +65,12 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     calc: {
       title: "Räkna på ert företag.",
       lead: "Dra till så många ni tror lyssnar varje månad.",
-      label: "Aktiva lyssnare",
+      label: "Användare som lyssnar",
       perMonth: "per månad",
       perYear: "per år",
       breakdown: "Så räknas det",
-      floorNote: "Minst tio lyssnare debiteras.",
-      rowLabel: "Lyssnare",
+      floorNote: "Minst tio användare debiteras.",
+      rowLabel: "Användare",
     },
     included: {
       title: "Allt ingår.",
@@ -87,7 +89,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     faq: {
       title: "Frågor om priset.",
       items: [
-        { q: "Vad räknas som aktiv lyssnare?", a: "Den som har lyssnat klart på minst tre sändningar under månaden. Den som lyssnar mindre kostar inget." },
+        { q: "Betalar vi för alla anställda?", a: "Nej. Bara för dem som har lyssnat klart på minst tre sändningar under månaden. Alla andra kostar inget – samma princip som Slacks fair billing." },
         { q: "Vad händer efter provperioden?", a: "Ni lägger in kort. Resten av månaden dras direkt, i förskott, räknat på provperioden. Sedan dras varje månad den 1:a, räknat på hur många som lyssnade månaden innan. Beloppet syns i admin, och ni får ett mejl tre dagar innan." },
         { q: "Varför räknas det på månaden innan?", a: "Då vet ni exakt vad som dras innan det dras, och ni behöver aldrig vänta på en faktura i efterhand. Växer ni följer priset med månaden efter." },
         { q: "Vilken valuta?", a: "Kronor i Sverige, euro i övriga Europa (14 €) och dollar i resten av världen (15 $). Svenska företag betalar 25 % moms, EU-företag med momsnummer omvänd skattskyldighet." },
@@ -100,16 +102,17 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     currency: sek,
   },
   en: {
-    title: "Pay for the people who listen.",
-    lead: "One price per active listener. People who don't listen cost nothing.",
-    perUnit: "per active listener per month",
+    title: "€14 per user per month.",
+    lead: "We only count the people who actually listen. Anyone who doesn't costs nothing.",
+    perUnit: "per user per month",
     plan: {
       name: "Newstail",
       price: PRICES.EUR,
       unitBefore: "€",
       unitAfter: "",
       features: [
-        "Minimum 10 listeners",
+        "Only listeners count – at least three broadcasts a month",
+        "Minimum 10 users",
         "Paid in advance on the 1st, based on the month before",
         "You see the amount before it is charged",
         "SEK 149 in Sweden, $15 outside Europe",
@@ -120,12 +123,12 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     calc: {
       title: "Run the numbers.",
       lead: "Drag to how many you think listen each month.",
-      label: "Active listeners",
+      label: "Users who listen",
       perMonth: "per month",
       perYear: "per year",
       breakdown: "How it's calculated",
-      floorNote: "A minimum of ten listeners is billed.",
-      rowLabel: "Listeners",
+      floorNote: "A minimum of ten users is billed.",
+      rowLabel: "Users",
     },
     included: {
       title: "Everything included.",
@@ -144,7 +147,7 @@ export const pricing: Record<"sv" | "en", PricingCopy> = {
     faq: {
       title: "Pricing questions.",
       items: [
-        { q: "What counts as an active listener?", a: "Someone who has finished at least three broadcasts in the month. People who listen less cost nothing." },
+        { q: "Do we pay for every employee?", a: "No. Only for those who finished at least three broadcasts in the month. Everyone else costs nothing – the same principle as Slack's fair billing." },
         { q: "What happens after the trial?", a: "You add a card. The rest of the month is charged right away, in advance, based on the trial. After that you're charged on the 1st of each month, based on how many listened the month before. The amount is shown in admin, and you get an email three days ahead." },
         { q: "Why is it based on the month before?", a: "So you know exactly what will be charged before it is, and never wait for an invoice afterwards. If you grow, the price follows the month after." },
         { q: "Which currency?", a: "Euro in Europe (€14), Swedish kronor in Sweden (SEK 149) and US dollars elsewhere ($15). EU companies with a VAT number are reverse charged." },

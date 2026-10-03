@@ -87,15 +87,15 @@ export const sv: Copy = {
     statsNote: "Siffror från ett demoföretag.",
   },
   pricing: {
-    metaTitle: "Pris – Newstail. Betala bara för dem som lyssnar.",
+    metaTitle: "Pris – Newstail. 149 kr per användare, bara de som lyssnar.",
     metaDescription:
-      "149 kr per aktiv lyssnare och månad. Den som inte lyssnar kostar inget. 14 dagar gratis, ingen bindning.",
-    title: "Betala för dem som lyssnar.",
-    lead: "Aktiv lyssnare = minst tre sändningar i månaden. Minst tio lyssnare. Publicera är gratis.",
+      "149 kr per användare och månad. Vi räknar bara de som faktiskt lyssnar. 14 dagar gratis, ingen bindning.",
+    title: "149 kr per användare och månad.",
+    lead: "Vi räknar bara de som faktiskt lyssnar – minst tre sändningar i månaden. Minst tio användare. Publicera är gratis.",
     tiers: [
-      { range: "Sverige", amount: "149 kr", unit: "per aktiv lyssnare och månad" },
-      { range: "Övriga Europa", amount: "14 €", unit: "per aktiv lyssnare och månad" },
-      { range: "Resten av världen", amount: "15 $", unit: "per aktiv lyssnare och månad" },
+      { range: "Sverige", amount: "149 kr", unit: "per användare och månad" },
+      { range: "Övriga Europa", amount: "14 €", unit: "per användare och månad" },
+      { range: "Resten av världen", amount: "15 $", unit: "per användare och månad" },
     ],
     notes: [
       "14 dagar gratis för hela företaget. Ingen bindning.",
@@ -120,8 +120,8 @@ export const sv: Copy = {
         a: "Det som rör er bransch och marknad, era kunder och konkurrenter, plus det varje medarbetare själv valt att följa. Interna budskap går alltid först.",
       },
       {
-        q: "Vad räknas som aktiv lyssnare?",
-        a: "Den som har hört minst tre sändningar under månaden. Den som inte lyssnar kostar inget.",
+        q: "Betalar vi för alla anställda?",
+        a: "Nej. Bara för dem som hört minst tre sändningar under månaden. Den som inte lyssnar kostar inget.",
       },
       {
         q: "Behöver IT göra något?",
@@ -182,7 +182,7 @@ export const sv: Copy = {
       {
         title: "Pris",
         links: [
-          { t: "Betala för dem som lyssnar", href: "/pris/" },
+          { t: "Pris – bara de som lyssnar räknas", href: "/pris/" },
           { t: "Räkna på ert företag", href: "/pris/#rakna" },
           { t: "Allt ingår", href: "/pris/#ingar" },
           { t: "Frågor om priset", href: "/pris/#fragor" },

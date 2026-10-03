@@ -87,15 +87,15 @@ export const en: Copy = {
     statsNote: "Figures from a demo company.",
   },
   pricing: {
-    metaTitle: "Pricing – Newstail. Pay only for the people who listen.",
+    metaTitle: "Pricing – Newstail. €14 per user, only the ones who listen.",
     metaDescription:
-      "€14 per active listener per month. People who don't listen cost nothing. 14 days free, no lock-in.",
-    title: "Pay for the people who listen.",
-    lead: "Active listener = at least three broadcasts a month. Minimum ten listeners. Publishing is free.",
+      "€14 per user per month. We only count the people who actually listen. 14 days free, no lock-in.",
+    title: "€14 per user per month.",
+    lead: "We only count the people who actually listen – at least three broadcasts a month. Minimum ten users. Publishing is free.",
     tiers: [
-      { range: "Europe", amount: "€14", unit: "per active listener per month" },
-      { range: "Sweden", amount: "SEK 149", unit: "per active listener per month" },
-      { range: "Rest of the world", amount: "$15", unit: "per active listener per month" },
+      { range: "Europe", amount: "€14", unit: "per user per month" },
+      { range: "Sweden", amount: "SEK 149", unit: "per user per month" },
+      { range: "Rest of the world", amount: "$15", unit: "per user per month" },
     ],
     notes: [
       "14 days free for the whole company. No lock-in.",
@@ -120,8 +120,8 @@ export const en: Copy = {
         a: "What moves your industry and market, your customers and competitors, plus whatever each employee chose to follow. Internal messages always come first.",
       },
       {
-        q: "What counts as an active listener?",
-        a: "Someone who has heard at least three broadcasts in the month. People who don't listen cost nothing.",
+        q: "Do we pay for every employee?",
+        a: "No. Only for those who heard at least three broadcasts in the month. Anyone who doesn't listen costs nothing.",
       },
       {
         q: "Does IT need to do anything?",
@@ -179,7 +179,7 @@ export const en: Copy = {
       {
         title: "Pricing",
         links: [
-          { t: "Pay for the people who listen", href: "/en/pricing/" },
+          { t: "Pricing – only listeners count", href: "/en/pricing/" },
           { t: "Run the numbers", href: "/en/pricing/#rakna" },
           { t: "Everything included", href: "/en/pricing/#ingar" },
           { t: "Pricing questions", href: "/en/pricing/#fragor" },
