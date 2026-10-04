@@ -236,7 +236,8 @@ export default function Space({ orb: showOrb = true }: { orb?: boolean }) {
       const dsy = sy - lastScroll;
       lastScroll = sy;
       scrollVel = approach(scrollVel, dt > 0 ? dsy / dt : 0, 0.2, f);
-      if (!reduced) turn += dsy * 0.0022 + voice * 0.02 * f;
+      // Rösten syns i molnen inuti (orb-gl uFlow), inte i snurren (Joel 2026-10-04).
+      if (!reduced) turn += dsy * 0.0022 + voice * 0.003 * f;
 
       pointer.x = approach(pointer.x, pointer.tx, 0.06, f);
       pointer.y = approach(pointer.y, pointer.ty, 0.06, f);

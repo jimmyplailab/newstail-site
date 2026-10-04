@@ -7,7 +7,10 @@
  * Inuti en mörk nebulosa i nyhetens ton + accenten, vita stjärnor på bakre väggen och några
  * svävande i mitten (ett fåtal med kors). Det inre vrider sig långsamt (uTurn).
  *
- * Rösten läses ur `pulse` (DawnStage: pulse = 1 + a·0.10): nebulosan lyser lite mer.
+ * Rösten läses ur `pulse` (DawnStage: pulse = 1 + a·0.10). Det är MOLNEN som talar (Joel
+ * 2026-10-04): nebulosans flöde (uFlow) drivs av rösten – stilla i tystnad, rör sig när värden
+ * pratar – och molnen tätnar och lyser mer med rösten. Vridningen (uTurn) är bara fingrets och
+ * en långsam egen drift; den ska inte vara det man ser av rösten.
  * Samma gränssnitt som förut (OrbFrame, create/resize/clear/draw) – DawnStage/OrbStage orörda.
  * `b` är accenten (orb-draw: accentFor(hue)). `phi` används inte.
  */
@@ -47,6 +50,7 @@ uniform vec2 uC;        // mitt, CSS-px, y nedåt
 uniform float uR;       // grundradie, CSS-px
 uniform float uPulse;
 uniform float uTime;    // sekunder
+uniform float uFlow;    // nebulosans fas – rinner med rösten (JS räknar upp den per bildruta)
 uniform float uTurn;    // långsam vridning av det inre, radianer (kring lodlinjen)
 uniform float uTilt;    // vridning kring tvärlinjen – fingret kan snurra åt alla håll (2026-09-24)
 uniform vec3 uA;        // nyhetens ton (light), 0–1
@@ -120,15 +124,17 @@ void main(){
     vec3 p0=n, p1=vec3(n.xy,-z);
     // ---- nebulosa längs strålen genom klotet
     vec3 neb=vec3(0.); float dens=0.;
-    // Det inre är det som rör sig (Joel 2026-09-24): nebulosan driver tydligt, glaset står stilla.
-    float t0=uTime*0.16;
+    // Det inre är det som rör sig (Joel 2026-09-24): nebulosan driver, glaset står stilla.
+    // Flödet följer rösten (2026-10-04): uFlow står nästan stilla i tystnad och rinner när värden talar.
+    float t0=uFlow;
     float nSteps=float(uSteps);
     for(int i=0;i<6;i++){
       if(i>=uSteps) break;
       float t=(float(i)+0.5)/nSteps;
       vec3 p=R*mix(p0,p1,t);
-      float f=fbm(p*1.35+vec3(t0*0.3,t0,t0*0.45));
-      float dd=smoothstep(-0.15,0.6,f)*(1.0-t*0.3);
+      // Rösten knådar molnen: tätare och mer kontrast när den talar, mjukare när den tystnar.
+      float f=fbm(p*(1.35-uAmp*0.12)+vec3(t0*0.3,t0,t0*0.45));
+      float dd=smoothstep(-0.15-uAmp*0.12,0.6-uAmp*0.22,f)*(1.0-t*0.3);
       vec3 c=mix(uA,uB,smoothstep(-0.4,0.6,snoise(p*0.8+vec3(3.1,0.,t0*0.3))));
       neb+=c*dd; dens+=dd;
     }
@@ -174,6 +180,7 @@ const UNIFORMS = [
   "uR",
   "uPulse",
   "uTime",
+  "uFlow",
   "uTurn",
   "uTilt",
   "uA",
@@ -192,6 +199,9 @@ export class OrbGL {
   private H = 0;
   private dpr = 1;
   private t0 = performance.now();
+  /** Nebulosans fas och senaste bildrutans tid – flödet räknas upp med rösten i draw(). */
+  private flow = 0;
+  private lastT = 0;
 
   static create(canvas: HTMLCanvasElement): OrbGL | null {
     try {
@@ -269,12 +279,20 @@ export class OrbGL {
     gl.scissor(x0, y0, Math.min(size, c.width - x0), Math.min(size, c.height - y0));
     const n = (v: RGB) => [v[0] / 255, v[1] / 255, v[2] / 255] as const;
     const t = (performance.now() - this.t0) / 1000;
+    // Molnen rör sig med rösten: långsam drift i tystnad, tydligt flöde när amp är hög.
+    const amp = Math.max(0, Math.min(1, (f.pulse - 1) / 0.1));
+    const dt = Math.max(0, Math.min(0.1, t - this.lastT));
+    this.lastT = t;
+    // Under golvet (liveAmp vilar på ~0,18 i tystnad) rör sig molnen bara i långsam drift.
+    const voice = Math.max(0, (amp - 0.2) / 0.8);
+    this.flow += dt * (0.05 + voice * 1.4);
     gl.uniform2f(this.u.uRes, c.width, c.height);
     gl.uniform1f(this.u.uDpr, this.dpr);
     gl.uniform2f(this.u.uC, f.x, f.y);
     gl.uniform1f(this.u.uR, f.R);
     gl.uniform1f(this.u.uPulse, f.pulse);
     gl.uniform1f(this.u.uTime, t);
+    gl.uniform1f(this.u.uFlow, this.flow);
     gl.uniform1f(this.u.uTurn, f.turn ?? t * 0.12);
     gl.uniform1f(this.u.uTilt, f.tilt ?? 0);
     gl.uniform3fv(this.u.uA, n(f.a.light));
