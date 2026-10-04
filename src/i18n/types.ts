@@ -17,7 +17,8 @@ export type Copy = {
     listen: string;
     listening: string;
     sampleNote: string;
-    bubbles: string[];
+    /** Rubrikerna som värden berättar i heron: ämne + rubrik under klotet, som under sändning i appen. */
+    items: { topic: string; title: string; inside?: boolean }[];
   };
   value: { rows: { title: string; text: string }[] };
   language: {
@@ -43,7 +44,18 @@ export type Copy = {
     /** Vem som publicerar och team – så man förstår att inte vem som helst kan publicera. */
     points: { t: string; d: string }[];
   };
-  quiz: { title: string; lead: string; recap: string; quiz: string; share: string };
+  quiz: {
+    title: string;
+    lead: string;
+    recap: string;
+    quiz: string;
+    share: string;
+    sources: string;
+    /** Frågorna i den levande quizrutan. `answer` = index på rätt svar. */
+    questions: { q: string; options: string[]; answer: number }[];
+    /** Visas när svaret valts, t.ex. "Rätt – 80 % mindes det". */
+    result: string;
+  };
   leaders: {
     title: string;
     lead: string;

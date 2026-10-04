@@ -3307,3 +3307,464 @@ main {
     animation: none;
   }
 }
+
+/* ======================================================================
+   2026-10-04: appens idiom i stället för x.ai-bubblor, telefoner med djup,
+   levande quizruta, admin i webbläsarram med flytande siffror
+   ====================================================================== */
+
+/* ---------- Heron som sändningsvyn i appen ---------- */
+.air-dots {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - var(--orb-size) / 2 - 30px);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+}
+.in-view .air-dots {
+  animation: fade-in-soft 600ms ease-out both;
+  animation-delay: 1500ms;
+}
+.air-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(236, 239, 244, 0.28);
+  transition: width 420ms cubic-bezier(0.2, 0.8, 0.2, 1), background-color 420ms ease;
+}
+.air-dots span.is-on {
+  width: 20px;
+  background: var(--ink);
+}
+.air-arrow {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  opacity: 0;
+  transition: color 150ms ease-out, transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.in-view .air-arrow {
+  animation: fade-in-soft 600ms ease-out both;
+  animation-delay: 1500ms;
+  opacity: 1;
+}
+.air-arrow:hover {
+  color: var(--ink);
+}
+.air-arrow:active {
+  transform: scale(0.9);
+  transition-duration: 80ms;
+}
+.air-arrow-prev {
+  left: calc(50% - var(--orb-size) / 2 - 64px);
+}
+.air-arrow-next {
+  right: calc(50% - var(--orb-size) / 2 - 64px);
+}
+.caption-hero {
+  top: calc(50% + var(--orb-size) / 2 + 24px);
+  width: min(360px, 92%);
+}
+.caption-hero .caption-title {
+  font-size: 1.125rem;
+}
+.caption-hero .caption-word {
+  animation-delay: calc(var(--i, 0) * 60ms) !important;
+}
+/* Intern nyhet: ämnet i appens guld */
+.hero.is-inside .caption-topic {
+  color: #d9c27a;
+}
+@media (max-width: 759px) {
+  .hero .split-stage.stage-hero {
+    --orb-size: min(40vw, 17svh);
+    /* prickarna ovanför + ämne och rubrik under klotet */
+    min-height: calc(var(--orb-size) + 150px);
+  }
+  .air-dots {
+    top: calc(50% - var(--orb-size) / 2 - 22px);
+  }
+  .air-arrow-prev {
+    left: calc(50% - var(--orb-size) / 2 - 52px);
+  }
+  .air-arrow-next {
+    right: calc(50% - var(--orb-size) / 2 - 52px);
+  }
+  .caption-hero {
+    top: calc(50% + var(--orb-size) / 2 + 12px);
+  }
+  .caption-hero .caption-title {
+    font-size: 0.9375rem;
+  }
+}
+
+/* ---------- Telefoner med djup ---------- */
+.phone-stage {
+  perspective: 1400px;
+}
+.phone-3d {
+  --rx: 3deg;
+  --ry: 0deg;
+  transform: rotateX(calc(var(--rx) + var(--tilt-x, 0deg))) rotateY(calc(var(--ry) + var(--tilt-y, 0deg)));
+  transform-style: preserve-3d;
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 0 0 6px #000,
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 50px 110px rgba(0, 0, 0, 0.8),
+    0 0 90px rgba(169, 188, 214, 0.12);
+}
+.phone-tilt-l {
+  --ry: -14deg;
+}
+.phone-tilt-r {
+  --ry: 14deg;
+}
+/* Ljuset som fångas i glaset */
+.phone-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.07) 48%, rgba(255, 255, 255, 0.02) 52%, transparent 62%);
+  pointer-events: none;
+}
+.phone-tilt-r::after {
+  background: linear-gradient(245deg, transparent 38%, rgba(255, 255, 255, 0.07) 48%, rgba(255, 255, 255, 0.02) 52%, transparent 62%);
+}
+/* Glöd under telefonen */
+.phone-stage::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 70%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(169, 188, 214, 0.14), transparent 62%);
+  pointer-events: none;
+  z-index: -1;
+}
+/* .in-view .reveal sätter transform: none – lutningen måste vinna när sektionen syns. */
+.in-view .phone-3d.reveal,
+.in-view .phone-stage.reveal .phone-3d {
+  transform: rotateX(calc(var(--rx) + var(--tilt-x, 0deg))) rotateY(calc(var(--ry) + var(--tilt-y, 0deg)));
+}
+@media (max-width: 759px) {
+  .phone-tilt-l {
+    --ry: -9deg;
+  }
+  .phone-tilt-r {
+    --ry: 9deg;
+  }
+}
+
+/* ---------- Quiz: levande ruta intill klotet ---------- */
+.stage-quiz {
+  --orb-size: min(280px, 20vw);
+}
+.stage-quiz .orb-anchor {
+  left: 34%;
+  top: 34%;
+}
+.quiz-cluster {
+  position: absolute;
+  left: 42%;
+  top: 40%;
+  width: min(300px, 60%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.quiz-card {
+  position: relative;
+  width: 100%;
+  padding: 1rem 1.1rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(30, 34, 42, 0.92), rgba(23, 26, 32, 0.92));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 20px 50px rgba(0, 0, 0, 0.6);
+}
+.quiz-kicker {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.quiz-q {
+  margin: 0.45rem 0 0.7rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.quiz-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.quiz-options li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 34px;
+  padding: 0 0.6rem;
+  margin: 0 -0.6rem;
+  border-radius: 10px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  transition: background-color 320ms ease, color 320ms ease;
+}
+.quiz-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+  flex: none;
+  transition: background-color 320ms ease, border-color 320ms ease, transform 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.quiz-card.is-answered li[data-correct] {
+  background: rgba(236, 239, 244, 0.1);
+  color: var(--ink);
+}
+.quiz-card.is-answered li[data-correct] .quiz-dot {
+  background: var(--ink);
+  border-color: var(--ink);
+  transform: scale(1.15);
+  box-shadow: 0 0 14px rgba(236, 239, 244, 0.45);
+}
+.quiz-card.is-answered li:not([data-correct]) {
+  opacity: 0.45;
+}
+.quiz-options li {
+  transition: background-color 320ms ease, color 320ms ease, opacity 320ms ease;
+}
+.quiz-result {
+  margin: 0.7rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ok);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 320ms ease 200ms, transform 320ms ease 200ms;
+}
+.quiz-card.is-answered .quiz-result {
+  opacity: 1;
+  transform: none;
+}
+/* Ny fråga tonar in */
+.quiz-card .quiz-q,
+.quiz-card .quiz-options li {
+  transition: opacity 320ms ease, background-color 320ms ease, color 320ms ease;
+}
+.quiz-card.is-fresh .quiz-q,
+.quiz-card.is-fresh .quiz-options li {
+  opacity: 0;
+  transition: none;
+}
+.recap-strip {
+  display: inline-flex;
+  padding-left: 0.2rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-3);
+  font-size: 0.8125rem;
+}
+.recap-label {
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-right: 0.2rem;
+}
+.recap-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+@media (max-width: 759px) {
+  .stage-quiz {
+    --orb-size: min(36vw, 16svh);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: calc(var(--orb-size) + 16px);
+  }
+  .stage-quiz .orb-anchor {
+    left: 50%;
+    top: calc(var(--orb-size) / 2);
+  }
+  .quiz-cluster {
+    position: static;
+    width: min(320px, 100%);
+    gap: 0.5rem;
+  }
+  .quiz-card {
+    padding: 0.8rem 0.9rem;
+  }
+  .quiz-q {
+    margin: 0.3rem 0 0.4rem;
+    font-size: 0.875rem;
+  }
+  .quiz-options li {
+    min-height: 30px;
+    font-size: 0.8125rem;
+  }
+  .quiz-result {
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ---------- Ledare: webbläsarram i perspektiv med flytande siffror ---------- */
+.stage-admin {
+  perspective: 1600px;
+  min-height: 0;
+}
+.browser {
+  position: relative;
+  max-width: 600px;
+  margin-left: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #0a0a0a;
+  overflow: hidden;
+  box-shadow:
+    0 50px 110px rgba(0, 0, 0, 0.8),
+    0 0 90px rgba(169, 188, 214, 0.1);
+}
+.browser img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  background: #15181e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.browser-bar > span:not(.browser-url) {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(236, 239, 244, 0.16);
+}
+.browser-url {
+  margin-left: 10px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(236, 239, 244, 0.06);
+  color: var(--ink-3);
+  font-size: 0.6875rem;
+}
+.browser-3d {
+  --rx: 3deg;
+  --ry: -9deg;
+  transform: rotateX(calc(var(--rx) + var(--tilt-x, 0deg))) rotateY(calc(var(--ry) + var(--tilt-y, 0deg)));
+}
+.in-view .browser-3d.reveal {
+  transform: rotateX(calc(var(--rx) + var(--tilt-x, 0deg))) rotateY(calc(var(--ry) + var(--tilt-y, 0deg)));
+}
+.browser-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+  pointer-events: none;
+}
+.stat-card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(30, 34, 42, 0.94), rgba(23, 26, 32, 0.94));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 20px 50px rgba(0, 0, 0, 0.6);
+}
+.stat-card .stat-value {
+  font-size: 1.5rem;
+}
+.stat-card .stat-label {
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.stat-card-0 {
+  right: -4%;
+  top: 8%;
+}
+.stat-card-1 {
+  left: -2%;
+  bottom: 18%;
+}
+.stat-card-2 {
+  right: 6%;
+  bottom: -6%;
+}
+.stat-card.reveal {
+  transform: translateY(14px) scale(0.96);
+}
+.in-view .stat-card.reveal {
+  transform: none;
+}
+@media (max-width: 759px) {
+  .stage-admin {
+    order: 1;
+    padding: 0 0 2.2rem;
+  }
+  .browser {
+    max-width: 100%;
+    --ry: -6deg;
+  }
+  .browser img {
+    max-height: 22svh;
+    object-fit: cover;
+    object-position: top;
+  }
+  .stat-card {
+    padding: 0.5rem 0.7rem;
+  }
+  .stat-card .stat-value {
+    font-size: 1.125rem;
+  }
+  .stat-card .stat-label {
+    font-size: 0.6875rem;
+  }
+  .stat-card-0 {
+    right: -2%;
+    top: 4%;
+  }
+  .stat-card-1 {
+    left: -2%;
+    bottom: 10%;
+  }
+  .stat-card-2 {
+    right: 4%;
+    bottom: -8%;
+  }
+}

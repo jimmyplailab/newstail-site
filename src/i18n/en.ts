@@ -23,10 +23,10 @@ export const en: Copy = {
     listen: "Hear it",
     listening: "Playing",
     sampleNote: "",
-    bubbles: [
-      "Competitor opens warehouse in Malmö",
-      "Arsenal take the derby in extra time",
-      "Internal: Q3 numbers on Friday",
+    items: [
+      { topic: "Industry", title: "Competitor opens warehouse in Malmö" },
+      { topic: "Internal", title: "Q3 numbers presented on Friday", inside: true },
+      { topic: "Football", title: "Arsenal take the derby in extra time" },
     ],
   },
   value: {
@@ -52,7 +52,7 @@ export const en: Copy = {
     points: [
       { t: "Three to ten minutes", d: "You choose the length." },
       { t: "Pause, next, back", d: "With your thumb, on the lock screen or in your headphones." },
-      { t: "Up to five topics of your own", d: "From interest rates to football – from day one." },
+      { t: "Up to ten topics of your own", d: "From interest rates to football – from day one." },
     ],
     bubbles: ["Rate decision: what it means for construction", "Your biggest customer names new CEO", "Premier League: Arsenal take the derby"],
     captionTopic: "Industry",
@@ -75,6 +75,12 @@ export const en: Copy = {
     recap: "Recap",
     quiz: "Quiz",
     share: "Share",
+    sources: "Sources",
+    questions: [
+      { q: "What did the central bank do with the rate?", options: ["Raised it", "Cut it", "Left it unchanged"], answer: 2 },
+      { q: "Where is the competitor opening its warehouse?", options: ["Malmö", "Växjö", "Borås"], answer: 0 },
+    ],
+    result: "Correct – 80% remembered it",
   },
   leaders: {
     title: "See that it lands.",

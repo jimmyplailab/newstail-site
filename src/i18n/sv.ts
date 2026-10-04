@@ -23,10 +23,10 @@ export const sv: Copy = {
     listen: "Så låter det",
     listening: "Spelar",
     sampleNote: "",
-    bubbles: [
-      "Konkurrenten öppnar lager i Jönköping",
-      "HV71 tog derbyt efter förlängning",
-      "Internt: Q3-siffrorna på fredag",
+    items: [
+      { topic: "Bransch", title: "Konkurrenten öppnar lager i Jönköping" },
+      { topic: "Internt", title: "Q3-siffrorna presenteras på fredag", inside: true },
+      { topic: "Hockey", title: "HV71 tog derbyt efter förlängning" },
     ],
   },
   value: {
@@ -37,7 +37,7 @@ export const sv: Copy = {
     ],
   },
   language: {
-    title: "Alla med. På sitt eget språk.",
+    title: "Alla hänger med. På sitt språk.",
     lead: "Varje medarbetare väljer värdens språk. Samma nyheter och samma interna budskap – på svenska, engelska, tyska eller spanska. När alla är lika uppdaterade blir teamet starkare.",
     samples: [
       { code: "SV", topic: "Internt", title: "Nytt kontor i Växjö från 1 november" },
@@ -52,7 +52,7 @@ export const sv: Copy = {
     points: [
       { t: "Tre till tio minuter", d: "Du väljer längden själv." },
       { t: "Pausa, nästa, tillbaka", d: "Med tummen, på låsskärmen eller i hörlurarna." },
-      { t: "Upp till fem egna ämnen", d: "Från räntor till hockey – med från dag ett." },
+      { t: "Upp till tio egna ämnen", d: "Från räntor till hockey – med från dag ett." },
     ],
     bubbles: ["Räntebeskedet: så slår det mot bygg", "Er största kund byter vd", "SHL: Hv71 tog derbyt"],
     captionTopic: "Bransch",
@@ -75,6 +75,12 @@ export const sv: Copy = {
     recap: "Recap",
     quiz: "Quiz",
     share: "Dela",
+    sources: "Källor",
+    questions: [
+      { q: "Vad gjorde Riksbanken med räntan?", options: ["Höjde", "Sänkte", "Lämnade oförändrad"], answer: 2 },
+      { q: "Var öppnar konkurrenten sitt nya lager?", options: ["Jönköping", "Växjö", "Borås"], answer: 0 },
+    ],
+    result: "Rätt – 80 % mindes det",
   },
   leaders: {
     title: "Se att det når fram.",
