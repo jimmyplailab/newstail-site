@@ -133,8 +133,8 @@ void main(){
       float t=(float(i)+0.5)/nSteps;
       vec3 p=R*mix(p0,p1,t);
       // Rösten knådar molnen: tätare och mer kontrast när den talar, mjukare när den tystnar.
-      float f=fbm(p*(1.35-uAmp*0.12)+vec3(t0*0.3,t0,t0*0.45));
-      float dd=smoothstep(-0.15-uAmp*0.12,0.6-uAmp*0.22,f)*(1.0-t*0.3);
+      float f=fbm(p*(1.35-uAmp*0.08)+vec3(t0*0.3,t0,t0*0.45));
+      float dd=smoothstep(-0.15-uAmp*0.08,0.6-uAmp*0.15,f)*(1.0-t*0.3);
       vec3 c=mix(uA,uB,smoothstep(-0.4,0.6,snoise(p*0.8+vec3(3.1,0.,t0*0.3))));
       neb+=c*dd; dens+=dd;
     }
@@ -285,7 +285,8 @@ export class OrbGL {
     this.lastT = t;
     // Under golvet (liveAmp vilar på ~0,18 i tystnad) rör sig molnen bara i långsam drift.
     const voice = Math.max(0, (amp - 0.2) / 0.8);
-    this.flow += dt * (0.05 + voice * 1.4);
+    // Mindre rörelse (Joel 2026-10-04, andra vändan): 0,6/s vid full röst.
+    this.flow += dt * (0.05 + voice * 0.6);
     gl.uniform2f(this.u.uRes, c.width, c.height);
     gl.uniform1f(this.u.uDpr, this.dpr);
     gl.uniform2f(this.u.uC, f.x, f.y);
