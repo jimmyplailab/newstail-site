@@ -1,6 +1,7 @@
 ---
 import type { Copy } from "../i18n/types";
 import { START_URL } from "../i18n/types";
+import Device from "./Device.astro";
 
 interface Props {
   copy: Copy;
@@ -34,12 +35,6 @@ const REST = "0.5,0.5,0.1,0";
       <div class="air-dots" aria-hidden="true">
         {c.hero.items.map((_, i) => <span class={i === 0 ? "is-on" : ""} />)}
       </div>
-      <button class="air-arrow air-arrow-prev" type="button" data-step="-1" aria-label={c.lang === "sv" ? "Föregående" : "Previous"}>
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6" /><path d="M8 6v12" /></svg>
-      </button>
-      <button class="air-arrow air-arrow-next" type="button" data-step="1" aria-label={c.lang === "sv" ? "Nästa" : "Next"}>
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l6 6-6 6" /><path d="M16 6v12" /></svg>
-      </button>
       <div class="caption caption-hero" style="--wait: 1500ms" aria-live="off">
         <span class="caption-topic" data-hero-topic>{c.hero.items[0]!.topic}</span>
         <span class="caption-title" data-hero-title>
@@ -96,9 +91,7 @@ const REST = "0.5,0.5,0.1,0";
       </ul>
     </div>
     <div class="split-stage phone-stage reveal" style="--i: 1" data-tilt>
-      <div class="phone phone-3d phone-tilt-l">
-        <img src="/screens/app-home.webp" alt={c.lang === "sv" ? "Newstail-appens hemvy med dagens rubriker" : "The Newstail app home screen with today's headlines"} width="720" height="1565" loading="lazy" decoding="async" />
-      </div>
+      <Device kind="iphone" class="phone-3d phone-tilt-l" src="/screens/app-home.webp" alt={c.lang === "sv" ? "Newstail-appens hemvy med dagens rubriker" : "The Newstail app home screen with today's headlines"} width={720} height={1565} />
     </div>
   </div>
 </section>
@@ -124,9 +117,7 @@ const REST = "0.5,0.5,0.1,0";
       </ul>
     </div>
     <div class="split-stage phone-stage" data-tilt>
-      <div class="phone phone-3d phone-tilt-r reveal" style="--i: 0">
-        <img src="/screens/app-publish.webp" alt={c.lang === "sv" ? "Publicera i Newstail-appen: tala in ett internt budskap" : "Publishing in the Newstail app: record an internal message"} width="720" height="1565" loading="lazy" decoding="async" />
-      </div>
+      <Device kind="iphone" class="phone-3d phone-tilt-r reveal" style="--i: 0" src="/screens/app-publish.webp" alt={c.lang === "sv" ? "Publicera i Newstail-appen: tala in ett internt budskap" : "Publishing in the Newstail app: record an internal message"} width={720} height={1565} />
       <div class="bubbles" style="--wait: 500ms">
         <span class="bubble bubble-r bubble-inside b-in-1" style="--i: 0">{c.inside.bubble}</span>
         <span class="bubble bubble-l b-in-2 muted" style="--i: 2">{c.inside.reach}</span>
@@ -179,13 +170,7 @@ const REST = "0.5,0.5,0.1,0";
       <p class="subtle stats-note">{c.leaders.statsNote}</p>
     </div>
     <div class="split-stage stage-admin" data-tilt>
-      <div class="browser browser-3d reveal" style="--i: 1">
-        <div class="browser-bar" aria-hidden="true">
-          <span></span><span></span><span></span>
-          <span class="browser-url">air.newstail.io/admin</span>
-        </div>
-        <img src="/screens/admin-overview.webp" alt={c.lang === "sv" ? "Admin i Newstail: översikt över lyssnande och interna budskap" : "Newstail admin: overview of listening and internal messages"} width="1400" height="1242" loading="lazy" decoding="async" />
-      </div>
+      <Device kind="macbook" class="browser-3d reveal" style="--i: 1" src="/screens/admin-overview.webp" alt={c.lang === "sv" ? "Admin i Newstail: översikt över lyssnande och interna budskap" : "Newstail admin: overview of listening and internal messages"} width={1400} height={1242} />
       {
         c.leaders.stats.map((s, i) => (
           <div class={`stat-card stat-card-${i} reveal`} style={`--i: ${i + 2}`}>
@@ -305,14 +290,6 @@ const REST = "0.5,0.5,0.1,0";
       timer = 0;
     };
     new IntersectionObserver(([e]) => (e!.isIntersecting ? start() : stop()), { threshold: 0.5 }).observe(hero);
-    hero.querySelectorAll<HTMLButtonElement>(".air-arrow").forEach((b) =>
-      b.addEventListener("click", () => {
-        stop();
-        i = (i + Number(b.dataset.step) + items.length) % items.length;
-        show(i);
-        start();
-      }),
-    );
   }
 
   // Quizrutan: värden ställer frågan, svaret väljs, resultatet tonar in – sedan nästa fråga.

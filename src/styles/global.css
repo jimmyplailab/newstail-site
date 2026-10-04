@@ -3419,30 +3419,12 @@ main {
   --ry: 0deg;
   transform: rotateX(calc(var(--rx) + var(--tilt-x, 0deg))) rotateY(calc(var(--ry) + var(--tilt-y, 0deg)));
   transform-style: preserve-3d;
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow:
-    inset 0 0 0 6px #000,
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 50px 110px rgba(0, 0, 0, 0.8),
-    0 0 90px rgba(169, 188, 214, 0.12);
 }
 .phone-tilt-l {
   --ry: -14deg;
 }
 .phone-tilt-r {
   --ry: 14deg;
-}
-/* Ljuset som fångas i glaset */
-.phone-3d::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.07) 48%, rgba(255, 255, 255, 0.02) 52%, transparent 62%);
-  pointer-events: none;
-}
-.phone-tilt-r::after {
-  background: linear-gradient(245deg, transparent 38%, rgba(255, 255, 255, 0.07) 48%, rgba(255, 255, 255, 0.02) 52%, transparent 62%);
 }
 /* Glöd under telefonen */
 .phone-stage::before {
@@ -3686,13 +3668,6 @@ main {
 .in-view .browser-3d.reveal {
   transform: rotateX(calc(var(--rx) + var(--tilt-x, 0deg))) rotateY(calc(var(--ry) + var(--tilt-y, 0deg)));
 }
-.browser-3d::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
-  pointer-events: none;
-}
 .stat-card {
   position: absolute;
   display: flex;
@@ -3766,5 +3741,62 @@ main {
   .stat-card-2 {
     right: 4%;
     bottom: -8%;
+  }
+}
+
+/* ---------- Riktiga enhetsramar (Device.astro + devices.css) ---------- */
+/* Omslaget har ramens proportioner; ramen är 428×868 / 740×434 px och skalas med --s. */
+.dev {
+  position: relative;
+  aspect-ratio: var(--w) / var(--h);
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.75));
+}
+.dev > .device {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  transform: scale(var(--s, 1));
+}
+.dev .device-screen {
+  overflow: hidden;
+}
+.dev .device-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+/* Ljuset som fångas i glaset */
+.dev-iphone .device-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.07) 48%, rgba(255, 255, 255, 0.02) 52%, transparent 62%);
+  pointer-events: none;
+}
+.phone-tilt-r .device-screen::after {
+  background: linear-gradient(245deg, transparent 38%, rgba(255, 255, 255, 0.07) 48%, rgba(255, 255, 255, 0.02) 52%, transparent 62%);
+}
+.dev-iphone {
+  width: min(260px, 30vh, 64vw);
+}
+.dev-macbook {
+  width: min(640px, 100%);
+  margin-left: auto;
+}
+@media (max-width: 759px) {
+  .dev-iphone {
+    width: min(34vw, 22svh);
+  }
+  #inside .dev-iphone {
+    width: min(30vw, 19svh);
+  }
+  .dev-macbook {
+    width: 100%;
+  }
+  .dev {
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.7));
   }
 }

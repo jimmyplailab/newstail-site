@@ -1,6 +1,7 @@
 ---
 import "@fontsource-variable/inter";
 import "../styles/global.css";
+import "../styles/devices.css";
 import Space from "../space/Space";
 import type { Copy } from "../i18n/types";
 import { LOGIN_URL, START_URL } from "../i18n/types";
@@ -167,6 +168,17 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
         { threshold: 0.35 },
       );
       document.querySelectorAll("[data-watch]").forEach((el) => io.observe(el));
+      // Enhetsramarna (Device.astro) är fasta i pixlar och skalas till sin bredd.
+      const devs = document.querySelectorAll<HTMLElement>(".dev");
+      if (devs.length) {
+        const ro = new ResizeObserver((entries) => {
+          for (const e of entries) {
+            const el = e.target as HTMLElement;
+            el.style.setProperty("--s", String(e.contentRect.width / Number(el.style.getPropertyValue("--w") || 428)));
+          }
+        });
+        devs.forEach((d) => ro.observe(d));
+      }
     </script>
   </body>
 </html>
