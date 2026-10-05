@@ -1,0 +1,37 @@
+---
+/** Låsskärmen: morgonpushen med dagens rubrik och Live Activity med sändningen. */
+interface Props {
+  t: { date: string; push: string; more: string; now: string; topic: string; title: string; pos: string };
+}
+const { t } = Astro.props;
+---
+
+<div class="scr-lock">
+  <img class="lock-wall" src="/orbs/orb-30.webp" alt="" width="240" height="240" loading="lazy" decoding="async" />
+  <span class="lock-date">{t.date}</span>
+  <span class="lock-time">9:41</span>
+  <div class="lock-push">
+    <span class="lock-icon"><img src="/orbs/orb-200.webp" alt="" width="40" height="40" /></span>
+    <span class="lock-push-body">
+      <span class="lock-push-head"><strong>Newstail</strong><small>{t.now}</small></span>
+      <span>{t.push}</span>
+      <small>{t.more}</small>
+    </span>
+  </div>
+  <div class="lock-live">
+    <span class="lock-live-top">
+      <span class="lock-icon lock-icon-lg"><img src="/orbs/orb-150.webp" alt="" width="56" height="56" /></span>
+      <span class="lock-live-text">
+        <small>{t.topic} · {t.pos}</small>
+        <strong>{t.title}</strong>
+      </span>
+    </span>
+    <span class="lock-bar"><span></span></span>
+    <span class="lock-ctrl" aria-hidden="true">
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="#eceff4"><path d="M14 2L2 11l12 9V2zM28 2L16 11l12 9V2z"></path></svg>
+      <svg width="22" height="26" viewBox="0 0 22 26" fill="#eceff4"><rect x="2" y="1" width="6" height="24" rx="1.5"></rect><rect x="14" y="1" width="6" height="24" rx="1.5"></rect></svg>
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="#eceff4"><path d="M16 2l12 9-12 9V2zM2 2l12 9-12 9V2z"></path></svg>
+    </span>
+  </div>
+  <span class="lock-bottom" aria-hidden="true"></span>
+</div>

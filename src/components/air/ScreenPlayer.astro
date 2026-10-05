@@ -1,0 +1,84 @@
+---
+/**
+ * Sändningen som i appen efter bygge 75/76: prickar, klotet med progressringen, ämne,
+ * rubrik och källor i grått under, "?" uppe till höger, Avsluta längst ner. Inga knappar
+ * (tryck = paus, svep = nästa, håll = berätta mer). Med flera punkter byter den själv.
+ */
+export type PlayerItem = { topic: string; title: string; src: string; hue: number };
+interface Props {
+  items: PlayerItem[];
+  /** Vilken punkt som syns först. */
+  start?: number;
+  done?: string;
+}
+const { items, start = 0, done = "Avsluta" } = Astro.props;
+const first = items[start]!;
+---
+
+<div class="scr-player" data-player data-items={JSON.stringify(items)} data-start={start} style={`--hue: ${first.hue}`}>
+  <span class="scr-help" aria-hidden="true">?</span>
+  <div class="scr-dots" aria-hidden="true">
+    {items.map((_, i) => <span class={i === start ? "is-on" : ""} />)}
+  </div>
+  <div class="scr-orb-wrap">
+    <span class="scr-orb-glow" aria-hidden="true"></span>
+    <span class="scr-ring" aria-hidden="true"></span>
+    <span class="scr-ring-arc" aria-hidden="true"></span>
+    <img class="scr-orb" src={`/orbs/orb-${first.hue}.webp`} alt="" width="240" height="240" loading="lazy" decoding="async" />
+  </div>
+  <div class="scr-caption">
+    <span class="scr-topic" data-p-topic>{first.topic}</span>
+    <span class="scr-title" data-p-title>{first.title}</span>
+    <span class="scr-src" data-p-src>{first.src}</span>
+  </div>
+  <span class="scr-done">{done}</span>
+</div>
+
+<script>
+  // Punkterna byter som när värden går vidare: ringen fylls, tonar, börjar om.
+  document.querySelectorAll<HTMLElement>("[data-player]").forEach((el) => {
+    const items = JSON.parse(el.dataset.items || "[]") as { topic: string; title: string; src: string; hue: number }[];
+    if (items.length < 2) return;
+    const topic = el.querySelector<HTMLElement>("[data-p-topic]")!;
+    const title = el.querySelector<HTMLElement>("[data-p-title]")!;
+    const src = el.querySelector<HTMLElement>("[data-p-src]")!;
+    const orb = el.querySelector<HTMLImageElement>(".scr-orb")!;
+    const dots = [...el.querySelectorAll<HTMLElement>(".scr-dots span")];
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let i = Number(el.dataset.start || 0);
+    let timer = 0;
+    items.forEach((x) => {
+      const im = new Image();
+      im.src = `/orbs/orb-${x.hue}.webp`;
+    });
+    const show = (k: number) => {
+      const x = items[k]!;
+      el.classList.add("is-switching");
+      window.setTimeout(() => {
+        topic.textContent = x.topic;
+        title.textContent = x.title;
+        src.textContent = x.src;
+        orb.src = `/orbs/orb-${x.hue}.webp`;
+        dots.forEach((d, j) => d.classList.toggle("is-on", j === k));
+        el.style.setProperty("--hue", String(x.hue));
+        el.classList.remove("is-switching");
+        el.classList.remove("is-running");
+        void el.offsetWidth;
+        el.classList.add("is-running");
+      }, 260);
+    };
+    const run = () => {
+      if (timer || reduced) return;
+      el.classList.add("is-running");
+      timer = window.setInterval(() => {
+        i = (i + 1) % items.length;
+        show(i);
+      }, 4600);
+    };
+    const stop = () => {
+      clearInterval(timer);
+      timer = 0;
+    };
+    new IntersectionObserver(([e]) => (e!.isIntersecting ? run() : stop()), { threshold: 0.4 }).observe(el);
+  });
+</script>

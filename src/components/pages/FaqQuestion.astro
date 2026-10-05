@@ -1,0 +1,48 @@
+---
+/** En fråga på egen sida: svaret stort, länk vidare, fler frågor i samma kategori. */
+import { CATS, FAQ, faqPath, type Faq } from "../../content/faq";
+import { ROUTES, START_URL, UI, type Lang } from "../../content/site";
+
+interface Props {
+  lang: Lang;
+  faq: Faq;
+}
+const { lang, faq } = Astro.props;
+const sv = lang === "sv";
+const R = ROUTES[lang];
+const ui = UI[lang];
+const more = FAQ.filter((f) => f.cat === faq.cat && f !== faq).slice(0, 4);
+const next: Record<string, [string, string]> = {
+  pricing: [sv ? "Räkna på er" : "Calculate your price", `${R.pricing}${sv ? "#rakna" : "#calculate"}`],
+  trust: [sv ? "Mer om trygghet" : "More about trust", R.trust],
+  it: [sv ? "Mer om trygghet" : "More about trust", R.trust],
+  listen: [sv ? "Så funkar det" : "How it works", R.how],
+  publish: [sv ? "Så publicerar ni" : "How you publish", `${R.how}${sv ? "#publicerar" : "#publish"}`],
+  start: [sv ? "Så funkar det" : "How it works", R.how],
+};
+const [nextT, nextHref] = next[faq.cat]!;
+---
+
+<div class="page q-page" data-space data-hue="262">
+  <div class="q-layout">
+    <div>
+      <nav class="crumbs" aria-label={sv ? "Brödsmulor" : "Breadcrumbs"}>
+        <a href={R.faq}>{sv ? "Frågor" : "Questions"}</a><span aria-hidden="true">›</span>
+        <a href={`${R.faq}#${faq.cat}`}>{CATS[faq.cat][lang]}</a>
+      </nav>
+      <header class="page-head">
+        <h1 class="title-xl">{faq[lang].q}</h1>
+      </header>
+      <p class="answer">{faq[lang].a}</p>
+      <div class="actions">
+        <a class="pill pill-secondary pill-lg" href={nextHref}>{nextT}</a>
+        <a class="pill pill-primary pill-lg" href={START_URL}>{ui.start}</a>
+      </div>
+    </div>
+    <aside class="aside-links">
+      {more.length > 0 && <small>{sv ? `Fler om ${CATS[faq.cat].sv.toLowerCase()}` : `More on ${CATS[faq.cat].en.toLowerCase()}`}</small>}
+      {more.map((f) => <a href={faqPath(lang, f.slug[lang])}>{f[lang].q}</a>)}
+      <a href={R.faq} class="subtle" style="font-size: 0.9375rem; margin-top: 0.4rem">{ui.allQuestions} ›</a>
+    </aside>
+  </div>
+</div>

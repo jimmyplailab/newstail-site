@@ -1,0 +1,18 @@
+---
+import Base from "../layouts/Base.astro";
+import DocPage from "../components/pages/DocPage.astro";
+import { LEGAL } from "../content/legal";
+import { breadcrumbs } from "../content/site";
+const doc = LEGAL.terms.sv;
+---
+
+<Base
+  lang="sv"
+  path="/villkor/"
+  altPath="/en/terms/"
+  title={doc.metaTitle}
+  description={doc.metaDescription}
+  schema={[breadcrumbs([{ name: "Newstail", path: "/" }, { name: "Trygghet", path: "/trygghet/" }, { name: doc.title, path: "/villkor/" }])]}
+>
+  <DocPage lang="sv" doc={doc} />
+</Base>

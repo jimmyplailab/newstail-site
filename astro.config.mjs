@@ -11,4 +11,5 @@ export default defineConfig({
     routing: { prefixDefaultLocale: false },
   },
   build: { inlineStylesheets: "auto" },
+  devToolbar: { enabled: false },
 });

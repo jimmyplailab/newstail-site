@@ -1,0 +1,18 @@
+---
+import Base from "../../layouts/Base.astro";
+import DocPage from "../../components/pages/DocPage.astro";
+import { LEGAL } from "../../content/legal";
+import { breadcrumbs } from "../../content/site";
+const doc = LEGAL.privacy.en;
+---
+
+<Base
+  lang="en"
+  path="/en/privacy/"
+  altPath="/integritet/"
+  title={doc.metaTitle}
+  description={doc.metaDescription}
+  schema={[breadcrumbs([{ name: "Newstail", path: "/en/" }, { name: "Trust", path: "/en/trust/" }, { name: doc.title, path: "/en/privacy/" }])]}
+>
+  <DocPage lang="en" doc={doc} />
+</Base>

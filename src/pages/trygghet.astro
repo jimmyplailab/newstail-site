@@ -1,11 +1,18 @@
 ---
 import Base from "../layouts/Base.astro";
-import Trust from "../components/Trust.astro";
-import { sv as copy } from "../i18n/sv";
-import { trust } from "../i18n/subpages";
-const page = trust.sv;
+import TrustPage from "../components/pages/TrustPage.astro";
+import { breadcrumbs, faqPage } from "../content/site";
+import { faqFor } from "../content/faq";
 ---
 
-<Base copy={copy} path="/trygghet/" altPath="/en/trust/" title={page.metaTitle} description={page.metaDescription} orb={false} snap>
-  <Trust page={page} />
+<Base
+  lang="sv"
+  path="/trygghet/"
+  altPath="/en/trust/"
+  title="Trygghet – vad ledningen ser och aldrig ser | Newstail"
+  description="Ledningen ser mönster per team, aldrig vad en enskild medarbetare hört. Data inom EU, ingen AI-träning på era data, integritetspolicy och PUB-avtal."
+  snap
+  schema={[breadcrumbs([{ name: "Newstail", path: "/" }, { name: "Trygghet", path: "/trygghet/" }]), faqPage(faqFor("trust", "sv"))]}
+>
+  <TrustPage lang="sv" />
 </Base>

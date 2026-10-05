@@ -1,0 +1,102 @@
+---
+/** Om oss: varför, vi som bygger det, vad vi tror på, bolaget och mejlen. */
+import { type Lang } from "../../content/site";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const sv = lang === "sv";
+const c = sv
+  ? {
+      h1: "Alla på jobbet ska hänga med.",
+      lead: "[Varför ni startade Newstail – två meningar, med era egna ord.]",
+      teamTitle: "Vi som bygger det.",
+      people: [
+        ["Joel Enhörning", "Medgrundare · [roll]"],
+        ["Jimmy Lindström", "Medgrundare · [roll]"],
+      ],
+      values: [
+        ["Röst före text", "Det man hör, hinner man med."],
+        ["Alla ska med", "Oavsett språk eller arbetsplats."],
+        ["Integritet först", "Mönster, aldrig personer."],
+      ],
+      facts: [
+        ["Bolag", "Plailab AB"],
+        ["Org.nr", "559284-2610"],
+        ["Ort", "[Ort]"],
+        ["Grundat", "[År]"],
+      ],
+      mail: "Hör av dig.",
+      photo: "Foto",
+    }
+  : {
+      h1: "Everyone at work should keep up.",
+      lead: "[Why you started Newstail – two sentences, in your own words.]",
+      teamTitle: "The people building it.",
+      people: [
+        ["Joel Enhörning", "Co-founder · [role]"],
+        ["Jimmy Lindström", "Co-founder · [role]"],
+      ],
+      values: [
+        ["Voice before text", "What you hear, you have time for."],
+        ["Everyone included", "Whatever the language or workplace."],
+        ["Privacy first", "Patterns, never people."],
+      ],
+      facts: [
+        ["Company", "Plailab AB"],
+        ["Reg. no.", "559284-2610"],
+        ["Based in", "[City]"],
+        ["Founded", "[Year]"],
+      ],
+      mail: "Get in touch.",
+      photo: "Photo",
+    };
+const ph = (s: string) => s.replace(/\[([^\]]+)\]/g, '<span class="todo">[$1]</span>');
+---
+
+<section class="section sub-top" data-space data-hue="72" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <h1 class="title-hero">{c.h1}</h1>
+      <p class="lead" set:html={ph(c.lead)} />
+    </div>
+    <div class="split-stage stage-reach" aria-hidden="true">
+      <img class="about-orb" src="/orbs/orb-72.webp" alt="" width="260" height="260" />
+    </div>
+  </div>
+</section>
+
+<section class="section" data-space data-hue="200" data-watch>
+  <div class="wide">
+    <h2 class="title-xl">{c.teamTitle}</h2>
+    <div class="people">
+      {
+        c.people.map(([n, r]) => (
+          <div class="person">
+            <span class="photo" aria-hidden="true" />
+            <span>
+              <b>{n}</b>
+              <span set:html={ph(r)} />
+            </span>
+          </div>
+        ))
+      }
+    </div>
+    <div class="grid-3">
+      {c.values.map(([t, d]) => <div class="lined"><strong>{t}</strong><span>{d}</span></div>)}
+    </div>
+  </div>
+</section>
+
+<section class="section" data-space data-hue="262" data-watch>
+  <div class="wide">
+    <div class="facts-row" style="margin-top: 0">
+      {c.facts.map(([l, v]) => <div><small>{l}</small><b set:html={ph(v)} /></div>)}
+    </div>
+    <div class="stack" style="margin-top: clamp(3rem, 10vh, 6rem)">
+      <h2 class="title-xl">{c.mail}</h2>
+      <a class="big-mail" href="mailto:hello@newstail.io">hello@newstail.io</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,17 @@
+---
+import Base from "../../layouts/Base.astro";
+import AboutPage from "../../components/pages/AboutPage.astro";
+import { breadcrumbs } from "../../content/site";
+---
+
+<Base
+  lang="en"
+  path="/en/about/"
+  altPath="/om-oss/"
+  title="About – Newstail and Plailab AB"
+  description="We build Newstail so that everyone at work keeps up – including the people who never open the intranet. About us, the company and how to reach us."
+  snap
+  schema={[breadcrumbs([{ name: "Newstail", path: "/en/" }, { name: "About", path: "/en/about/" }])]}
+>
+  <AboutPage lang="en" />
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from "../../../layouts/Base.astro";
+import FaqHub from "../../../components/pages/FaqHub.astro";
+import { FAQ } from "../../../content/faq";
+import { breadcrumbs, faqPage } from "../../../content/site";
+---
+
+<Base
+  lang="en"
+  path="/en/faq/"
+  altPath="/fragor/"
+  title="Questions and answers about Newstail"
+  description="Answers to common questions about Newstail: getting started, listening, publishing, pricing, trust and IT."
+  schema={[breadcrumbs([{ name: "Newstail", path: "/en/" }, { name: "Questions", path: "/en/faq/" }]), faqPage(FAQ.map((f) => f.en))]}
+>
+  <FaqHub lang="en" />
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from "../../layouts/Base.astro";
+import HowPage from "../../components/pages/HowPage.astro";
+import { breadcrumbs } from "../../content/site";
+---
+
+<Base
+  lang="en"
+  path="/en/how-it-works/"
+  altPath="/sa-funkar-det/"
+  title="How Newstail works – the broadcast, publishing and the management view"
+  description="A personal news broadcast for every employee: internal news first, then the industry and what each person follows. How you listen, publish and follow up in Newstail."
+  snap
+  schema={[breadcrumbs([{ name: "Newstail", path: "/en/" }, { name: "How it works", path: "/en/how-it-works/" }])]}
+>
+  <HowPage lang="en" />
+</Base>

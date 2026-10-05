@@ -1,0 +1,67 @@
+---
+/** Recapen: dagens punkter med källor och Skicka till kollega. Valfritt bladet "Skicka till". */
+export type RecapItem = { topic: string; title: string; text?: string; src: string };
+interface Props {
+  date: string;
+  sub: string;
+  items: RecapItem[];
+  send: string;
+  share: string;
+  sheet?: { title: string; people: string[]; note: string; button: string; foot: string };
+  quiz?: { kicker: string; q: string; options: string[]; answer: number };
+}
+const { date, sub, items, send, share, sheet, quiz } = Astro.props;
+---
+
+<div class="scr-recap">
+  <div class="scr-head">
+    <span class="scr-round" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eceff4" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"></path></svg></span>
+    <span class="scr-company">RECAP</span>
+    <span class="scr-round" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eceff4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v7h14v-7"></path></svg></span>
+  </div>
+  <div class="scr-recap-top">
+    <span class="scr-recap-date">{date}</span>
+    <span class="scr-recap-sub">{sub}</span>
+  </div>
+  <div class="scr-recap-list">
+    {
+      items.map((x, i) => (
+        <div class={`scr-recap-item${sheet && i > 0 ? " is-dim" : ""}`}>
+          <small>{x.topic}</small>
+          <strong>{x.title}</strong>
+          {x.text && <p>{x.text}</p>}
+          <span class="scr-chips">
+            <span>{x.src}</span>
+            <span class={sheet && i === 0 ? "is-on" : ""}>{send}</span>
+            {!sheet && <span>{share}</span>}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+  {
+    sheet && (
+      <div class="scr-sheet">
+        <span class="scr-grab" />
+        <strong>{sheet.title}</strong>
+        <span class="scr-people">
+          {sheet.people.map((p, i) => <span class={i === 0 ? "is-on" : ""}>{p}</span>)}
+        </span>
+        <span class="scr-note">{sheet.note}</span>
+        <span class="scr-send">{sheet.button}</span>
+        <small>{sheet.foot}</small>
+      </div>
+    )
+  }
+  {
+    quiz && (
+      <div class="scr-quiz">
+        <small>{quiz.kicker}</small>
+        <strong>{quiz.q}</strong>
+        <span class="scr-quiz-opts">
+          {quiz.options.map((o, i) => <span class={i === quiz.answer ? "is-on" : ""}>{o}</span>)}
+        </span>
+      </div>
+    )
+  }
+</div>

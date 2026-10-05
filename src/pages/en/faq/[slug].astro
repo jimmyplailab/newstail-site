@@ -1,0 +1,31 @@
+---
+import Base from "../../../layouts/Base.astro";
+import FaqQuestion from "../../../components/pages/FaqQuestion.astro";
+import { CATS, FAQ, faqPath, type Faq } from "../../../content/faq";
+import { breadcrumbs, faqPage } from "../../../content/site";
+
+export function getStaticPaths() {
+  return FAQ.map((faq) => ({ params: { slug: faq.slug.en }, props: { faq } }));
+}
+const { faq } = Astro.props as { faq: Faq };
+const path = faqPath("en", faq.slug.en);
+---
+
+<Base
+  lang="en"
+  path={path}
+  altPath={faqPath("sv", faq.slug.sv)}
+  title={`${faq.en.q} | Newstail`}
+  description={faq.en.a.length > 155 ? `${faq.en.a.slice(0, 152).trimEnd()}…` : faq.en.a}
+  schema={[
+    breadcrumbs([
+      { name: "Newstail", path: "/en/" },
+      { name: "Questions", path: "/en/faq/" },
+      { name: CATS[faq.cat].en, path: `/en/faq/#${faq.cat}` },
+      { name: faq.en.q, path },
+    ]),
+    faqPage([faq.en]),
+  ]}
+>
+  <FaqQuestion lang="en" faq={faq} />
+</Base>

@@ -1,0 +1,255 @@
+---
+/**
+ * Trygghet: vad ledningen ser och aldrig ser, vad medarbetaren bestämmer, var innehållet kommer
+ * ifrån, och papperen för IT. Påståendena följer docs/TREDJEPARTER.md (aggregat från fem personer,
+ * databasen i Stockholm).
+ */
+import FaqList from "../FaqList.astro";
+import { faqFor } from "../../content/faq";
+import { ROUTES, UI, type Lang } from "../../content/site";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const sv = lang === "sv";
+const ui = UI[lang];
+const R = ROUTES[lang];
+const faq = faqFor("trust", lang);
+
+const c = sv
+  ? {
+      h1: "Tryggt från början.",
+      lead: "Byggt för företag, med medarbetarens integritet som utgångspunkt.",
+      dotsB: "34 av 41 har lyssnat.",
+      dotsS: "Det är vad ledningen ser. Aldrig vilka.",
+      facts: [
+        ["Mönster, aldrig personer", "Teamet, aldrig vem."],
+        ["Ingen AI tränas på era data", "De används bara för era sändningar."],
+        ["Databasen i Stockholm", "Era data lagras inom EU."],
+        ["Ni styr vem som publicerar", "Bara de ni utser."],
+      ],
+      seesKicker: "Ledningen",
+      seesTitle: "Vad ledningen ser.",
+      seesLead: "Siffror per team visas från fem personer.",
+      yesLabel: "Ledningen ser",
+      yes: ["Hur många som lyssnat, per dag och team", "Hur många som hört varje internt budskap", "Hur mycket som mindes, per team", "Vad organisationen följer, som helhet"],
+      noLabel: "Ledningen ser aldrig",
+      no: ["Vad en enskild person har hört", "En persons svar i quizen", "En persons egna ämnen", "Team med färre än fem personer"],
+      teamsHead: "Så ser det ut i admin",
+      teams: [
+        ["Förvaltning Jönköping", "12 av 14"],
+        ["Förvaltning Växjö", "9 av 11"],
+        ["Projekt och utveckling", "5 av 6"],
+      ],
+      locked: "Nytt team",
+      lockedNote: "Nya teamet har tre personer. Därför syns inga siffror.",
+      ownKicker: "Medarbetaren",
+      ownTitle: "Medarbetaren bestämmer över sitt.",
+      ownLead: "Det du lyssnar på är ditt.",
+      own: [
+        ["Egna ämnen är privata", "Syns inte för någon annan."],
+        ["Quizsvaren är dina", "De räknas ihop per team. Ingen ser ditt."],
+        ["Ingen mikrofon som lyssnar", "Bara när någon själv spelar in ett budskap."],
+        ["Ta bort kontot – allt försvinner", "Direkt i appen."],
+      ],
+      contentKicker: "Innehållet",
+      contentTitle: "Innehåll man kan lita på.",
+      content: [
+        ["Källor på varje punkt", "Läs originalet i recapen."],
+        ["Det interna går först", "Bara från dem ni utsett."],
+        ["Hör det innan det går ut", "Allt interna lyssnas igenom först."],
+      ],
+      source: {
+        tag: "ENERGI",
+        title: "Nya krav på energideklarationer från årsskiftet",
+        text: "Fler byggnader omfattas, och deklarationen ska visa fler mått än i dag.",
+        label: "Källor",
+        list: ["Boverket", "Branschpress", "Nyhetsbyrå"],
+      },
+      itKicker: "För IT och inköp",
+      itTitle: "Inga integrationer. Avtalen finns här.",
+      docs: [
+        ["PUB-avtal", "Personuppgiftsbiträdesavtalet", R.dpa],
+        ["Integritetspolicy", "Hur vi hanterar personuppgifter", R.privacy],
+        ["Villkor", "Det ni godkänner när ni börjar", R.terms],
+      ],
+      security: "Säkerhetsfrågor:",
+      faqTitle: "Frågor om trygghet.",
+    }
+  : {
+      h1: "Secure from the start.",
+      lead: "Built for companies, with the employee's privacy as the starting point.",
+      dotsB: "34 of 41 have listened.",
+      dotsS: "That's what management sees. Never who.",
+      facts: [
+        ["Patterns, never people", "The team, never who."],
+        ["No AI is trained on your data", "It's only used for your broadcasts."],
+        ["Database in Stockholm", "Your data is stored within the EU."],
+        ["You decide who publishes", "Only the people you choose."],
+      ],
+      seesKicker: "Management",
+      seesTitle: "What management sees.",
+      seesLead: "Team figures are shown from five people.",
+      yesLabel: "Management sees",
+      yes: ["How many listened, per day and team", "How many heard each internal message", "How much was remembered, per team", "What the organisation follows, as a whole"],
+      noLabel: "Management never sees",
+      no: ["What an individual has heard", "A person's quiz answers", "A person's own topics", "Teams with fewer than five people"],
+      teamsHead: "How it looks in admin",
+      teams: [
+        ["Property mgmt Jönköping", "12 of 14"],
+        ["Property mgmt Växjö", "9 of 11"],
+        ["Projects and development", "5 of 6"],
+      ],
+      locked: "New team",
+      lockedNote: "The new team has three people. So no figures are shown.",
+      ownKicker: "The employee",
+      ownTitle: "Employees decide over their own.",
+      ownLead: "What you listen to is yours.",
+      own: [
+        ["Own topics are private", "Not visible to anyone else."],
+        ["Quiz answers are yours", "They're added up per team. Nobody sees yours."],
+        ["No microphone listening", "Only when someone records a message themselves."],
+        ["Delete the account – everything goes", "Right in the app."],
+      ],
+      contentKicker: "The content",
+      contentTitle: "Content you can trust.",
+      content: [
+        ["Sources on every story", "Read the original in the recap."],
+        ["Internal news comes first", "Only from the people you choose."],
+        ["Hear it before it goes out", "Every internal message is listened through first."],
+      ],
+      source: {
+        tag: "ENERGY",
+        title: "New energy rating rules from the new year",
+        text: "More buildings are covered, and the rating must show more measures than today.",
+        label: "Sources",
+        list: ["Boverket", "Trade press", "News agency"],
+      },
+      itKicker: "For IT and procurement",
+      itTitle: "No integrations. The agreements are here.",
+      docs: [
+        ["DPA", "The data processing agreement", R.dpa],
+        ["Privacy policy", "How we handle personal data", R.privacy],
+        ["Terms", "What you agree to when you start", R.terms],
+      ],
+      security: "Security questions:",
+      faqTitle: "Questions about trust.",
+    };
+const dots = Array.from({ length: 41 }, (_, i) => i);
+const on = new Set([0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 30, 31, 33, 34, 35, 36, 37, 39, 40]);
+const lock = `<svg class="lock-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`;
+---
+
+<section class="section sub-top" data-space data-hue="200" data-watch>
+  <div class="wide">
+    <div class="split">
+      <div class="split-text stack">
+        <h1 class="title-hero">{c.h1}</h1>
+        <p class="lead">{c.lead}</p>
+      </div>
+      <div class="split-stage stage-reach">
+        <div class="people-dots" aria-hidden="true">
+          {dots.map((i) => <i class={on.has(i) ? "on" : undefined} style={`--i: ${i}`} />)}
+        </div>
+        <p class="dots-caption"><b>{c.dotsB}</b><span>{c.dotsS}</span></p>
+      </div>
+    </div>
+    <div class="grid-4 trust-facts">
+      {c.facts.map(([t, d]) => <div class="lined"><strong>{t}</strong><span>{d}</span></div>)}
+    </div>
+  </div>
+</section>
+
+<section class="section" id={sv ? "ser" : "sees"} data-space data-hue="262" data-watch>
+  <div class="wide">
+    <div class="wide-head stack">
+      <p class="kicker">{c.seesKicker}</p>
+      <h2 class="title-xl">{c.seesTitle}</h2>
+      <p class="lead">{c.seesLead}</p>
+    </div>
+    <div class="grid-3">
+      <div class="tile">
+        <small class="subtle">{c.yesLabel}</small>
+        <ul class="checks">{c.yes.map((x) => <li>{x}</li>)}</ul>
+      </div>
+      <div class="tile">
+        <small class="subtle">{c.noLabel}</small>
+        <ul class="checks no">{c.no.map((x) => <li>{x}</li>)}</ul>
+      </div>
+      <div class="tile tile-black">
+        <small class="subtle">{c.teamsHead}</small>
+        <div class="team-rows">
+          {c.teams.map(([t, v]) => <span><b style="font-weight: 500">{t}</b><i>{v}</i></span>)}
+          <span><b style="font-weight: 500">{c.locked}</b><Fragment set:html={lock} /></span>
+        </div>
+        <small class="subtle" style="margin-top: auto; font-size: 0.8125rem">{c.lockedNote}</small>
+      </div>
+    </div>
+    <p class="note">{ui.demoNote}</p>
+  </div>
+</section>
+
+<section class="section" data-space data-hue="300" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="kicker">{c.ownKicker}</p>
+      <h2 class="title-xl">{c.ownTitle}</h2>
+      <p class="lead">{c.ownLead}</p>
+    </div>
+    <div class="split-stage stage-reach">
+      <ul class="points" style="margin-top: 0">{c.own.map(([t, d]) => <li><strong>{t}</strong><span>{d}</span></li>)}</ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-space data-hue="150" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="kicker">{c.contentKicker}</p>
+      <h2 class="title-xl">{c.contentTitle}</h2>
+      <ul class="points">{c.content.map(([t, d]) => <li><strong>{t}</strong><span>{d}</span></li>)}</ul>
+    </div>
+    <div class="split-stage stage-reach">
+      <div class="tile source-card">
+        <span class="tag">{c.source.tag}</span>
+        <h3>{c.source.title}</h3>
+        <p>{c.source.text}</p>
+        <small class="subtle">{c.source.label}</small>
+        <div class="chips" style="margin-top: 0">{c.source.list.map((s) => <span class="chip">{s}</span>)}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="it" data-space data-hue="200" data-watch>
+  <div class="wide">
+    <div class="wide-head stack">
+      <p class="kicker">{c.itKicker}</p>
+      <h2 class="title-xl">{c.itTitle}</h2>
+    </div>
+    <div class="grid-3 docs">
+      {
+        c.docs.map(([t, d, href]) => (
+          <a class="tile" href={href}>
+            <span class="doc-ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h4" /></svg>
+            </span>
+            <span><b>{t}</b><small>{d}</small></span>
+          </a>
+        ))
+      }
+    </div>
+    <p class="note">{c.security} <a href="mailto:hello@newstail.io">hello@newstail.io</a></p>
+  </div>
+</section>
+
+<section class="section" data-space data-hue="262" data-watch>
+  <div class="faq-split">
+    <div class="stack">
+      <h2 class="title-xl">{c.faqTitle}</h2>
+      <a class="link-more" href={R.faq}>{ui.allQuestions}</a>
+    </div>
+    <FaqList items={faq} lang={lang} />
+  </div>
+</section>

@@ -1,0 +1,100 @@
+---
+/** Admin i en laptop, ritad i HTML med demoföretagets siffror (allt hänger ihop: 34 av 41). */
+interface Props {
+  lang: "sv" | "en";
+  class?: string;
+  /** Raderna under korten: interna budskap eller team. */
+  mode?: "inside" | "teams";
+}
+const { lang, class: cls = "", mode = "inside" } = Astro.props;
+const sv = lang === "sv";
+const t = sv
+  ? {
+      nav: ["Översikt", "Internt", "Medarbetare", "Team", "Insikter", "Företag", "Konto"],
+      title: "Översikt",
+      span: "7 dagar",
+      heard: "HAR LYSSNAT",
+      of: "av 41",
+      week: "83 % · veckan innan 78 %",
+      recall: "MINDES RÄTT",
+      recallSub: "i veckans quiz",
+      section: mode === "inside" ? "SENASTE INTERNA" : "PER TEAM",
+      label: "Översikt i Newstails admin med demoföretagets siffror",
+    }
+  : {
+      nav: ["Overview", "Internal", "People", "Teams", "Insights", "Company", "Account"],
+      title: "Overview",
+      span: "7 days",
+      heard: "HAVE LISTENED",
+      of: "of 41",
+      week: "83 % · week before 78 %",
+      recall: "REMEMBERED",
+      recallSub: "in this week's quiz",
+      section: mode === "inside" ? "LATEST INTERNAL" : "PER TEAM",
+      label: "Overview in the Newstail admin with the demo company's figures",
+    };
+const inside = sv
+  ? [
+      ["Vi förvärvar två fastigheter i Växjö", 38, 41],
+      ["Hyresförhandlingen för 2027 är klar", 34, 41],
+      ["Hyresgästdag i Kvarteret Linden", 12, 14],
+    ]
+  : [
+      ["We are acquiring two properties in Växjö", 38, 41],
+      ["The 2027 rent negotiation is done", 34, 41],
+      ["Tenant day at Kvarteret Linden", 12, 14],
+    ];
+const teams = sv
+  ? [
+      ["Förvaltning Jönköping", 12, 14],
+      ["Förvaltning Växjö", 9, 11],
+      ["Projekt & utveckling", 5, 6],
+    ]
+  : [
+      ["Property management Jönköping", 12, 14],
+      ["Property management Växjö", 9, 11],
+      ["Projects & development", 5, 6],
+    ];
+const rows = (mode === "inside" ? inside : teams) as [string, number, number][];
+---
+
+<div class={`dev alaptop ${cls}`} style="--w: 940; --h: 545" role="img" aria-label={t.label}>
+  <div class="alaptop-body">
+    <div class="alaptop-lid">
+      <span class="alaptop-notch"></span>
+      <div class="alaptop-screen">
+        <div class="adm">
+          <div class="adm-side">
+            <div class="adm-brand"><span class="adm-n">n</span><span><b>Newstail</b><small>ADMIN</small></span></div>
+            <ul>{t.nav.map((n, i) => <li class={i === 0 ? "is-on" : ""}>{n}</li>)}</ul>
+          </div>
+          <div class="adm-title"><b>{t.title}</b><span>{t.span}</span></div>
+          <div class="adm-card adm-card-1">
+            <small>{t.heard}</small>
+            <span class="adm-big"><b>34</b><span>{t.of}</span></span>
+            <span class="adm-bar"><span style="width: 83%"></span></span>
+            <small class="adm-foot">{t.week}</small>
+          </div>
+          <div class="adm-card adm-card-2">
+            <small>{t.recall}</small>
+            <span class="adm-big"><b>80</b><span>%</span></span>
+            <small class="adm-foot">{t.recallSub}</small>
+          </div>
+          <div class="adm-rows">
+            <small>{t.section}</small>
+            <div>
+              {rows.map(([name, a, b]) => (
+                <span class="adm-row">
+                  <span>{name}</span>
+                  <span class="adm-bar"><span style={`width: ${Math.round((a / b) * 100)}%`}></span></span>
+                  <span class="adm-num">{sv ? `${a} av ${b}` : `${a} of ${b}`}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="alaptop-base"><span></span></div>
+  </div>
+</div>

@@ -2,45 +2,55 @@
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 import "../styles/devices.css";
+import "../styles/v2.css";
 import Space from "../space/Space";
-import type { Copy } from "../i18n/types";
-import { LOGIN_URL, START_URL } from "../i18n/types";
+import { FOOTER, LEGAL_LINKS, LOGIN_URL, ROUTES, SITE, START_URL, UI, orgGraph, type Lang } from "../content/site";
 
 interface Props {
-  copy: Copy;
+  lang: Lang;
   /** Sidans sökväg på det här språket, t.ex. "/" eller "/pris/". */
   path: string;
-  /** Samma sida på det andra språket. */
-  altPath: string;
+  /** Samma sida på det andra språket – saknas den (landningssidorna) blir det ingen hreflang. */
+  altPath?: string;
   title: string;
   description: string;
-  /** Sektionerna snäpper (bara startsidan). */
+  /** Sektionerna snäpper (marknadssidorna). Text-, frågor- och avtalssidor snäpper inte. */
   snap?: boolean;
-  /** Klotet i rymden (bara startsidan – undersidorna har bara stjärnorna). */
+  /** Klotet i rymden (startsidan) – övriga sidor har bara stjärnorna. */
   orb?: boolean;
+  /** Extra JSON-LD utöver Organization och WebSite. */
+  schema?: Record<string, unknown>[];
+  /** Delningsbild (absolut sökväg på sajten). */
+  og?: string;
 }
-const { copy, path, altPath, title, description, snap = false, orb = true } = Astro.props;
-const site = "https://newstail.io";
-const canonical = `${site}${path}`;
-const svPath = copy.lang === "sv" ? path : altPath;
-const enPath = copy.lang === "en" ? path : altPath;
-const home = copy.lang === "sv" ? "/" : "/en/";
-const pricing = copy.lang === "sv" ? "/pris/" : "/en/pricing/";
-const techPage = copy.lang === "sv" ? "/tekniken/" : "/en/technology/";
-const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
+const { lang, path, altPath, title, description, snap = false, orb = false, schema = [], og } = Astro.props;
+const ui = UI[lang];
+const R = ROUTES[lang];
+const canonical = `${SITE}${path}`;
+const other = lang === "sv" ? "en" : "sv";
+const switchHref = altPath ?? ROUTES[other].home;
+const ogImage = `${SITE}${og ?? (lang === "sv" ? "/og.png" : "/og-en.png")}`;
+const ld = { "@context": "https://schema.org", "@graph": [...orgGraph(lang), ...schema] };
+const isCurrent = (href: string) => (path === href || path.startsWith(href) && href !== R.home ? "page" : undefined);
 ---
 
 <!doctype html>
-<html lang={copy.htmlLang} class={snap ? "snap" : undefined}>
+<html lang={lang} class={snap ? "snap" : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="sv" href={`${site}${svPath}`} />
-    <link rel="alternate" hreflang="en" href={`${site}${enPath}`} />
-    <link rel="alternate" hreflang="x-default" href={`${site}${svPath}`} />
+    {
+      altPath && (
+        <>
+          <link rel="alternate" hreflang={lang} href={canonical} />
+          <link rel="alternate" hreflang={other} href={`${SITE}${altPath}`} />
+          <link rel="alternate" hreflang="x-default" href={`${SITE}${lang === "sv" ? path : altPath}`} />
+        </>
+      )
+    }
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -50,61 +60,64 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={`${site}/og.png`} />
-    <meta property="og:locale" content={copy.lang === "sv" ? "sv_SE" : "en_GB"} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === "sv" ? "sv_SE" : "en_GB"} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${site}/og.png`} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <slot name="head" />
   </head>
   <body>
     <Space client:load orb={orb} />
     <header class="nav" id="nav">
       <div class="nav-inner">
-        <a href={home} class="logo" aria-label="Newstail"></a>
-        <nav class="nav-links" aria-label="Meny">
-          <a href={techPage} aria-current={path === techPage ? "page" : undefined}>{copy.nav.tech}</a>
-          <a href={trustPage} aria-current={path === trustPage ? "page" : undefined}>{copy.nav.trust}</a>
-          <a href={pricing} aria-current={path === pricing ? "page" : undefined}>{copy.nav.pricing}</a>
+        <a href={R.home} class="logo" aria-label="Newstail"></a>
+        <nav class="nav-links" aria-label={ui.nav.menu}>
+          <a href={R.how} aria-current={isCurrent(R.how)}>{ui.nav.how}</a>
+          <a href={R.trust} aria-current={isCurrent(R.trust)}>{ui.nav.trust}</a>
+          <a href={R.pricing} aria-current={isCurrent(R.pricing)}>{ui.nav.pricing}</a>
         </nav>
         <div class="nav-right">
-          <a class="lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>{copy.nav.switch}</a>
-          <a class="pill pill-ghost nav-login" href={LOGIN_URL}>{copy.nav.login}</a>
-          <a class="pill pill-primary nav-start" href={START_URL}>{copy.nav.start}</a>
-          <button class="nav-menu-btn" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"}>
+          <a class="lang" href={switchHref} hreflang={other}>{ui.nav.switch}</a>
+          <a class="pill pill-ghost nav-login" href={LOGIN_URL}>{ui.nav.login}</a>
+          <a class="pill pill-primary nav-start" href={START_URL}>{ui.nav.start}</a>
+          <button class="nav-menu-btn" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={ui.nav.menu}>
             <span></span><span></span><span></span>
           </button>
         </div>
       </div>
-      <nav class="nav-sheet" id="nav-sheet" aria-label={copy.lang === "sv" ? "Meny" : "Menu"} inert>
-        <a href={techPage}>{copy.nav.tech}</a>
-        <a href={trustPage}>{copy.nav.trust}</a>
-        <a href={pricing}>{copy.nav.pricing}</a>
-        <a href={LOGIN_URL}>{copy.nav.login}</a>
+      <nav class="nav-sheet" id="nav-sheet" aria-label={ui.nav.menu} inert>
+        <a href={R.how}>{ui.nav.how}</a>
+        <a href={R.trust}>{ui.nav.trust}</a>
+        <a href={R.pricing}>{ui.nav.pricing}</a>
         <div class="nav-sheet-foot">
-          <a class="pill pill-primary pill-lg" href={START_URL}>{copy.nav.start}</a>
-          <a class="nav-sheet-lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>{copy.lang === "sv" ? "English" : "Svenska"}</a>
+          <a class="pill pill-primary pill-lg" href={START_URL}>{ui.nav.start}</a>
+          <a class="pill pill-secondary pill-lg" href={LOGIN_URL}>{ui.nav.login}</a>
+          <a class="nav-sheet-lang" href={switchHref} hreflang={other}>{ui.otherLang}</a>
         </div>
       </nav>
     </header>
     <main>
       <slot />
     </main>
-    <footer class="footer" id="sidfot">
+    <footer class="footer footer-v2" id="sidfot" data-space data-hue="262" data-orb="0.5,0.5,0.1,0" data-orb-m="0.5,0.5,0.1,0">
       <div class="footer-inner">
         <div class="footer-brand">
-          <a href={home} class="logo" aria-label="Newstail"></a>
-          <a class="footer-lang" href={altPath} hreflang={copy.lang === "sv" ? "en" : "sv"}>
+          <a href={R.home} class="logo" aria-label="Newstail"></a>
+          <a class="footer-lang" href={switchHref} hreflang={other}>
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9s-1.3 6.3-3.9 9c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z" /></svg>
-            {copy.lang === "sv" ? "English" : "Svenska"}
+            {ui.otherLang}
           </a>
         </div>
-        <div class="footer-cols">
+        <div class={`footer-cols footer-cols-${FOOTER[lang].length}`}>
           {
-            copy.footer.cols.map((col) => (
+            FOOTER[lang].map((col) => (
               <div class="footer-col">
-                <h3>{col.title}</h3>
+                <h3>{col.t}</h3>
                 <ul>
                   {col.links.map((l) => (
                     <li>
@@ -112,18 +125,31 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
                     </li>
                   ))}
                 </ul>
+                {col.sub && (
+                  <>
+                    <h3 class="footer-sub">{col.sub.t}</h3>
+                    <ul>
+                      {col.sub.links.map((l) => (
+                        <li>
+                          <a href={l.href}>{l.t}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
             ))
           }
         </div>
       </div>
       <div class="footer-foot">
-        <span>{copy.footer.line}</span>
+        <span>{ui.legal}</span>
+        {LEGAL_LINKS[lang].map((l) => <a href={l.href}>{l.t}</a>)}
+        <span class="footer-foot-gap"></span>
+        <a href="mailto:hello@newstail.io">hello@newstail.io</a>
       </div>
     </footer>
     <script>
-      // Topplinjen blir glas när man scrollat; sektionernas animationer startar när de syns.
-      // Omladdning börjar alltid högst upp (webbläsaren ska inte återställa scrollen).
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       if (!location.hash) window.scrollTo(0, 0);
       const nav = document.getElementById("nav");
@@ -138,8 +164,7 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
         }
         nav?.classList.toggle("menu-open", open);
       });
-      // Som elevenlabs.io: högst upp syns hela topplinjen. Scrollar man ner glider den bort,
-      // scrollar man upp kommer en kompakt variant (logga + knappar) tillbaka på fast botten.
+      // Topplinjen: full högst upp, glider bort nedåt, kommer kompakt tillbaka uppåt.
       let lastY = window.scrollY;
       const onScroll = () => {
         const y = window.scrollY;
@@ -165,16 +190,16 @@ const trustPage = copy.lang === "sv" ? "/trygghet/" : "/en/trust/";
             }
           }
         },
-        { threshold: 0.35 },
+        { threshold: 0.3 },
       );
       document.querySelectorAll("[data-watch]").forEach((el) => io.observe(el));
-      // Enhetsramarna (Device.astro) är fasta i pixlar och skalas till sin bredd.
+      // Enhetsramarna (telefonen, laptopen) är ritade i fasta pixlar och skalas till sin bredd.
       const devs = document.querySelectorAll<HTMLElement>(".dev");
       if (devs.length) {
         const ro = new ResizeObserver((entries) => {
           for (const e of entries) {
             const el = e.target as HTMLElement;
-            el.style.setProperty("--s", String(e.contentRect.width / Number(el.style.getPropertyValue("--w") || 428)));
+            el.style.setProperty("--s", String(e.contentRect.width / Number(el.style.getPropertyValue("--w") || 380)));
           }
         });
         devs.forEach((d) => ro.observe(d));

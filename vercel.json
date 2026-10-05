@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/tekniken", "destination": "/sa-funkar-det/", "permanent": true },
+    { "source": "/tekniken/", "destination": "/sa-funkar-det/", "permanent": true },
+    { "source": "/en/technology", "destination": "/en/how-it-works/", "permanent": true },
+    { "source": "/en/technology/", "destination": "/en/how-it-works/", "permanent": true }
+  ]
+}

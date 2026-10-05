@@ -1,0 +1,41 @@
+---
+import Base from "../../layouts/Base.astro";
+import LandingPage from "../../components/pages/LandingPage.astro";
+import type { Landing } from "../../content/landing-types";
+import { CLUSTERS, LANDINGS, landingPath } from "../../content/landings";
+import { ORG_ID, SITE, breadcrumbs, faqPage } from "../../content/site";
+
+export function getStaticPaths() {
+  return LANDINGS.map((l) => ({ params: { cluster: l.cluster, slug: l.slug }, props: { l } }));
+}
+const { l } = Astro.props as { l: Landing };
+const path = landingPath(l);
+const page: Record<string, unknown> = {
+  "@type": l.article ? "Article" : "WebPage",
+  [l.article ? "headline" : "name"]: l.h1.replace(/\u00AD/g, ""),
+  description: l.metaDescription,
+  url: `${SITE}${path}`,
+  inLanguage: "sv-SE",
+  publisher: { "@id": ORG_ID },
+  ...(l.article ? { author: { "@id": ORG_ID }, dateModified: "2026-10-05" } : {}),
+};
+---
+
+<Base
+  lang="sv"
+  path={path}
+  title={l.metaTitle}
+  description={l.metaDescription}
+  snap={!l.article}
+  schema={[
+    page,
+    breadcrumbs([
+      { name: "Newstail", path: "/" },
+      { name: CLUSTERS[l.cluster].name, path: `/${l.cluster}/` },
+      { name: l.name, path },
+    ]),
+    faqPage(l.faq),
+  ]}
+>
+  <LandingPage l={l} />
+</Base>

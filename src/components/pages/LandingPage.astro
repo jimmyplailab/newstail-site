@@ -1,0 +1,264 @@
+---
+/**
+ * Mallen för alla landningssidor: hero med telefonen, känner ni igen er, så funkar det för er,
+ * hör ett exempel, (jämförelse), (guide), frågor, läs vidare. Allt kommer ur en Landing.
+ */
+import Phone from "../air/Phone.astro";
+import ScreenPlayer from "../air/ScreenPlayer.astro";
+import FaqList from "../FaqList.astro";
+import type { Landing } from "../../content/landing-types";
+import { CLUSTERS, resolveRelated } from "../../content/landings";
+import { START_URL, UI } from "../../content/site";
+
+interface Props {
+  l: Landing;
+}
+const { l } = Astro.props;
+const ui = UI.sv;
+const cl = CLUSTERS[l.cluster];
+const HUE: Record<string, number> = { INTERNT: 72, "NÅGOT NYTT": 300, BRANSCH: 200, MARKNAD: 150, KUNDER: 262, KONKURRENTER: 350 };
+const hueOf = (topic: string) => HUE[topic.toUpperCase()] ?? 200;
+const related = l.related.map(resolveRelated).filter((x) => x !== null);
+const pct = (a: number, b: number) => Math.round((a / b) * 100);
+---
+
+<div class={l.article ? "flow" : undefined}>
+<section class="section sub-top" data-space data-hue={String(hueOf(l.phone.topic))} data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <nav class="crumbs" aria-label="Brödsmulor">
+        <a href="/">Newstail</a><span aria-hidden="true">›</span><a href={`/${l.cluster}/`}>{cl.name}</a>
+      </nav>
+      <h1 class="title-hero landing-h1">{l.h1}</h1>
+      <p class="lead">{l.lead}</p>
+      <div class="actions">
+        <a class="pill pill-primary pill-lg" href={START_URL}>{ui.startLong}</a>
+        <a class="pill pill-secondary pill-lg" href="#exempel">Hör ett exempel</a>
+      </div>
+      <p class="note">{ui.noCard}</p>
+    </div>
+    <div class="split-stage stage-device stage-glow" style={`--glow-hue: ${hueOf(l.phone.topic)}`}>
+      <Phone label="Sändningen i Newstail-appen">
+        <ScreenPlayer items={[{ ...l.phone, hue: hueOf(l.phone.topic) }]} />
+      </Phone>
+    </div>
+  </div>
+</section>
+
+{
+  l.article && (
+    <section class="section section-auto" data-space data-hue="200">
+      <article class="article">
+        <p class="answer">{l.article.answer}</p>
+        {l.article.sections.map((s) => (
+          <section>
+            <h2>{s.h}</h2>
+            <p>{s.p}</p>
+            {s.list && (
+              <ol>
+                {s.list.map((x) => (
+                  <li>{x}</li>
+                ))}
+              </ol>
+            )}
+          </section>
+        ))}
+      </article>
+    </section>
+  )
+}
+
+<section class="section" data-space data-hue="262" data-watch>
+  <div class="wide">
+    <p class="kicker">Känner ni igen er?</p>
+    <div class="pains">
+      {l.pains.map((p) => <div><strong>{p.t}</strong><span>{p.d}</span></div>)}
+    </div>
+  </div>
+</section>
+
+<section class="section" data-space data-hue="150" data-watch>
+  <div class="wide">
+    <div class="wide-head stack">
+      <p class="kicker">Så funkar det för er</p>
+    </div>
+    <div class="grid-3" style="margin-top: 1.4rem">
+      {
+        l.rows.map((r) => (
+          <div class="tile row-tile">
+            <div class="vis">
+              {r.visual.kind === "topics" && (
+                <div class="chips" style="margin-top: 0">
+                  {r.visual.chips.map((c, i) => (
+                    <span class="topic-chip" style={`--h: ${[72, 200, 150, 262, 350, 300, 120, 30][i % 8]}`}>{c}</span>
+                  ))}
+                </div>
+              )}
+              {r.visual.kind === "inside" && (
+                <div class="mini">
+                  <small>INTERNT</small>
+                  <b style="font-weight: 600">{r.visual.title}</b>
+                  <span class="reach-line">
+                    <span class="bar"><span style={`width: ${pct(r.visual.heard, r.visual.of)}%`} /></span>
+                    Hört av {r.visual.heard} av {r.visual.of}
+                  </span>
+                </div>
+              )}
+              {r.visual.kind === "teams" && (
+                <div class="mini">
+                  <small>Vilka ska höra det?</small>
+                  <b style="font-weight: 600">{r.visual.title}</b>
+                  <div class="chips" style="margin-top: 0.2rem">
+                    {r.visual.teams.map((t, i) => (
+                      <span class={`chip${i === (r.visual as { selected: number }).selected ? " chip-on" : ""}`}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {r.visual.kind === "language" && (
+                <div class="mini">
+                  {r.visual.lines.map((x) => (
+                    <span class="lang-line">
+                      <b>{x.code}</b>
+                      {x.t}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {r.visual.kind === "reach" && (
+                <div class="mini">
+                  {r.visual.rows.map((x) => (
+                    <span style="display: flex; flex-direction: column; gap: 0.35rem">
+                      <span style="font-size: 0.875rem">{x.t}</span>
+                      <span class="reach-line">
+                        <span class="bar"><span style={`width: ${pct(x.heard, x.of)}%`} /></span>
+                        {x.heard} av {x.of}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+            <h3>{r.t}</h3>
+            <p>{r.d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section" id="exempel" data-space data-hue="300" data-watch>
+  <div class="split">
+    <div class="split-text stack">
+      <p class="kicker">Hör ett exempel</p>
+      <h2 class="title-xl">Så låter det.</h2>
+      <button class="player-bar" type="button" data-sample="/audio/sample-sv.mp3" aria-label="Spela ett röstprov">
+        <span class="pb-btn" aria-hidden="true">
+          <svg class="i-play" width="16" height="16" viewBox="0 0 12 12" fill="#0b0f17"><path d="M3 1.5v9l7.5-4.5z"></path></svg>
+          <svg class="i-pause" width="16" height="16" viewBox="0 0 12 12" fill="#0b0f17"><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"></path></svg>
+        </span>
+        <span class="pb-track">
+          <span class="bar"><span data-sample-progress style="width: 0%"></span></span>
+        </span>
+        <small>0:30</small>
+      </button>
+    </div>
+    <div class="split-stage stage-reach">
+      <div class="script">
+        {l.script.map((s) => <div><small>{s.topic}</small><p>{s.t}</p></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+{
+  l.compare && l.compare.rows.length > 0 && (
+    <section class="section" data-space data-hue="200" data-watch>
+      <div class="wide">
+        <div class="wide-head stack">
+          <p class="kicker">Jämförelsen</p>
+          <h2 class="title-xl">Newstail och {l.compare.other}.</h2>
+        </div>
+        <table class="compare">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Egenskap</span></th>
+              <th scope="col">Newstail</th>
+              <th scope="col">{l.compare.other}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {l.compare.rows.map((r) => (
+              <tr>
+                <th scope="row">{r.label}</th>
+                <td>{r.newstail}</td>
+                <td>{r.other}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="note">{l.compare.fair}</p>
+      </div>
+    </section>
+  )
+}
+
+<section class="section" data-space data-hue="262" data-watch>
+  <div class="faq-split">
+    <div class="stack">
+      <h2 class="title-xl">Frågor.</h2>
+      <a class="link-more" href="/fragor/">{ui.allQuestions}</a>
+    </div>
+    <FaqList items={l.faq} lang="sv" />
+  </div>
+</section>
+
+<section class="section" data-space data-hue="200" data-watch>
+  <div class="wide">
+    <p class="kicker">Läs vidare</p>
+    <div class="cards-link">
+      {
+        related.map((r) => (
+          <a href={r!.href}>
+            <small>{r!.cluster}</small>
+            <b>{r!.name}</b>
+            <span>{r!.card}</span>
+          </a>
+        ))
+      }
+    </div>
+    <div class="cta-band">
+      <div>
+        <h2>Prova med hela företaget.</h2>
+        <p>14 dagar gratis. {ui.noCard}</p>
+      </div>
+      <a class="pill pill-primary pill-lg" href={START_URL}>{ui.startLong}</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-sample]").forEach((btn) => {
+    let audio: HTMLAudioElement | null = null;
+    const bar = btn.querySelector<HTMLElement>("[data-sample-progress]");
+    btn.addEventListener("click", () => {
+      if (!audio) {
+        audio = new Audio(btn.dataset.sample);
+        audio.addEventListener("timeupdate", () => {
+          if (bar && audio && audio.duration) bar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+        });
+        audio.addEventListener("ended", () => btn.classList.remove("is-playing"));
+        if (bar) bar.style.width = "0%";
+      }
+      if (audio.paused) {
+        void audio.play();
+        btn.classList.add("is-playing");
+      } else {
+        audio.pause();
+        btn.classList.remove("is-playing");
+      }
+    });
+  });
+</script>

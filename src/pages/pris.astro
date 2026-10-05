@@ -1,9 +1,18 @@
 ---
 import Base from "../layouts/Base.astro";
-import Pricing from "../components/Pricing.astro";
-import { sv as copy } from "../i18n/sv";
+import PricingPage from "../components/pages/PricingPage.astro";
+import { breadcrumbs, faqPage } from "../content/site";
+import { faqFor } from "../content/faq";
 ---
 
-<Base copy={copy} path="/pris/" altPath="/en/pricing/" title={copy.pricing.metaTitle} description={copy.pricing.metaDescription} orb={false} snap>
-  <Pricing copy={copy} />
+<Base
+  lang="sv"
+  path="/pris/"
+  altPath="/en/pricing/"
+  title="Pris – 149 kr per användare som lyssnar | Newstail"
+  description="Ett pris: 149 kr per användare och månad, och bara de som faktiskt lyssnar räknas. Minst tio användare, ingen bindning, 14 dagar gratis."
+  snap
+  schema={[breadcrumbs([{ name: "Newstail", path: "/" }, { name: "Pris", path: "/pris/" }]), faqPage(faqFor("pricing", "sv"))]}
+>
+  <PricingPage lang="sv" />
 </Base>

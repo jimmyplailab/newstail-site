@@ -1,0 +1,25 @@
+---
+/** Frågor ur frågebanken, ihopfällda. Den första kan stå öppen. Varje svar länkar till sin sida. */
+import { faqPath } from "../content/faq";
+import type { Lang } from "../content/site";
+interface Props {
+  items: { q: string; a: string; slug?: string }[];
+  lang: Lang;
+  openFirst?: boolean;
+}
+const { items, lang, openFirst = true } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((x, i) => (
+      <details open={openFirst && i === 0}>
+        <summary>{x.q}</summary>
+        <div class="faq-a">
+          <p>{x.a}</p>
+          {x.slug && <a href={faqPath(lang, x.slug)}>{lang === "sv" ? "Egen sida ›" : "Own page ›"}</a>}
+        </div>
+      </details>
+    ))
+  }
+</div>

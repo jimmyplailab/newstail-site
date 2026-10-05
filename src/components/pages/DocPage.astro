@@ -1,0 +1,47 @@
+---
+/** Integritet, villkor och PUB-avtal: kort version överst, innehåll till vänster, texten till höger. */
+import type { LegalDoc } from "../../content/legal";
+import { ROUTES, type Lang } from "../../content/site";
+
+interface Props {
+  lang: Lang;
+  doc: LegalDoc;
+}
+const { lang, doc } = Astro.props;
+const sv = lang === "sv";
+const R = ROUTES[lang];
+---
+
+<div class="page" data-space data-hue="262">
+  <nav class="crumbs" aria-label={sv ? "Brödsmulor" : "Breadcrumbs"}>
+    <a href={R.trust}>{sv ? "Trygghet" : "Trust"}</a><span aria-hidden="true">›</span><span>{doc.title}</span>
+  </nav>
+  <header class="page-head">
+    <h1 class="title-hero">{doc.title}</h1>
+    <p class="updated">{doc.updated}</p>
+  </header>
+  {
+    doc.short && (
+      <section class="short">
+        <h2>{doc.short.h}</h2>
+        <ul>{doc.short.items.map((x) => <li>{x}</li>)}</ul>
+      </section>
+    )
+  }
+  <div class="doc">
+    <nav class="toc" aria-label={sv ? "Innehåll" : "Contents"}>
+      <small>{sv ? "Innehåll" : "Contents"}</small>
+      {doc.sections.map((s) => <a href={`#${s.id}`}>{s.h}</a>)}
+    </nav>
+    <div class="doc-body">
+      {
+        doc.sections.map((s) => (
+          <section id={s.id}>
+            <h2>{s.h}</h2>
+            <Fragment set:html={s.html} />
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</div>

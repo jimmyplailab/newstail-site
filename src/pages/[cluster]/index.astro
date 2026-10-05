@@ -1,0 +1,25 @@
+---
+import Base from "../../layouts/Base.astro";
+import HubPage from "../../components/pages/HubPage.astro";
+import type { Cluster } from "../../content/landing-types";
+import { CLUSTERS, LANDINGS, landingPath } from "../../content/landings";
+import { SITE, breadcrumbs } from "../../content/site";
+
+export function getStaticPaths() {
+  return (Object.keys(CLUSTERS) as Cluster[]).map((cluster) => ({ params: { cluster }, props: { cluster } }));
+}
+const { cluster } = Astro.props as { cluster: Cluster };
+const c = CLUSTERS[cluster];
+const path = `/${cluster}/`;
+const list = {
+  "@type": "CollectionPage",
+  name: c.title,
+  url: `${SITE}${path}`,
+  inLanguage: "sv-SE",
+  hasPart: LANDINGS.filter((l) => l.cluster === cluster).map((l) => ({ "@type": "WebPage", name: l.h1.replace(/\u00AD/g, ""), url: `${SITE}${landingPath(l)}` })),
+};
+---
+
+<Base lang="sv" path={path} title={c.metaTitle} description={c.metaDescription} schema={[list, breadcrumbs([{ name: "Newstail", path: "/" }, { name: c.name, path }])]}>
+  <HubPage cluster={cluster} />
+</Base>

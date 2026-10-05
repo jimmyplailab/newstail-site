@@ -1,0 +1,39 @@
+---
+/** Hemvyn: hälsning, rubriker med färgad etikett, veckans himmel och klotet som vilar nere. */
+export type HomeItem = { label: string; kind: "inside" | "industry" | "own"; title: string };
+interface Props {
+  company: string;
+  greeting: string;
+  date: string;
+  items: HomeItem[];
+  /** Tända dagar i veckans himmel (0–7). */
+  lit?: number;
+  recap?: string;
+}
+const { company, greeting, date, items, lit = 3, recap = "Recap" } = Astro.props;
+---
+
+<div class="scr-home">
+  <div class="scr-head">
+    <span class="scr-round" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#eceff4" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></span>
+    <span class="scr-company">{company}</span>
+    <span class="scr-avatar" aria-hidden="true">AL</span>
+  </div>
+  <span class="scr-hello">{greeting}</span>
+  <span class="scr-date">{date}</span>
+  <span class="scr-pill">{recap}</span>
+  <div class="scr-bubbles">
+    {
+      items.map((x, i) => (
+        <span class={`scr-bubble scr-bubble-${i % 2 ? "l" : "r"} k-${x.kind}`} style={`--i: ${i}`}>
+          <small>{x.label}</small>
+          {x.title}
+        </span>
+      ))
+    }
+  </div>
+  <div class="scr-week" aria-hidden="true">
+    {Array.from({ length: 7 }, (_, i) => <span class={i < lit ? "is-lit" : ""} />)}
+  </div>
+  <img class="scr-rest" src="/orbs/orb-262.webp" alt="" width="240" height="240" loading="lazy" decoding="async" />
+</div>

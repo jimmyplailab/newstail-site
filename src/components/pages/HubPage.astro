@@ -1,0 +1,43 @@
+---
+/** Hubbsidan för ett kluster: rubrik och ett kort per sida. */
+import type { Cluster } from "../../content/landing-types";
+import { CLUSTERS, LANDINGS, landingPath } from "../../content/landings";
+import { START_URL, UI } from "../../content/site";
+
+interface Props {
+  cluster: Cluster;
+}
+const { cluster } = Astro.props;
+const c = CLUSTERS[cluster];
+const pages = LANDINGS.filter((l) => l.cluster === cluster);
+const others = (Object.keys(CLUSTERS) as Cluster[]).filter((k) => k !== cluster);
+---
+
+<div class="page" data-space data-hue="200">
+  <nav class="crumbs" aria-label="Brödsmulor"><a href="/">Newstail</a><span aria-hidden="true">›</span><span>{c.name}</span></nav>
+  <header class="page-head">
+    <h1 class="title-hero">{c.title}</h1>
+    <p class="lead">{c.lead}</p>
+  </header>
+  <div class="cards-link hub-grid">
+    {
+      pages.map((l) => (
+        <a href={landingPath(l)}>
+          <b>{l.name}</b>
+          <span>{l.card}</span>
+          <span class="headline">{l.phone.topic} · {l.phone.title}</span>
+        </a>
+      ))
+    }
+  </div>
+  <div class="chips" style="margin-top: 3rem">
+    {others.map((k) => <a class="chip" href={`/${k}/`}>{CLUSTERS[k].name}</a>)}
+  </div>
+  <div class="cta-band">
+    <div>
+      <h2>Prova med hela företaget.</h2>
+      <p>14 dagar gratis. {UI.sv.noCard}</p>
+    </div>
+    <a class="pill pill-primary pill-lg" href={START_URL}>{UI.sv.startLong}</a>
+  </div>
+</div>

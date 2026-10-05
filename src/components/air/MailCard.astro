@@ -1,0 +1,26 @@
+---
+/** Fredagsmejlet "Det här missade du" i Air-mejlens stil. */
+interface Props {
+  t: { from: string; when: string; subject: string; company: string; title: string; sub: string; items: string[]; tag: string; button: string };
+}
+const { t } = Astro.props;
+---
+
+<div class="mailcard" role="img" aria-label={t.subject}>
+  <div class="mail-head">
+    <span><strong>{t.from}</strong><small>{t.when}</small></span>
+    <span class="mail-subject">{t.subject}</span>
+  </div>
+  <div class="mail-body">
+    <span class="mail-icon">n</span>
+    <small class="mail-eyebrow">{t.company}</small>
+    <strong class="mail-title">{t.title}</strong>
+    <span class="mail-sub">{t.sub}</span>
+    <span class="mail-items">
+      {t.items.map((x) => (
+        <span><small>{t.tag}</small>{x}</span>
+      ))}
+    </span>
+    <span class="mail-button">{t.button}</span>
+  </div>
+</div>
