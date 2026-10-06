@@ -97,11 +97,11 @@ export const FAQ: Faq[] = [
     tags: ["pricing"],
     sv: {
       q: "Vem räknas som användare?",
-      a: "Den som har hört minst tre sändningar under en kalendermånad. Den som inte lyssnar kostar inget – inte heller den som bara publicerar.",
+      a: "Alla som har ett konto i ert företag – de ni bjudit in och som gått in i appen. Ni styr själva vem som bjuds in, och kan ta bort vem som helst när som helst.",
     },
     en: {
       q: "Who counts as a user?",
-      a: "Anyone who has heard at least three broadcasts in a calendar month. People who don't listen cost nothing – nor do people who only publish.",
+      a: "Everyone with an account in your company – the people you've invited who have opened the app. You decide who gets invited, and can remove anyone at any time.",
     },
   },
   {
@@ -118,16 +118,16 @@ export const FAQ: Faq[] = [
     },
   },
   {
-    slug: { sv: "varfor-manaden-innan", en: "why-the-month-before" },
+    slug: { sv: "mitt-i-manaden", en: "mid-month" },
     cat: "pricing",
     tags: ["pricing"],
     sv: {
-      q: "Varför räknas det på månaden innan?",
-      a: "Så att ni alltid vet beloppet innan det dras. Lyssnade 34 i oktober betalar ni för 34 den 1 november.",
+      q: "Vad händer när någon läggs till mitt i månaden?",
+      a: "Hen är med direkt och räknas från nästa 1:a. Ni betalar i förskott den 1:a för antalet användare just då, och får ett mejl tre dagar innan med beloppet.",
     },
     en: {
-      q: "Why is it based on the month before?",
-      a: "So you always know the amount before it is charged. If 34 people listened in October, you pay for 34 on 1 November.",
+      q: "What happens when someone is added mid-month?",
+      a: "They're in right away and count from the next 1st. You pay in advance on the 1st for the number of users at that moment, and get an email three days ahead with the amount.",
     },
   },
   {
@@ -136,11 +136,11 @@ export const FAQ: Faq[] = [
     tags: ["pricing"],
     sv: {
       q: "Finns det ett minsta antal?",
-      a: "Ja, tio användare. Är ni färre, eller lyssnar färre än tio en månad, betalar ni för tio.",
+      a: "Ja, tio användare. Är ni färre betalar ni för tio – 1 790 kr i månaden.",
     },
     en: {
       q: "Is there a minimum?",
-      a: "Yes, ten users. If you are fewer, or fewer than ten listen in a month, you pay for ten.",
+      a: "Yes, ten users. If you are fewer you pay for ten – €170 a month.",
     },
   },
   {
@@ -169,11 +169,11 @@ export const FAQ: Faq[] = [
     tags: ["pricing"],
     sv: {
       q: "Vi är många, eller flera bolag – hur gör vi?",
-      a: "Hör av er på hello@newstail.io så går vi igenom det tillsammans.",
+      a: "Över 1 000 användare har vi volympris. Hör av er på hello@newstail.io så går vi igenom det tillsammans.",
     },
     en: {
       q: "We are large, or several companies – what do we do?",
-      a: "Get in touch at hello@newstail.io and we'll go through it together.",
+      a: "Above 1,000 users we have volume pricing. Get in touch at hello@newstail.io and we'll go through it together.",
     },
   },
   {

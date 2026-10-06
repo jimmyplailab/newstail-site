@@ -62,7 +62,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas, och ni provar gratis i 14 dagar utan kort.",
+        a: "179 kr per användare och månad, exkl. moms. Allt ingår, och ni provar gratis i 14 dagar utan kort.",
       },
       {
         q: "Hur snabbt kommer vi igång?",
@@ -135,7 +135,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Passar det för mindre företag?",
-        a: "Ja, från 10 användare. Det kostar 149 kr per användare och månad, och bara de som lyssnar räknas.",
+        a: "Ja, från 10 användare. Det kostar 179 kr per användare och månad, allt ingår.",
       },
     ],
     related: ["losningar/app-for-personalen", "jamfor/spintr", "/sa-funkar-det/"],
@@ -538,7 +538,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas, och det finns ingen bindning.",
+        a: "179 kr per användare och månad, exkl. moms. Allt ingår, och det finns ingen bindning.",
       },
       {
         q: "Hur mycket tid tar det för personalen?",
@@ -605,7 +605,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad kostar Newstail?",
-        a: "149 kr per användare och månad, exkl. moms, minst 10 användare. Bara de som lyssnar räknas.",
+        a: "179 kr per användare och månad, exkl. moms, minst 10 användare. Allt ingår.",
       },
       {
         q: "Ser man vad en enskild person har hört?",
@@ -621,7 +621,7 @@ export const landingsA: Landing[] = [
         { label: "Omvärld", newstail: "Bransch, marknad, kunder, konkurrenter", other: "[kontrollera]" },
         { label: "Se att det kom fram", newstail: "Hört av x av y per team", other: "[kontrollera]" },
         { label: "Dokument och arkiv", newstail: "Nej, det har intranätet", other: "Ja" },
-        { label: "Pris", newstail: "149 kr per lyssnare och månad", other: "Fråga Spintr" },
+        { label: "Pris", newstail: "179 kr per användare och månad", other: "Fråga Spintr" },
       ],
       fair: "Behöver ni ett intranät med dokument och ett gemensamt ställe för allt passar Spintr bättre, och Newstail kan ligga bredvid.",
     },
@@ -686,7 +686,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad kostar Newstail?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas, och det finns ingen bindning.",
+        a: "179 kr per användare och månad, exkl. moms. Allt ingår, och det finns ingen bindning.",
       },
     ],
     related: ["losningar/app-for-personalen", "jamfor/spintr", "branscher/handel-och-butik"],
@@ -764,7 +764,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms. Att publicera är gratis och bara de som lyssnar räknas.",
+        a: "179 kr per användare och månad, exkl. moms. Allt ingår – även att publicera.",
       },
     ],
     related: ["losningar/internkommunikation", "roller/internkommunikator", "guider/bra-internkommunikation"],
@@ -810,8 +810,8 @@ export const landingsA: Landing[] = [
         visual: { kind: "inside", title: "Så påverkar läget våra hyresgäster", heard: 33, of: 41 },
       },
       {
-        t: "Pris per lyssnare",
-        d: "149 kr per användare och månad, och bara de som lyssnar räknas.",
+        t: "Ett pris per användare",
+        d: "179 kr per användare och månad, allt ingår.",
         visual: {
           kind: "reach",
           rows: [
@@ -834,7 +834,7 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad är skillnaden mot en bevakningstjänst?",
-        a: "En bevakningstjänst ger ofta namngivna användare mejl med träffar. I Newstail får alla en egen sändning efter roll, och ni betalar bara för dem som lyssnar.",
+        a: "En bevakningstjänst ger ofta namngivna användare mejl med träffar. I Newstail får alla en egen sändning efter roll, till ett pris per användare.",
       },
       {
         q: "Vilka källor används?",
@@ -842,14 +842,14 @@ export const landingsA: Landing[] = [
       },
       {
         q: "Vad kostar Newstail?",
-        a: "149 kr per användare och månad, exkl. moms, minst 10 användare. 14 dagar gratis, inget kort och ingen bindning.",
+        a: "179 kr per användare och månad, exkl. moms, minst 10 användare. 14 dagar gratis, inget kort och ingen bindning.",
       },
     ],
     related: ["losningar/omvarldsbevakning", "guider/omvarldsanalys", "/pris/"],
     compare: {
       other: "Bevakningstjänst, branschpress, gratisverktyg",
       rows: [
-        { label: "Vem får läsa", newstail: "Alla som lyssnar", other: "Namngivna användare eller per licens" },
+        { label: "Vem får läsa", newstail: "Alla ni bjuder in", other: "Namngivna användare eller per licens" },
         { label: "Format", newstail: "Uppläst sändning, 3–10 min", other: "Mejlsammanfattningar och länkar" },
         { label: "Urval", newstail: "Efter roll, plus egna ämnen", other: "Sökord som någon har ställt in" },
         { label: "Internt", newstail: "Interna budskap i samma sändning", other: "Nej" },

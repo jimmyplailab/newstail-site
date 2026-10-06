@@ -230,12 +230,12 @@ export const softwareApp = (lang: Lang) => ({
   publisher: { "@id": ORG_ID },
   offers: {
     "@type": "Offer",
-    price: lang === "sv" ? "149" : "14",
+    price: lang === "sv" ? "179" : "17",
     priceCurrency: lang === "sv" ? "SEK" : "EUR",
     description:
       lang === "sv"
-        ? "Per användare och månad. Bara de som lyssnar räknas. 14 dagar gratis."
-        : "Per user and month. Only people who listen are counted. 14 days free.",
+        ? "Per användare och månad, allt ingår. 14 dagar gratis."
+        : "Per user and month, everything included. 14 days free.",
   },
 });
 

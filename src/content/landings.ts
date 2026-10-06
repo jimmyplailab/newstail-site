@@ -52,7 +52,7 @@ export const CLUSTERS: Record<Cluster, { name: string; title: string; lead: stri
 
 /** Kärnsidor som en landningssida kan länka till under "Läs vidare". */
 export const CORE_LINKS: Record<string, { name: string; card: string; cluster: string }> = {
-  "/pris/": { name: "Pris", card: "149 kr per användare och månad. Bara de som lyssnar räknas.", cluster: "Newstail" },
+  "/pris/": { name: "Pris", card: "179 kr per användare och månad. Allt ingår.", cluster: "Newstail" },
   "/trygghet/": { name: "Trygghet", card: "Ledningen ser mönster per team – aldrig vad en person hört.", cluster: "Newstail" },
   "/sa-funkar-det/": { name: "Så funkar det", card: "Sändningen, publiceringen och ledningens vy.", cluster: "Newstail" },
 };

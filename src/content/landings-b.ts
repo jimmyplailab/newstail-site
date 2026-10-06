@@ -69,7 +69,7 @@ export const landingsB: Landing[] = [
       },
       {
         q: "Vad kostar det för oss?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas. Är ni 41 och 34 lyssnar en månad blir det 5 066 kr.",
+        a: "179 kr per användare och månad, exkl. moms. Är ni 34 användare blir det 6 086 kr i månaden.",
       },
       {
         q: "Hur kommer vi igång?",
@@ -147,7 +147,7 @@ export const landingsB: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms, och bara de som lyssnar räknas. Minst 10 användare. 14 dagar gratis, inget kort.",
+        a: "179 kr per användare och månad, exkl. moms. Minst 10 användare. 14 dagar gratis, inget kort.",
       },
     ],
     related: ["losningar/intranat", "losningar/app-for-personalen", "/pris/"],
@@ -236,7 +236,7 @@ export const landingsB: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms, och bara de som lyssnar räknas. Ingen bindning, så det funkar även när personalstyrkan växlar.",
+        a: "179 kr per användare och månad, exkl. moms. Ingen bindning, och ni tar bort användare när som helst – så det funkar även när personalstyrkan växlar.",
       },
     ],
     related: ["losningar/app-for-personalen", "branscher/handel-och-butik", "/pris/"],
@@ -313,7 +313,7 @@ export const landingsB: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas. 14 dagar gratis, ingen bindning.",
+        a: "179 kr per användare och månad, exkl. moms. Allt ingår. 14 dagar gratis, ingen bindning.",
       },
     ],
     related: ["branscher/fastighet", "losningar/app-for-personalen", "roller/vd-och-ledning"],
@@ -402,7 +402,7 @@ export const landingsB: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas, minst 10 användare.",
+        a: "179 kr per användare och månad, exkl. moms, minst 10 användare. Allt ingår.",
       },
     ],
     related: ["losningar/app-for-personalen", "losningar/internkommunikation", "roller/hr"],
@@ -476,7 +476,7 @@ export const landingsB: Landing[] = [
       },
       {
         q: "Vad kostar det?",
-        a: "149 kr per användare och månad, exkl. moms. Bara de som lyssnar räknas. 14 dagar gratis, ingen bindning.",
+        a: "179 kr per användare och månad, exkl. moms. Allt ingår. 14 dagar gratis, ingen bindning.",
       },
     ],
     related: ["losningar/app-for-personalen", "roller/hr", "/trygghet/"],

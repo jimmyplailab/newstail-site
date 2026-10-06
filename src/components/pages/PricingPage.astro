@@ -12,24 +12,23 @@ const sv = lang === "sv";
 const ui = UI[lang];
 const R = ROUTES[lang];
 const faq = faqFor("pricing", lang);
-const PRICE = sv ? 149 : 14;
+const PRICE = sv ? 179 : 17;
 
 const c = sv
   ? {
-      h1: "149 kr per användare och månad.",
-      lead: "Vi räknar bara de som faktiskt lyssnar. Den som inte lyssnar kostar inget.",
+      h1: "179 kr per användare och månad.",
+      lead: "Ett pris, ingen bindning. Ni bjuder in dem som ska vara med – och betalar för dem. Minst tio.",
       plan: "Newstail",
       unit: "kr",
-      per: "per lyssnare och månad",
-      checks: ["Bara de som lyssnar räknas", "Minst 10 användare", "Ingen bindningstid", "Ni ser beloppet innan det dras"],
+      per: "per användare och månad",
+      checks: ["Allt ingår", "Minst 10 användare", "Ingen bindningstid", "Ni ser beloppet innan det dras"],
       cta: "Prova gratis i 14 dagar",
-      fine: "Inget kort under provperioden. Priser exkl. moms. 14 € i övriga Europa, 15 $ i resten av världen.",
+      fine: "Inget kort under provperioden. Priser exkl. moms. 17 € i övriga Europa, 18 $ i resten av världen.",
       calcKicker: "Räkna",
       calcTitle: "Vad kostar det för er?",
-      emp: "Anställda",
-      lis: "Lyssnar varje månad",
+      emp: "Användare",
       month: "kr/mån",
-      free: (n: number) => (n === 1 ? "1 som inte lyssnar kostar inget." : `${n} som inte lyssnar kostar inget.`),
+      perYear: (n: number) => `${n.toLocaleString("sv-SE")} kr per år`,
       floor: "Minst tio användare debiteras.",
       dotScale: "En prick = fem personer",
       payKicker: "Betalningen",
@@ -37,30 +36,29 @@ const c = sv
       steps: [
         ["Dag 1", "Hela företaget gratis", "14 dagar. Inget kort."],
         ["Dag 15", "Lägg in kort", "Resten av månaden dras i förskott."],
-        ["Den 1:a", "Räknat på månaden innan", "Mejl tre dagar innan."],
+        ["Den 1:a", "Antal användare × 179 kr", "Mejl tre dagar innan."],
       ],
       exampleL: "Exempel",
-      exampleV: "34 lyssnade i september → 5 066 kr den 1 oktober",
+      exampleV: "34 användare → 6 086 kr den 1:a varje månad",
       inclTitle: "Allt ingår.",
       incl: ["Obegränsat lyssnande", "En egen sändning per medarbetare", "Fyra språk", "Publicera med röst eller text", "Team och publiceringsrätter", "Recap och quiz", "Fredagsmejlet", "Admin med insikter"],
       faqTitle: "Frågor om priset.",
-      big: "Fler än 250? Prata med oss",
+      big: "Volympris över 1 000 användare – hör av er",
     }
   : {
-      h1: "€14 per user and month.",
-      lead: "We only count the people who actually listen. Anyone who doesn't listen costs nothing.",
+      h1: "€17 per user and month.",
+      lead: "One price, no lock-in. You invite the people who should be in – and pay for them. Minimum ten.",
       plan: "Newstail",
       unit: "€",
-      per: "per listener and month",
-      checks: ["Only listeners are counted", "At least 10 users", "No lock-in", "You see the amount before it's charged"],
+      per: "per user and month",
+      checks: ["Everything included", "At least 10 users", "No lock-in", "You see the amount before it's charged"],
       cta: "Try it free for 14 days",
-      fine: "No card during the trial. Prices excl. VAT. SEK 149 in Sweden, $15 outside Europe.",
+      fine: "No card during the trial. Prices excl. VAT. SEK 179 in Sweden, $18 outside Europe.",
       calcKicker: "Calculate",
       calcTitle: "What does it cost for you?",
-      emp: "Employees",
-      lis: "Listen every month",
+      emp: "Users",
       month: "€/mo",
-      free: (n: number) => (n === 1 ? "1 person who doesn't listen costs nothing." : `${n} people who don't listen cost nothing.`),
+      perYear: (n: number) => `€${n.toLocaleString("en-GB")} per year`,
       floor: "At least ten users are charged.",
       dotScale: "One dot = five people",
       payKicker: "Payment",
@@ -68,17 +66,16 @@ const c = sv
       steps: [
         ["Day 1", "The whole company free", "14 days. No card."],
         ["Day 15", "Add a card", "The rest of the month is charged in advance."],
-        ["The 1st", "Based on the month before", "Email three days ahead."],
+        ["The 1st", "Number of users × €17", "Email three days ahead."],
       ],
       exampleL: "Example",
-      exampleV: "34 listened in September → €476 on 1 October",
+      exampleV: "34 users → €578 on the 1st of every month",
       inclTitle: "Everything included.",
       incl: ["Unlimited listening", "A broadcast for every employee", "Four languages", "Publish by voice or text", "Teams and publishing rights", "Recap and quiz", "The Friday email", "Admin with insights"],
       faqTitle: "Questions about pricing.",
-      big: "More than 250? Talk to us",
+      big: "Volume pricing above 1,000 users – talk to us",
     };
-const E0 = 41;
-const L0 = 34;
+const E0 = 34;
 ---
 
 <section class="section sub-top" data-space data-hue="200" data-watch>
@@ -112,15 +109,11 @@ const L0 = 34;
       <div class="calc-controls">
         <label class="calc-row">
           <span>{c.emp}<output data-out="emp">{E0}</output></span>
-          <input type="range" min="10" max="250" step="1" value={E0} data-in="emp" />
-        </label>
-        <label class="calc-row">
-          <span>{c.lis}<output data-out="lis">{L0}</output></span>
-          <input type="range" min="0" max={E0} step="1" value={L0} data-in="lis" />
+          <input type="range" min="1" max="1000" step="1" value={E0} data-in="emp" />
         </label>
         <div class="calc-sum" aria-live="polite">
-          <b><span data-out="sum">{sv ? `${(L0 * PRICE).toLocaleString("sv-SE")}` : `€${L0 * PRICE}`}</span><small>{c.month}</small></b>
-          <span data-out="free">{c.free(E0 - L0)}</span>
+          <b><span data-out="sum">{sv ? `${(E0 * PRICE).toLocaleString("sv-SE")}` : `€${(E0 * PRICE).toLocaleString("en-GB")}`}</span><small>{c.month}</small></b>
+          <span data-out="year">{c.perYear(E0 * PRICE * 12)}</span>
           <em data-out="floor" hidden>{c.floor}</em>
         </div>
       </div>
@@ -184,38 +177,25 @@ const L0 = 34;
     const price = Number(root.dataset.price);
     const sv = root.dataset.lang === "sv";
     const emp = root.querySelector<HTMLInputElement>('[data-in="emp"]')!;
-    const lis = root.querySelector<HTMLInputElement>('[data-in="lis"]')!;
     const out = (k: string) => root.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
     const dots = root.querySelector<HTMLElement>("[data-dots]")!;
-    const freeText = (n: number) =>
-      sv
-        ? n === 1
-          ? "1 som inte lyssnar kostar inget."
-          : `${n} som inte lyssnar kostar inget.`
-        : n === 1
-          ? "1 person who doesn't listen costs nothing."
-          : `${n} people who don't listen cost nothing.`;
+    const money = (n: number) => (sv ? n.toLocaleString("sv-SE") : `€${n.toLocaleString("en-GB")}`);
     const render = () => {
       const e = Number(emp.value);
-      lis.max = String(e);
-      if (Number(lis.value) > e) lis.value = String(e);
-      const l = Number(lis.value);
-      const billed = Math.max(10, l);
+      const billed = Math.max(10, e);
       const sum = billed * price;
       out("emp").textContent = String(e);
-      out("lis").textContent = String(l);
-      out("sum").textContent = sv ? sum.toLocaleString("sv-SE") : `€${sum.toLocaleString("en-GB")}`;
-      out("free").textContent = freeText(e - l);
-      out("floor").hidden = l >= 10;
-      const per = e > 60 ? 5 : 1;
+      out("sum").textContent = money(sum);
+      out("year").textContent = sv ? `${money(sum * 12)} kr per år` : `${money(sum * 12)} per year`;
+      out("floor").hidden = e >= 10;
+      const per = e > 300 ? 25 : e > 60 ? 5 : 1;
       out("scale").hidden = per === 1;
+      out("scale").textContent = sv ? `En prick = ${per} personer` : `One dot = ${per} people`;
       const n = Math.ceil(e / per);
-      const lit = Math.round(l / per);
       if (dots.children.length !== n) dots.innerHTML = "<i></i>".repeat(n);
-      Array.from(dots.children).forEach((d, i) => d.classList.toggle("on", i < lit));
+      Array.from(dots.children).forEach((d) => d.classList.add("on"));
     };
     emp.addEventListener("input", render);
-    lis.addEventListener("input", render);
     render();
   }
 </script>
